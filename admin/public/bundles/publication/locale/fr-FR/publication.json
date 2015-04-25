@@ -1,0 +1,16 @@
+{
+	"publication_title": "Publication",
+	"draft" : "Brouillon",
+	"issued" : "Publié",
+	"allunselect" : "Tout désélectionner",
+	"allselect" : "Tout sélectionner",
+	"del" : "Supprimer",
+	"create" : "Créer les ePubs",
+	"delete_title" : "SUPPRESSION",
+	"delete_query" : "Voulez-vous supprimer ces documents ?",
+	"label_isbn" : "ISBN",
+	"label_title" : "Titre",
+	"label_status" : "Statut",
+	"label_novelty" : "Nouveauté",
+	"label_download" : "Téléchargement"
+}

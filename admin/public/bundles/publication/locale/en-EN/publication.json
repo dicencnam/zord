@@ -1,0 +1,16 @@
+{
+	"publication_title": "Publication",
+	"draft": "Draft",
+	"issued": "Issued",
+	"allunselect": "Deselect All",
+	"allselect": "Select All",
+	"del": "Remove",
+	"create": "Create ePubs",
+	"delete_title": "SUPPRESSION",
+	"delete_query": "Do you want to remove the documents ?",
+	"label_isbn": "ISBN",
+	"label_title": "Title",
+	"label_status": "Status",
+	"label_novelty" : "Novelty",
+	"label_download": "Downloading"
+}

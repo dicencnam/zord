@@ -1,0 +1,38 @@
+
+.counter_create_file {
+	text-align:center;
+	margin: 15px 0 35px 0;
+	display:none;
+}
+
+.counter_table {
+	display:none;
+}
+
+.counter_table table {
+	width:100%;
+}
+.counter_table table, .counter_table th, .counter_table td {
+	border: 1px solid gray;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.counter_table tr td:first-child {
+	text-align: left;
+}
+.counter_table tr th:first-child {
+	text-align: left;
+}
+
+.counter_create_file a {
+	display:inline-block;
+	color: white;
+	background: black;
+	border: 5px;
+	text-decoration:none;
+	border-radius: 5px;
+	font-size: 1em;
+	padding: 6px 20px;
+	cursor: pointer;
+}

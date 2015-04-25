@@ -1,0 +1,15 @@
+
+#publication_table {
+	max-width:75%;
+	margin:auto;
+}
+
+#publication_table, #publication_table th, #publication_table td {
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding:2px 3px;
+}
+
+#publication_table .draft {
+	background:#ffd1d1 ! important;
+}

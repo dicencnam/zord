@@ -1,0 +1,30 @@
+#users_list {
+	border: 1px solid black;
+	border-collapse: collapse;
+	margin:auto;
+}
+
+#users_list th, #users_list td {
+	padding:4px 8px;
+}
+
+#users_list input[type="date"]{
+	width: 124px;
+	font-size: 0.8em;
+}
+
+.user_del {
+	color:red;
+	cursor:pointer;
+}
+
+.user_update {
+	color:green;
+	cursor:pointer;
+}
+
+#users_websites {
+	width: 300px;
+	text-align: left;
+	display:inline-block;
+}

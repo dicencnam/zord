@@ -1,0 +1,48 @@
+
+#tocTEI {
+	width: 30%;
+	border-right: 1px solid gray;
+	height:100%;
+	overflow: auto;
+	float: left;
+	direction:rtl;
+}
+
+#tocTEI > *{
+	direction:ltr;
+}
+
+#contentTEI {
+	width: 62%;
+	min-height: 1000px;
+	padding-right: 5%;
+	margin-left: 32%;
+}
+
+.tocTEIFix {
+	position: fixed;
+	top: 0;
+}
+
+#tocTEI ul {
+	padding-left: 15px;
+	margin-left: 5px;
+}
+
+
+#tocTEI li {
+	cursor:pointer
+}
+
+#source_error {
+	display:none;
+}
+
+#source_counter {
+	color:black;
+	display:none;
+}
+
+.errors {
+	color:red;
+}

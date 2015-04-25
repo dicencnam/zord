@@ -1,0 +1,12 @@
+{
+	"portal_title": "Portal",
+	"addPortal" : "Add portal",
+	"Portal_name" : "Portal name",
+	"Portal_url" : "URL",
+	"Portal_domain" : "Domain name",
+	"Portal_publisher" : "Publisher Name",
+	"addPortal_send" : "Add",
+	"delPortal" : "Delete portal",
+	"delPortal_send" : "Delete",
+	"invalid_field": "Invalid(s) field(s) !",
+}
