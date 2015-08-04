@@ -4,7 +4,7 @@
 <form id="importTEI">
 	<div class="form_service">
 		<p><label>{{$websites}} </label>
-			<select id="source_websites"></select>
+			<div id="source_websites"></div>
 		</p>
 		<p><label>{{$status}} </label>
 			<select id="source_state">
@@ -17,18 +17,18 @@
 		</p>
 		<br/>
 		<input id="import_tei_send" type="button" value="{{$send}}"/>
-		<div id="source_wait" style="margin-top:8px;display:none;">
+		<div id="source_wait">
 			<span id="source_msg"></span>
 		</div>
-		<textarea id="source_report" style="margin:15px auto 0 auto;height: 300px;padding: 10px;overflow: auto;display: none;text-align: left;white-space: pre-wrap;width:90%;" spellcheck="false"></textarea>
-		<div id="source_links" style="margin-top:15px;"></div>
+		<textarea id="source_report" spellcheck="false"></textarea>
+		<div id="source_links"></div>
 	</div>
 
 </form>
 {{/template}}
 
 {{template id="source_websites" overlay="source_websites" insert="beforeend" preload="true"}}
-<option value="{{$value}}">{{$label}}</option>
+<label><input type="checkbox" name="websites" value="{{$value}}" checked="checked"/>{{$label}}</label>
 {{/template}}
 
 {{template id="source_categories" overlay="source_categories" insert="beforeend" preload="true"}}

@@ -1,37 +1,31 @@
+#source_websites {
+	display: inline-block;
+	width: 306px;
+	text-align: left;
+}
 
-#tocTEI {
-	width: 30%;
-	border-right: 1px solid gray;
-	height:100%;
+#source_websites label {
+	display: inline;
+}
+
+#source_wait {
+	margin-top:8px;
+	display:none
+}
+
+#source_report {
+	margin:15px auto 0 auto;
+	height: 300px;
+	padding: 10px;
 	overflow: auto;
-	float: left;
-	direction:rtl;
+	display: none;
+	text-align: left;
+	white-space: pre-wrap;
+	width:90%;
 }
 
-#tocTEI > *{
-	direction:ltr;
-}
-
-#contentTEI {
-	width: 62%;
-	min-height: 1000px;
-	padding-right: 5%;
-	margin-left: 32%;
-}
-
-.tocTEIFix {
-	position: fixed;
-	top: 0;
-}
-
-#tocTEI ul {
-	padding-left: 15px;
-	margin-left: 5px;
-}
-
-
-#tocTEI li {
-	cursor:pointer
+#source_links {
+	margin-top:15px;
 }
 
 #source_error {

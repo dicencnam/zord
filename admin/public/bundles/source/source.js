@@ -10,7 +10,7 @@ define('bdl/source/source',function() {
 
 	var xsltProcessor = null;
 
-	var portal = null;
+	var portals = [];
 
 	var sendClick = true;
 
@@ -22,17 +22,17 @@ define('bdl/source/source',function() {
 
 	var booksURLS = [];
 
-	var getFinalTest = function(testRNG,name,show,callback){
+	var getFinalTest = function(testRNG,name,show,portal,callback){
 		var fileName = name.substring(0, name.lastIndexOf("."));
 		var save = true;
 		// rapport
 		var report = [];
-		var fileHeadReport = '------------------------------\n'+fileName+'\n\n';
+		var fileHeadReport = '------------------------------\n'+fileName+' - '+portal+'\n\n';
 		if(testRNG!=''){
 			report.push(testRNG);
 		}
 		if(teiObj.structure==null){
-			report.push('Undefined struture !!!!! ');
+			report.push('Undefined struture (titlePage) !!!!! ');
 			save = false;
 		}
 		if(teiObj.graphics!=undefined && teiObj.graphics.length>0){
@@ -68,7 +68,7 @@ define('bdl/source/source',function() {
 		}
 		if(report.length>0){
 			if(!save)
-				report.push('File not save !!!');
+				report.push('File not saved !!!');
 			finalContentReport.push(fileHeadReport+'Errors :-(\n\n'+report.join('\n\n'));
 		} else {
 			finalContentReport.push(fileHeadReport+'No error  :-)');
@@ -107,7 +107,7 @@ define('bdl/source/source',function() {
 		linksEl.innerHTML = '';
 		booksURLS.forEach(function(link){
 			linksEl.insertAdjacentHTML('beforeend',
-				'<a href="'+link.url+'">'+link.name+'</a><br/>'
+				'<a href="'+link.url+'" target="_blank">'+link.name+'</a><br/>'
 			);
 		});
 		linksEl.style.display = 'block';
@@ -115,27 +115,35 @@ define('bdl/source/source',function() {
 
 	var getRNG = function(xml,name,show,callback){
 
-		var fileName = name.substring(0, name.lastIndexOf("."));
-		$ajax.getJSON({
-			url : 'index.php',
-			data : {
-				module : 'Admin_TEI_'+portal,
-				action : 'validation',
-				xml : xml,
-				repository : portal,
-				folder : fileName
-			},
-			success : function (data) {
-				$notify.pub('teiParse:'+portal,[fileName,data.tei,data.graphics,function(_teiObj){
-					teiObj = _teiObj;
-					getFinalTest(data.rng,name,show,callback);// function(tests,name,show,callback)
-				}]);
-			},
-			error : function (code,data) {
-				console.log(code);
-			}
+		var portalsLength = portals.length;
+		portals.forEach(function(portal,i){
+			var fileName = name.substring(0, name.lastIndexOf("."));
+			$ajax.getJSON({
+				url : 'index.php',
+				data : {
+					module : 'Admin_TEI_'+portal,
+					action : 'validation',
+					xml : xml,
+					repository : portal,
+					folder : fileName
+				},
+				success : function (data) {
+					$notify.pub('teiParse:'+portal,[fileName,data.tei,data.graphics,function(_teiObj){
+						teiObj = _teiObj;
+						var _show = show;
+						var _callback = callback;
+						if((i+1)<portalsLength){
+							_show = false;
+							_callback = undefined;
+						}
+						getFinalTest(data.rng,name,show,portal,callback);
+					}]);
+				},
+				error : function (code,data) {
+					MSG.alert('Error',data.message);
+				}
+			});
 		});
-
 	};
 
 	var sourceView = {
@@ -164,55 +172,62 @@ define('bdl/source/source',function() {
 					document.getElementById('source_links').style.display = 'none';
 					finalContentReport = [];
 					booksURLS = [];
-					portal = document.getElementById('source_websites').value;
-					var name = file.name;
-					var ext = name.substring(name.lastIndexOf(".")+1, name.length).toLowerCase();
-					if (ext=='xml') {
-						sendEl.style.display = 'none';
-						waitEl.style.display = 'inline';
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							getRNG(this.result,name,true,null);
-						};
-						reader.readAsText(file);
-					} else if (ext=='zip') {
-						var errorRapport = [];
+					portals = [].slice.call(document.getElementById('source_websites').querySelectorAll('input:checked')).map(
+						function(el){
+							return el.value
+					});
+					if(portals.length>0){
+						var name = file.name;
+						var ext = name.substring(name.lastIndexOf(".")+1, name.length).toLowerCase();
+						if (ext=='xml') {
+							sendEl.style.display = 'none';
+							waitEl.style.display = 'inline';
+							var reader = new FileReader();
+							reader.onload = function(e) {
+								getRNG(this.result,name,true,null);
+							};
+							reader.readAsText(file);
+						} else if (ext=='zip') {
+							var errorRapport = [];
 
-						zip.createReader(new zip.BlobReader(file), function(reader) {
-							// get all entries from the zip
-							reader.getEntries(function(entries) {
-								if (entries.length) {
-									var entriesLength = entries.length;
+							zip.createReader(new zip.BlobReader(file), function(reader) {
+								// get all entries from the zip
+								reader.getEntries(function(entries) {
+									if (entries.length) {
+										var entriesLength = entries.length;
 
-									var splitFnc = function(entrieNum){
-										var name = entries[entrieNum].filename;
-										var fileName = name.substring(0, name.lastIndexOf("."));
-										msgEL.innerHTML = fileName+'<br/>'+(entrieNum+1)+'/'+entriesLength;
+										var splitFnc = function(entrieNum){
+											var name = entries[entrieNum].filename;
+											var fileName = name.substring(0, name.lastIndexOf("."));
+											msgEL.innerHTML = fileName+'<br/>'+(entrieNum+1)+'/'+entriesLength;
 
-										// get first entry content as text
-										entries[entrieNum].getData(new zip.TextWriter(), function(xml) {
-											var callBack = undefined;
-											if(entrieNum<entriesLength-1){
-												var callback = function(){
-													splitFnc(entrieNum+1);
-												};
-											} else {
-												reader.close();
-											}
-											if(callback!=undefined)
-												getRNG(xml,name,false,callback);
-											else
-												getRNG(xml,name,true,callback);
-										});
-									};
-									sendEl.style.display = 'none';
-									waitEl.style.display = 'inline';
-									splitFnc(0);
-								}
+											// get first entry content as text
+											entries[entrieNum].getData(new zip.TextWriter(), function(xml) {
+												var callBack = undefined;
+												if(entrieNum<entriesLength-1){
+													var callback = function(){
+														splitFnc(entrieNum+1);
+													};
+												} else {
+													reader.close();
+												}
+												if(callback!=undefined)
+													getRNG(xml,name,false,callback);
+												else
+													getRNG(xml,name,true,callback);
+											});
+										};
+										sendEl.style.display = 'none';
+										waitEl.style.display = 'inline';
+										splitFnc(0);
+									}
+								});
 							});
-						});
+						} else {
+							MSG.alert('Error','File not allowed');
+						}
 					} else {
-						MSG.alert('File not allowed');
+						MSG.alert('Error','No portal');
 					}
 				}
 			});

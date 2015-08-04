@@ -48,7 +48,7 @@
 		var html = [];
 		[].forEach.call(element.querySelectorAll('tei\\:div[xml\\:id="'+xmlID+'"] > tei\\:div'), function (el,i) {
 			var type = el.getAttribute('type');
-			if(type=='section'){
+			if(type=='section' || type=='scene' || type=='letter'){
 				var id = el.getAttribute('xml:id');
 				if(id==undefined){
 					id = creatID();
@@ -230,7 +230,8 @@
 						else{
 							split[1] = toDecimal(split[1]);
 						}
-						if(split[1]==splitCount+1)
+
+						if(typeof splitCount!='undefined' && split[1]==splitCount+1)
 								splitCount = split[1];
 						else
 							t.errorsPage.push('inavlid number:'+page);
@@ -333,7 +334,7 @@
 
 	var getContentType = function(el){
 		var type_el = el.getAttribute('type');
-		if(type_el=='index' || type_el=='bibliography' || type_el=='glossary')
+		if(type_el=='index' || type_el=='bibliography' || type_el=='glossary' || type_el=='toc')
 			return 1;
 		return 0;
 	};
@@ -371,6 +372,7 @@
 		var headerString = getHeader(contentEl);
 
 		var structure = getStructure(contentEl);
+
 		if(structure!=null){
 			var abstract = getAbstract(contentEl);
 
@@ -414,15 +416,13 @@
 				var query = 'tei\\:div[xml\\:id="'+id+'"] > tei\\:div';
 				[].forEach.call(tempTEI.querySelectorAll(query), function (el) {
 					var type = el.getAttribute('type');
-					if(type!='section')
+					if(type!='section' && type!='letter' && type!='scene')
 						el.parentNode.removeChild(el);
 				});
 				structure[item]['element'] = (new XMLSerializer()).serializeToString(tempTEI)
 					.replace(' xmlns="http://www.w3.org/1999/xhtml"','').replace(/xml:id=/g,'id=');
 			}
 		}
-
-
 
 		return {
 			structure : structure,
@@ -465,7 +465,7 @@
 					callback();
 			},
 			error : function (code,data) {
-				console.log(code);
+				MSG.alert('Error',data.message);
 			}
 		});
 	});

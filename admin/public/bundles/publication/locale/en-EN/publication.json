@@ -2,15 +2,17 @@
 	"publication_title": "Publication",
 	"draft": "Draft",
 	"issued": "Issued",
-	"allunselect": "Deselect All",
-	"allselect": "Select All",
+	"allunselect": "Deselect all",
+	"allselect": "Select",
 	"del": "Remove",
 	"create": "Create ePubs",
 	"delete_title": "SUPPRESSION",
 	"delete_query": "Do you want to remove the documents ?",
 	"label_isbn": "ISBN",
 	"label_title": "Title",
+	"label_date": "Date",
 	"label_status": "Status",
 	"label_novelty" : "Novelty",
-	"label_download": "Downloading"
+	"label_download": "Downloading",
+	"email_news" : "Email news"
 }

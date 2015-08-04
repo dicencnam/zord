@@ -3,8 +3,9 @@
 <div class="window-title">{{$counter_title}}</div>
 <div id="counter_form" class="form_service">
 	<p><label>{{$users}} </label><select id="counter_users"></select></p>
-	<p><label>{{$from}} </label><input type="month" id="counter_start" data-empty="no"/></p>
-	<p><label>{{$to}} </label><input type="month" id="counter_end" data-empty="no"/></p>
+	<p><label>{{$from}}* </label><input type="month" id="counter_start" data-empty="no"/></p>
+	<p><label>{{$to}}* </label><input type="month" id="counter_end" data-empty="no"/></p>
+	<p>* YYYY-MM</p>
 	<div style="text-align:center;margin-top:15px;">
 		<input id="counter_send" type="button" value="{{$report}}"/>
 	</div>

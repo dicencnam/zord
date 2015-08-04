@@ -1,5 +1,5 @@
 /**
- * teiSpliter portal __PORTALDEFAULT__
+ * teiSpliter portal thr
  * @author David Dauvergne
  * @copyright 2014 David Dauvergne
  * @licence GNU Lesser General Public Licence see LICENCE file or http://www.gnu.org/licenses/lgpl.html
@@ -441,15 +441,15 @@
 		}
 	};
 
-	$notify.sub('teiParse:__PORTALDEFAULT__', function(fileName,tei,graphics,callback){
+	$notify.sub('teiParse:thr', function(fileName,tei,graphics,callback){
 		callback(parse(fileName,tei,graphics));
 	});
 
-	$notify.sub('teiSave:__PORTALDEFAULT__',function(repository,fileName,level,headerString,structure,toc,abstract,ids,callback){
+	$notify.sub('teiSave:thr',function(repository,fileName,level,headerString,structure,toc,abstract,ids,callback){
 		$ajax.getJSON({
 			url : 'index.php',
 			data : {
-				module : 'Admin_TEI___PORTALDEFAULT__',
+				module : 'Admin_TEI_thr',
 				action : 'saveSource',
 				structure : JSON.stringify(structure),
 				ids : JSON.stringify(ids),
@@ -470,11 +470,11 @@
 		});
 	});
 
-	$notify.sub('teiChangeLevel:__PORTALDEFAULT__',function(id,repository,level,callback){
+	$notify.sub('teiChangeLevel:thr',function(id,repository,level,callback){
 		$ajax.getJSON({
 			url : 'index.php',
 			data : {
-				module : 'Admin_TEI___PORTALDEFAULT__',
+				module : 'Admin_TEI_thr',
 				action : 'updateLevelSource',
 				fileName : id,
 				repository : repository,
@@ -487,11 +487,11 @@
 		});
 	});
 
-	$notify.sub('teiChangeNovelty:__PORTALDEFAULT__',function(id,repository,novelty,callback){
+	$notify.sub('teiChangeNovelty:thr',function(id,repository,novelty,callback){
 		$ajax.getJSON({
 			url : 'index.php',
 			data : {
-				module : 'Admin_TEI___PORTALDEFAULT__',
+				module : 'Admin_TEI_thr',
 				action : 'updateNovelty',
 				fileName : id,
 				repository : repository,

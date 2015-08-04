@@ -157,8 +157,6 @@ define('bdl/users/users',function() {
 				);
 			});
 		});
-
-
 	};
 
 	var usersView = {

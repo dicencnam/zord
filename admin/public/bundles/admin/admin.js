@@ -27,13 +27,6 @@ define('bdl/admin/admin',function() {
 			WEBSITES.forEach(function(site){
 				$req('library/TEI_'+site);
 			});
-			document.addEventListener('scroll', function(){
-				var tocTEI = document.getElementById('tocTEI');
-				if(tocTEI!=undefined){
-					window.scrollY >= window.origOffsetY ? tocTEI.classList.add('tocTEIFix') :
-					tocTEI.classList.remove('tocTEIFix');
-				}
-			});
 		}
 	};
 	return adminView;

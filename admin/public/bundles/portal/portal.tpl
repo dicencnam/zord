@@ -16,10 +16,6 @@
 			<input type="text" id="addPortal_url"  placeholder="http://portal.domain.com"/>
 		</p>
 		<p>
-			<label>{{$Portal_domain}} </label>
-			<input type="text" id="addPortal_domain"  placeholder="domain"/>
-		</p>
-		<p>
 			<label>{{$Portal_publisher}} </label>
 			<input type="text" id="addPortal_publisher"  placeholder="Publisher"/>
 		</p>
@@ -36,8 +32,8 @@
 			<input type="text" id="delPortal_name" placeholder="portal"/>
 		</p>
 		<p>
-			<label>{{$Portal_domain}} </label>
-			<input type="text" id="delPortal_domain"  placeholder="domain"/>
+			<label>{{$Portal_url}} </label>
+			<input type="text" id="delPortal_url"  placeholder="http://portal.domain.com"/>
 		</p>
 		<br/>
 		<input id="delPortal_send" type="button" value="{{$delPortal_send}}"/>

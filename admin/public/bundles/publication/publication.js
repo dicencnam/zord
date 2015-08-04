@@ -20,6 +20,7 @@ define('bdl/publication/publication',function() {
 						portal:portal,
 						label_isbn : locale.label_isbn,
 						label_title : locale.label_title,
+						label_date : locale.label_date,
 						label_status : locale.label_status,
 						label_novelty : locale.label_novelty,
 						label_download : locale.label_download
@@ -41,8 +42,12 @@ define('bdl/publication/publication',function() {
 							checked_novelty = ' checked="checked"';
 						}
 
+						var title = data.books[portal][isbn].title.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+							 return '&#'+i.charCodeAt(0)+';';
+						});
 						$bundles.tpls.publication_item({
-							title:data.books[portal][isbn].title,
+							title:title,
+							date:data.books[portal][isbn].date_i,
 							isbn:isbn,
 							portal:portal,
 							level:cl,
@@ -91,8 +96,6 @@ define('bdl/publication/publication',function() {
 		});
 	};
 
-
-
 	var delDocs = function(books){
 		$ajax.getJSON({
 			url : 'index.php',
@@ -135,10 +138,22 @@ define('bdl/publication/publication',function() {
 	var publicationView = {
 		init : function () {
 			locale = $definition.get('i18n!bdl/publication/locale/publication');
+			WEBSITES.forEach(function(site){
+				$bundles.tpls.publication_websites({value:site,label:site.toUpperCase()});
+			});
 			getDocs();
 			document.getElementById('delete_allselect').addEventListener('click', function(event){
+				var portals = [].slice.call(document.getElementById('publication_websites').querySelectorAll('input:checked')).map(
+					function(el){
+						return el.value
+				});
 				[].forEach.call(document.getElementById('publication_table').querySelectorAll('.pub-selector'), function (el) {
-					el.checked = true;
+					var repository = el.parentNode.parentNode.getAttribute('data-repository');
+					if(portals.indexOf(repository)>-1)
+						el.checked = true;
+					else {
+						el.checked = false;
+					}
 				});
 			});
 			document.getElementById('delete_allunselect').addEventListener('click', function(event){
@@ -158,6 +173,19 @@ define('bdl/publication/publication',function() {
 						}
 					});
 				}
+			});
+
+			document.getElementById('publication_email_news').addEventListener('click', function(event){
+				$ajax.getJSON({
+					url : 'index.php',
+					data : {
+						module : 'Admin_action',
+						action : 'emailNews'
+					},
+					success : function (data) {
+						MSG.hide();
+					}
+				});
 			});
 
 		}

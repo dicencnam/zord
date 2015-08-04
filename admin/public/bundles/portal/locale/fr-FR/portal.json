@@ -3,7 +3,6 @@
 	"addPortal" : "Ajouter un portail",
 	"Portal_name" : "Nom du portail",
 	"Portal_url" : "URL",
-	"Portal_domain" : "Nom de domaine",
 	"Portal_publisher" : "Nom de l'éditeur",
 	"addPortal_send" : "Ajouter",
 	"delPortal" : "Supprimer un portail",
