@@ -1,0 +1,14 @@
+{
+	"comment": "Register citation",
+	"addnote" : "Add note",
+	"cancel": "Cancel",
+	"ok": "Ok",
+	"add_citation": "The record has been added to your citations page",
+	"button_next" : "Next chapter",
+	"button_before" : "Previous chapter",
+	"help" : "Help",
+	"close" : "Close",
+	"bug" : "Report misprint",
+	"bug_help" : "Select the faulty text first",
+	"bug_save" : "The misprint has been reported to the publisher. Thank you !"
+}

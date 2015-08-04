@@ -1,0 +1,896 @@
+/* specific print */
+
+/* -------------------------------- ab -------------------------------- */
+
+tei\:ab {
+	display:block;
+	text-align: center;
+	margin: 1em auto;
+}
+
+tei\:ab > tei\:lb {
+	display: block ! important;
+	margin-top: -0.9em ! important;
+}
+
+/* -------------------------------- addrLine -------------------------------- */
+
+tei\:addrLine {
+	display:block;
+}
+
+/* --------------------------------- address --------------------------------- */
+
+tei\:address {
+	font-style: normal;
+	line-height: 110%;
+}
+
+/* -------------------------------- argument -------------------------------- */
+
+tei\:argument {
+
+}
+/*
+[rend]
+	[0] => rights
+*/
+
+/* ---------------------------------- bibl ---------------------------------- */
+
+tei\:bibl {
+	display:block;
+	text-indent:-25px;
+	padding-left:25px;
+	margin:3px 0;
+}
+
+/* --------------------------------- byline --------------------------------- */
+
+tei\:byline {
+	text-indent: 0;
+}
+
+/* --------------------------------- caption --------------------------------- */
+
+tei\:caption {
+	display:block;
+	text-align: center;
+	margin-top:0.2em;
+	font-size: 0.9em;
+}
+
+/* ---------------------------------- cell ---------------------------------- */
+
+tei\:cell {
+	display:table-cell;
+	padding: 0 5px;
+	text-align: left;
+}
+/*
+[rows]
+	[0] => 0
+	[1] => 6
+	[2] => 4
+	[3] => 1
+	[4] => 2
+
+[rendition]
+	[0] => #left
+	[1] => #center
+	[2] => #right
+
+[role]
+	[0] => label
+*/
+/* ---------------------------------- date ---------------------------------- */
+
+tei\:date {
+
+}
+
+/* ---------------------------------- desc ---------------------------------- */
+
+tei\:desc {
+	display:block;
+	text-align: center;
+	margin-top:0.2em;
+	font-size: 0.9em;
+}
+
+/* ----------------------------------- div ----------------------------------- */
+
+tei\:div[type="section"] {
+	margin: 25px 0;
+}
+
+/*
+[type]
+	[0] => chapter
+	[1] => section
+	[2] => index
+	[3] => article
+	[4] => part
+
+[rendition]
+		[0] => #div_theatre_dialog
+*/
+
+/* -------------------------------- docAuthor -------------------------------- */
+
+tei\:docAuthor {
+	display:block;
+}
+
+/* ------------------------------- docEdition ------------------------------- */
+
+tei\:docEdition {
+
+}
+
+/* ------------------------------- docImprint ------------------------------- */
+
+tei\:docImprint > tei\:date {
+	display:block;
+}
+
+/* -------------------------------- docTitle -------------------------------- */
+
+tei\:docTitle {
+	display:block;
+}
+
+/* ---------------------------------- emph ---------------------------------- */
+
+tei\:emph {
+	font-style: oblique;
+}
+
+/* -------------------------------- epigraph -------------------------------- */
+
+tei\:epigraph {
+	text-align: right;
+	display: block;
+	margin: 1em 0 2em auto;
+	max-width: 50%;
+	font-size: 0.8em;
+}
+
+tei\:epigraph tei\:p {
+	text-indent: 0;
+	margin: 0;
+	text-align: right;
+}
+
+/* ---------------------------------- facsimile ---------------------------------- */
+
+/* --------------------------------- figure --------------------------------- */
+
+tei\:figure {
+	display: block;
+	margin: 2em auto;
+	text-align: center;
+}
+/*
+[rend]
+	[0] => border
+*/
+/* ------------------------------ floatingText ------------------------------ */
+
+tei\:floatingText {
+
+}
+/*
+[rend]
+	[0] => div
+	[1] => center
+	[2] => div_common_letter
+	[3] => div_theatre_stage_direction
+	[4] => div_section_suptitle
+
+[type]
+	[0] => div_common_pseudo_footnote
+*/
+/* --------------------------------- foreign --------------------------------- */
+
+tei\:foreign {
+
+}
+
+/* ---------------------------------- gloss ---------------------------------- */
+
+tei\:gloss {
+	display:inline;
+	background:#ccd8ea;
+	padding:0 5px;
+	font-size:0.8em;
+	border-radius:4px;
+}
+
+tei\:l tei\:gloss {
+	position:absolute;
+	display:block;
+	font-size:0.7em;
+	width:23em;
+	left:37.2em;
+	background:#ccd8ea;
+	padding:5px;
+	line-height:1.3em;
+	border-radius:8px;
+	margin-top: -26px;
+	text-indent:0;
+}
+
+/* --------------------------------- graphic --------------------------------- */
+
+tei\:graphic {
+
+}
+
+/* ---------------------------------- head ---------------------------------- */
+tei\:head,
+tei\:head[rendition="#chaptertitle"],
+tei\:head[type="prepagetitle"],
+tei\:head[type="prepageTitle"],
+tei\:head[type="prpagetitle"] {
+	display:block;
+	display:block;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-top: 0;
+	margin-bottom: 1.5em;
+	text-align: center;
+}
+
+tei\:head[rendition="#sectiontitle"] {
+	display:block;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-top: 0;
+}
+
+tei\:head[rendition="#ssectiontitle"] {
+	display:block;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 110%;
+	padding-top: 0.4em;
+	margin-top: 0;
+	font-weight:bold;
+}
+
+tei\:head[rendition="#sssectiontitle"] {
+	margin-top:0.8em;
+	font-style: italic;
+	font-size:1.1em;
+	text-indent:15px;
+}
+tei\:head[rendition="ssssectiontitle"] {
+	margin-top:0.8em;
+	font-style: italic;
+	font-size:1em;
+	text-indent:25px;
+}
+tei\:head[rendition="sssssectiontitle"] {
+	margin-top:0.8em;
+	font-style: italic;
+	font-size:1em;
+	text-indent:30px;
+}
+
+tei\:div[type="part"] > tei\:head {
+	display:block;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 200%;
+	padding-top: 1em;
+	margin-top: 0;
+	margin-bottom: 2em;
+	text-align: center;
+}
+/*
+[type]
+	[0] => prepagetitle
+	[1] => chapter_number
+	[2] => chapter_subtitle
+	[3] => short
+	[4] => section_subtitle
+	[5] => prepageTitle
+	[6] => chapter_suptitle
+	[7] => sub
+	[8] => prpagetitle
+	[9] => chapterTitle
+
+[rendition]
+	[0] => #chaptertitle
+	[1] => #sectiontitle
+	[2] => #ssectiontitle
+
+	[3] => #sssectiontitle
+	[4] => #ssssectiontitle
+	[5] => #div_theatre_dialog_title
+	[6] => #sssssectiontitle
+*/
+/* ----------------------------------- hi ----------------------------------- */
+
+tei\:hi[rend="sup"] {
+	vertical-align: super;
+	font-size: smaller;
+	line-height: normal;
+}
+tei\:hi[rend="sub"] {
+	vertical-align: sub;
+	font-size: smaller;
+	line-height: normal;
+}
+tei\:hi[rend="b"] {
+	font-weight:bold;
+}
+tei\:hi[rend="sc"] {
+	font-variant:small-caps;
+}
+tei\:hi[rend="small"] {
+	font-size:0.8em;
+}
+tei\:hi[rend="big"] {
+	font-size:1.2em;
+}
+tei\:hi[rend="underline"] {
+	text-decoration:underline;
+}
+tei\:hi[rend="i"] {
+	font-style: italic;
+}
+tei\:hi[rend="n"] {
+
+}
+/*
+[rend]
+	[0] => sup
+	[1] => b
+	[2] => sc
+	[3] => sub
+	[4] => n
+	[5] => small
+	[6] => i
+	[7] => underline
+	[8] => big
+*/
+/* ---------------------------------- item ---------------------------------- */
+
+tei\:item {
+	display: list-item;
+	list-style-position: outside;
+	margin-left: 33px;
+}
+
+tei\:item > tei\:p {
+	text-indent:0;
+}
+
+/* ------------------------------------ l ------------------------------------ */
+
+tei\:l {
+	display: block;
+	max-width: 40%;
+	text-indent: -130px;
+	padding-left: 130px;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAYCAYAAADOMhxqAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYIBggYunC3+QAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAA1SURBVDjLY/z///9/BihgZGRkwAaQlDAwMZAIWAiZiA5ItmFUw6iGUQ301IA1T6OXHhSVGgAgbQ0tkvTZNQAAAABJRU5ErkJggg==');
+	background-repeat: no-repeat;
+	background-position: 118px 1.78em;
+	background-size: 0.5em;
+	line-height: 1.5em;
+}
+
+
+tei\:l:before {
+	content:"";
+	width:45px;
+	text-indent:0;
+	display:inline-block;
+	font-size:0.8em;
+	color:gray;
+}
+
+tei\:l[n]:before {
+	content:attr(n);
+}
+
+
+/* ---------------------------------- label ---------------------------------- */
+
+tei\:label {
+
+}
+/*
+[rendition]
+	[0] => #sectionlabel
+*/
+/* ----------------------------------- lb ----------------------------------- */
+
+tei\:lb {
+	display:block;
+}
+
+
+tei\:lb[ed="margin"] {
+	display:inline;
+}
+
+tei\:lb[ed="margin"]:before {
+	font-family:Arial, sans-serif;
+	position:absolute;
+	font-size:10px;
+	left:30px;
+	font-style:normal;
+	text-indent:0;
+	content: attr(n);
+	margin-top:5px;
+}
+
+tei\:lb[ed="margin"]:after {
+	color: gray;
+	font-family:Arial, sans-serif;
+	content:"|";
+
+}
+
+/* ----------------------------------- lg ----------------------------------- */
+
+tei\:lg {
+	display:block;
+	margin:8px 0px 15px 0px;
+}
+
+/* ---------------------------------- list ---------------------------------- */
+
+tei\:list {
+	list-style-position: inside;
+	display:block;
+	list-style: square inside url('data:image/gif;base64,R0lGODlhBQAKAIABAAAAAP///yH5BAEAAAEALAAAAAAFAAoAAAIIjI+ZwKwPUQEAOw==');
+}
+
+tei\:list[type="ordered"] {
+	list-style-position: inside;
+	display:block;
+	list-style: none inside;
+	position: relative;
+}
+
+tei\:list[type="ordered"] > tei\:item:before {
+	display: inline-block;
+	text-align: right;
+	position: absolute;
+	width: 80px;
+	margin-left: -87px;
+	content:attr(n);
+}
+
+tei\:list[type="toc"],
+tei\:list[type="index"],
+tei\:list[type="gloss"] {
+	list-style-position: inside;
+	display:block;
+	list-style: none inside;
+}
+
+tei\:list[type="toc"] tei\:list,
+tei\:list[type="index"] tei\:list,
+tei\:list[type="gloss"] tei\:list {
+	list-style-position: inside;
+	display:block;
+	list-style: none inside;
+}
+
+tei\:div[type="toc"] tei\:list,
+tei\:div[type="index"] tei\:list {
+	list-style-position: inside;
+	display:block;
+	list-style: none inside;
+}
+/*
+[type]
+	[0] => index
+	[1] => toc
+	[2] => gloss
+	[3] => simple
+
+[rend]
+	[0] => l
+*/
+/* -------------------------------- listBibl -------------------------------- */
+
+tei\:listBibl {
+	display:block;
+	padding:15px 0;
+}
+
+/* ---------------------------------- note ---------------------------------- */
+
+tei\:note {
+	position:relative;
+	font-size:0.9em;
+	line-height:1.2em;
+}
+
+tei\:note > * {
+	display: none;
+}
+
+
+
+tei\:note:before {
+	color:gray;
+	content:attr(n);
+	cursor:pointer;
+	position:relative;
+	top:-0.6em;
+	font-size:0.8em;
+}
+
+/*
+[type]
+	[0] => abstract
+	[1] => image
+	[2] => ref
+*/
+/* ----------------------------------- p ------------------------------------ */
+
+tei\:p {
+	display:block;
+	margin:0;
+	text-indent: 15px;
+	text-align: justify;
+}
+
+tei\:p[rendition="#center"] {
+	text-align: center;
+}
+
+tei\:p[rendition="#right"] {
+	text-align: right;
+}
+
+tei\:p[rendition="#left"] {
+	text-align: left;
+}
+
+/*
+tei\:p[rendition="#credit"] { }
+*/
+
+/* ----------------------------------- pb ----------------------------------- */
+
+tei\:pb:before {
+	position:absolute;
+	display:inline;
+	padding:0;
+	margin:0;
+	font-size:10px;
+	font-style:normal;
+	text-indent:0;
+	font-weight:normal;
+	color:black;
+}
+
+tei\:pb[ed="temoin"]:before {
+	left:0;
+	content: "[" attr(n) "]";
+}
+
+tei\:pb[ed="temoin"]:after {
+	color:#0077FF;
+	content: "|" ! important;
+}
+
+tei\:pb[id]:before {
+	right:0px;
+	content: "p. " attr(n) "";
+	cursor:pointer;
+}
+
+/* ---------------------------------- quote ---------------------------------- */
+
+tei\:quote {
+	display:block;
+	padding-left:45px;;
+	line-height:1.3em;
+	font-size:0.91em;
+	margin:10px 0;
+}
+
+tei\:quote tei\:p {
+	text-indent: 0;
+}
+/*
+[type]
+	[0] => div_common_citation
+
+[rendition]
+	[0] => #sectionlabel
+*/
+/* ----------------------------------- ref ----------------------------------- */
+
+tei\:ref {
+	text-decoration: none;
+	border-bottom: dotted 1px #999;
+	cursor:pointer;
+}
+
+tei\:ref[rendition="#notecall #app"] {
+	border-bottom: none;
+	cursor:pointer;
+	position:relative;
+	top:-0.6em;
+	font-size:0.8em;
+}
+
+/*tei\:ref + tei\:note {
+	margin-left:5px;
+	outline:1px solid red;
+}*/
+/* ----------------------------------- row ----------------------------------- */
+
+tei\:row {
+	display: table-row;
+}
+/*
+[rend]
+	[0] => thead
+*/
+/* ----------------------------------- seg ----------------------------------- */
+
+tei\:seg {
+
+}
+
+tei\:seg[rendition="#interval"] tei\:note:before {
+	display:none;
+}
+
+/*
+[rend]
+	[0] => b
+
+[rendition]
+	[0] => #index_book_page
+	[1] => #interval
+	[2] => #span_original_text_reference
+	[3] => #span_theatre_stage_direction
+	[4] => #span_character
+*/
+/* ----------------------------------- sp ----------------------------------- */
+
+tei\:sp {
+
+}
+/*
+[who]
+	[0] => joseph
+	[1] => marie
+	[2] => le premier hoste
+	[3] => dieu le pere
+	...
+	[85] => cantique de la trouppe
+	[86] => satan
+	[87] => s
+	[88] => a
+	[89] => i
+	[90] => epilogue
+*/
+/* ---------------------------------- space --------------------------------- */
+
+tei\:space {
+
+}
+
+/* ---------------------------------- table ---------------------------------- */
+
+tei\:table {
+	display:table;
+	border-spacing: 0.7em;
+	width: 100%;
+}
+
+tei\:table[rend="vis-a-vis"] {
+	table-layout: fixed;
+}
+
+/* -------------------------------- titlepage -------------------------------- */
+
+tei\:titlePage {
+	text-align:center;
+}
+
+
+tei\:titlepage img {
+	width:200px;
+}
+
+tei\:titlePage tei\:byline {
+
+}
+
+tei\:titlePage tei\:docAuthor {
+	font-size: 28px;
+	font-variant: small-caps;
+	margin: 35px 0 10px 0;
+}
+
+tei\:titlePage > tei\:docImprint {
+	font-size: 80%;
+	line-height: 120%;
+	margin-top: 90px;
+	display: block;
+}
+
+tei\:titlePage tei\:argument[rend="rights"],
+tei\:titlePage tei\:argument[rend="rights"] {
+	display: block;
+	margin: 2em 0 3em 0;
+	line-height: 140%;
+	font-size: 65%;
+}
+
+/* -------------------------------- titlePart -------------------------------- */
+
+tei\:titlePart[type="collection"], tei\:titlePart[type="collection-sub"] {
+	display:block;
+	font-size:12px;
+	text-transform: uppercase;
+	margin:2px 0;
+	text-align:center;
+}
+
+tei\:titlePart[type="collection-sub-num"] {
+	display:block;
+	font-size:12px;
+	text-transform: uppercase;
+	margin:2px 0;
+	text-align:center;
+}
+
+tei\:titlePart {
+	display:block;
+	text-align:center;
+}
+
+tei\:titlePart[type="desc"] {
+	display:block;
+	margin:35px 0;
+	font-size: 15px;
+}
+
+tei\:titlePart[type="main"] {
+	font-size:30px;
+	margin: 10px 0;
+}
+
+tei\:titlePart[type="sub"] {
+	font-size:20px;
+	margin: 10px 0;
+}
+
+/*
+[type]
+	[0] => collection
+	[1] => main
+	[2] => sub
+	[3] => desc
+*/
+/* ------------------------------------ fw ----------------------------------- */
+
+tei\:fw {
+	display: none;
+}
+
+/* --------------------------------- castitem -------------------------------- */
+
+tei\:castitem {
+	display: list-item;
+	list-style-position: outside;
+	margin-left: 33px;
+}
+
+/* --------------------------------- castlist -------------------------------- */
+
+tei\:castlist {
+	list-style-position: inside;
+	display:block;
+	list-style: none inside;
+}
+
+/* ----------------------------------- role ---------------------------------- */
+tei\:role {
+	font-variant: small-caps;
+}
+
+/* --------------------------------- roledesc -------------------------------- */
+tei\:roledesc {
+	font-style: italic;
+}
+
+/* ---------------------------------- stage --------------------------------- */
+tei\:stage {
+	margin: 0.6em 0;
+	font-style: italic;
+	font-size: 0.9em;
+	display: block;
+}
+
+/* ------------------------------------ sp ----------------------------------- */
+tei\:sp {
+	display: block;
+	margin: 1.5em 0;
+}
+
+/* --------------------------------- speaker -------------------------------- */
+tei\:speaker {
+	display: block;
+	padding-left: 9em;
+	font-variant: small-caps;
+}
+
+/* -------------------------------------------------------------------------- */
+/* ----------------------------------- img ----------------------------------- */
+
+#tei img {
+	margin:auto;
+	max-width:500px;
+	display:block;
+}
+
+/* -------------------------------- footnotes -------------------------------- */
+
+#footnotes {
+	margin-left: 25px;
+}
+
+#footnotes .foot-page {
+	font-weight: bold;
+	font-size: 0.8em;
+	position: relative;
+	left: -25px;
+	margin: 20px 0 10px 0;
+}
+
+/*#footnotes tei\:note > * {
+	display: block;
+	padding:5px 5px 5px 10px;
+}*/
+
+#footnotes tei\:note tei\:p {
+	text-indent:0px;
+	padding:5px 5px 5px 10px;
+}
+
+#footnotes .footnote-counter {
+	content:attr(n);
+	cursor:pointer;
+	vertical-align: inherit;
+	text-align:right;
+	width: 50px;
+	font-size: 0.9em;
+	left: -55px;
+	position: relative;
+	display: inline-block;
+}
+
+#footnotes tei\:note:before {
+	content:'';
+	font-size:0;
+}
+
+.footnote-note {
+	border-left:1px solid gainsboro;
+	margin-top: -27px;
+	padding-top: 5px;
+}
+
+.footnote-select{
+	background:#FFFFEE;
+}

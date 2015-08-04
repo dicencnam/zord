@@ -1,0 +1,11 @@
+{
+	"source": "source",
+	"nosource": "nosource",
+	"bibliography": "bibliography",
+	"date": "Date",
+	"authors": "Authors",
+	"title": "Title",
+	"editors": "Editors",
+	"publication_date": "Issued",
+	"new" : "New"
+}

@@ -1,0 +1,156 @@
+/**
+* demo frieze
+*/
+
+/* ^div */
+#frieze {
+	margin:15px auto;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#friezeWarp {
+	overflow: hidden;
+	display:inline-block;
+	float:left;
+}
+
+#friezeSlider {
+	position:relative;
+	-webkit-transition: left 1s;
+	-moz-transition: left 1s;
+	-ms-transition: left 1s;
+	-o-transition: left 1s;
+	transition: left 1s;
+}
+
+#friezeSlider[data-transition="none"] {
+	-webkit-transition:0.01s;
+	-moz-transition: 0.01s;
+	-ms-transition:0.01s;
+	-o-transition:0.01s;
+	transition:0.01s;
+}
+
+.friezeBar {
+	white-space: nowrap;
+	margin-top: 20px;
+}
+
+.friezeBar > div {
+	display: inline-block;
+	vertical-align: bottom;
+	text-align: center;
+	min-height:2px;
+	cursor:pointer;
+	background: #6E97CB;
+	margin-left: 1px;
+	border-radius: 6px;
+}
+
+.friezeBar > div:first-child {
+	background:transparent;
+	border:none;
+}
+
+.friezeBar > div > span {
+	font-size:12px;
+	top: -20px;
+	position: relative;
+}
+
+.friezeBar .bar_occ {
+	color:#C03938;
+}
+
+.friezeBar .bar_occ:after {
+	content:" / ";
+	color:#6E97CB;
+}
+
+.friezeBar .bar_book {
+	color:#6C747F;
+}
+
+.friezeDate {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.friezeDate > div {
+	display: inline-block;
+	font-size:13px;
+	margin-left: 1px;
+	text-align: center;
+	position: relative;
+	top:-2px;
+	color:#33455D;
+	font-weight:bold;
+}
+
+.friezeDate > div > span {
+	padding: 8px 0 0 1px;
+	display: inline-block;
+}
+
+#friezeBarRight, #friezeBarLeft {
+	display:inline-block;
+	float:left;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#friezeBarRight {
+	text-align:right;
+}
+
+#friezeBarLeft {
+	text-align:left;
+}
+
+#friezeBarRight > span, #friezeBarLeft > span {
+	display:inline-block;
+	font-size:18px;
+	width:25px;
+}
+
+#friezeBarRight[data-display="false"], #friezeBarLeft[data-display="false"] {
+	color:lightgrey;
+	cursor:default;
+}
+
+#friezeBarRight[data-display="true"], #friezeBarLeft[data-display="true"] {
+	color:#6C747F;;
+}
+
+#friezeBarRight[data-display="true"]:hover, #friezeBarLeft[data-display="true"]:hover {
+	color:#C03938;
+	cursor:pointer;
+}
+
+#friezeBarTop {
+	color:#6C747F;
+	text-align:center;
+	cursor:pointer;
+	visibility:hidden;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position:relative;
+	top:-15px;
+}
+
+#friezeBarTop:hover {
+	color:#C03938;
+}

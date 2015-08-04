@@ -29,7 +29,6 @@ class SimpleUrl extends Url implements IUrl {
 		if(!isset($_SESSION['domaine_name']) || $_SESSION['domaine_name']!=$this->_domain){
 			$this->_loadPortal($this->_domain);
 		}
-
 		return $this->parseRequest();
 	}
 
