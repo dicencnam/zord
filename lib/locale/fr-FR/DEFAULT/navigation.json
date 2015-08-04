@@ -1,0 +1,13 @@
+{
+	"home" : "Accueil",
+	"presentation" : "Présentation",
+	"subscription" : "Abonnement",
+	"contact" : "Contact",
+	"help" : "Aide",
+	"search" : "Recherche",
+	"notices" : "Notices",
+	"citations" : "Mes citations",
+	"nonconnect" : "Vous n'êtes pas connecté",
+	"disconnect" : " Déconnexion",
+	"connexion" : "Connexion"
+}

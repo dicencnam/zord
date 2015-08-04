@@ -1,0 +1,13 @@
+{
+    "name": "ZORD",
+    "description": "ZORD JavaScript Framework",
+    "version": "1.0",
+    "options": {
+        "linkNatives": "true",        
+        "attributesEmit": "true",
+        "selleck": "true",
+        "ignorePaths": [],
+        "paths": ["../admin","../appli"],
+        "outdir": "./js"
+    }
+}

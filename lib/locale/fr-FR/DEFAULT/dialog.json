@@ -1,0 +1,14 @@
+{
+	"comment" : "Enregistrer la citation",
+	"addnote" : "Ajouter une note",
+	"cancel" : "Annuler",
+	"ok" : "Ok",
+	"add_citation" : "L'enregistrement à été ajouté à votre page de citations",
+	"button_next" : "Chapitre suivant",
+	"button_before" : "Chapitre précédent",
+	"help" : "Aide",
+	"close" : "Fermer",
+	"bug" : "Signaler une coquille",
+	"bug_help" : "Sélectionnez d'abord le texte érronée",
+	"bug_save" : "La coquille à bien été signalée à l'éditeur. Merci !"
+}

@@ -1,0 +1,346 @@
+
+
+[note] => Array
+	(
+			[type] => Array
+					(
+							[0] => abstract
+							[1] => image
+							[2] => ref
+					)
+
+			[n] => Array ()
+
+	)
+
+
+[titlePart] => Array
+	(
+			[type] => Array
+					(
+							[0] => collection
+							[1] => main
+							[2] => sub
+							[3] => desc
+					)
+
+	)
+
+
+[hi] => Array
+	(
+			[rend] => Array
+					(
+							[0] => sup
+							[1] => b
+							[2] => sc
+							[3] => sub
+							[4] => n
+							[5] => small
+							[6] => i
+							[7] => underline
+							[8] => big
+					)
+
+	)
+
+[figure] => Array
+	(
+			[rend] => Array
+					(
+							[0] => border
+					)
+
+	)
+
+[argument] => Array
+	(
+			[rend] => Array
+					(
+							[0] => rights
+					)
+
+	)
+
+[p] => Array
+	(
+			[rendition] => Array
+					(
+							[0] => #center
+							[1] => #right
+							[2] => #credit
+							[3] => #left
+					)
+
+	)
+
+[div] => Array
+	(
+			[type] => Array
+					(
+							[0] => chapter
+							[1] => section
+							[2] => index
+							[3] => article
+							[4] => part
+					)
+
+			[rendition] => Array
+					(
+							[0] => #div_theatre_dialog
+					)
+
+	)
+
+[head] => Array
+	(
+			[type] => Array
+					(
+							[0] => prepagetitle
+							[1] => chapter_number
+							[2] => chapter_subtitle
+							[3] => short
+							[4] => section_subtitle
+							[5] => prepageTitle
+							[6] => chapter_suptitle
+							[7] => sub
+							[8] => prpagetitle
+							[9] => chapterTitle
+					)
+
+			[rendition] => Array
+					(
+							[0] => #chaptertitle
+							[1] => #sectiontitle
+							[2] => #ssectiontitle
+							[3] => #sssectiontitle
+							[4] => #ssssectiontitle
+							[5] => #div_theatre_dialog_title
+							[6] => #sssssectiontitle
+					)
+
+	)
+
+
+[label] => Array
+	(
+			[rendition] => Array
+					(
+							[0] => #sectionlabel
+					)
+
+	)
+
+
+[row] => Array
+	(
+			[rend] => Array
+					(
+							[0] => thead
+					)
+
+	)
+
+[cell] => Array
+	(
+			[rows] => Array
+					(
+							[0] => 0
+							[1] => 6
+							[2] => 4
+							[3] => 1
+							[4] => 2
+					)
+
+			[rendition] => Array
+					(
+							[0] => #left
+							[1] => #center
+							[2] => #right
+					)
+
+			[role] => Array
+					(
+							[0] => label
+					)
+
+	)
+
+
+[seg] => Array
+	(
+			[rend] => Array
+					(
+							[0] => b
+					)
+
+			[rendition] => Array
+					(
+							[0] => #index_book_page
+							[1] => #interval
+							[2] => #span_original_text_reference
+							[3] => #span_theatre_stage_direction
+							[4] => #span_character
+					)
+
+	)
+
+
+[list] => Array
+	(
+			[type] => Array
+					(
+							[0] => index
+							[1] => toc
+							[2] => gloss
+							[3] => simple
+					)
+
+			[rend] => Array
+					(
+							[0] => l
+					)
+
+	)
+
+[editor] => Array
+	(
+			[key] => Array
+					(
+							[0] =>
+					)
+
+	)
+
+
+[quote] => Array
+	(
+			[type] => Array
+					(
+							[0] => div_common_citation
+					)
+
+			[rendition] => Array
+					(
+							[0] => #sectionlabel
+					)
+
+	)
+
+
+[floatingText] => Array
+	(
+			[rend] => Array
+					(
+							[0] => div
+							[1] => center
+							[2] => div_common_letter
+							[3] => div_theatre_stage_direction
+							[4] => div_section_suptitle
+					)
+
+			[type] => Array
+					(
+							[0] => div_common_pseudo_footnote
+					)
+
+	)
+
+[sp] => Array
+	(
+			[who] => Array
+					(
+							[0] => joseph
+							[1] => marie
+							[2] => le premier hoste
+							[3] => dieu le pere
+							[4] => le premier ange
+							[5] => le second ange
+							[6] => le tiers ange
+							[7] => dieu
+							[8] => tous les anges
+							[9] => le cinquieme ange
+							[10] => les anges
+							[11] => bergerie
+							[12] => sophron
+							[13] => elpison
+							[14] => nephalle
+							[15] => cristilla
+							[16] => philetine
+							[17] => christilla
+							[18] => sophron et philetine
+							[19] => les bergers
+							[20] => sathan
+							[21] => les pasteurs
+							[22] => les bergeres
+							[23] => les bergers et bergeres
+							[24] => philosophie
+							[25] => tribulation
+							[26] => inspiration
+							[27] => intelligence divine
+							[28] => balthasar
+							[29] => melchior
+							[30] => gaspard
+							[31] => intelligence
+							[32] => le premier serviteur
+							[33] => herodes
+							[34] => le premier docteur
+							[35] => les trois roys
+							[36] => le capitaine
+							[37] => la premiere femme
+							[38] => le premier tyrant
+							[39] => la nourrice
+							[40] => rachel
+							[41] => les ames des innocents
+							[42] => contemplation
+							[43] => memoire
+							[44] => consolation
+							[45] => le quart ange
+							[46] => les ange
+							[47] => jospeh
+							[48] => tous
+							[49] => le mallade
+							[50] => la femme
+							[51] => la mallade
+							[52] => le varlet
+							[53] => janot
+							[54] => perot
+							[55] => jacot
+							[56] => thierrot
+							[57] => len enfans
+							[58] => les enfans
+							[59] => le petit enfant
+							[60] => la seconde fille
+							[61] => la vieille
+							[62] => toutes ensemble
+							[63] => la fille
+							[64] => le vieillard
+							[65] => trop
+							[66] => prou
+							[67] => peu
+							[68] => moins
+							[69] => amarissime
+							[70] => securus
+							[71] => agapy
+							[72] => paraclesis
+							[73] => la mondainne
+							[74] => l
+							[75] => la supersticieuse
+							[76] => la sage
+							[77] => la ravie de dieu
+							[78] => la bergere
+							[79] => la tierce fille
+							[80] => abraham
+							[81] => sara
+							[82] => demie trouppe
+							[83] => isaac
+							[84] => trouppe
+							[85] => cantique de la trouppe
+							[86] => satan
+							[87] => s
+							[88] => a
+							[89] => i
+							[90] => epilogue
+					)
+
+	)

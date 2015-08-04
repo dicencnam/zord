@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head id="head">
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<title>README</title>
+	<style>
+	body{
+		margin: 0 auto;
+		font-family: Georgia, Palatino, serif;
+		color: #444444;
+		line-height: 1;
+		max-width: 960px;
+		padding: 30px;
+	}
+	h1, h2, h3, h4 {
+		color: #111111;
+		font-weight: 400;
+	}
+	h1, h2, h3, h4, h5, p {
+		margin-bottom: 24px;
+		padding: 0;
+	}
+	h1 {
+		font-size: 48px;
+	}
+	h2 {
+		font-size: 36px;
+		margin: 24px 0 6px;
+	}
+	h3 {
+		font-size: 24px;
+	}
+	h4 {
+		font-size: 21px;
+	}
+	h5 {
+		font-size: 18px;
+	}
+	a {
+		color: #0099ff;
+		margin: 0;
+		padding: 0;
+		vertical-align: baseline;
+	}
+	a:hover {
+		text-decoration: none;
+		color: #ff6600;
+	}
+	a:visited {
+		color: purple;
+	}
+	li {
+		line-height: 24px;
+	}
+	li ul, li ul {
+		margin-left: 24px;
+	}
+	p, ul, ol {
+		font-size: 16px;
+		line-height: 24px;
+		max-width: 540px;
+	}
+	pre {
+		padding: 0px 24px;
+		max-width: 800px;
+		white-space: pre-wrap;
+	}
+	code {
+		font-family: Consolas, Monaco, Andale Mono, monospace;
+		line-height: 1.5;
+	}
+	aside {
+		display: block;
+		float: right;
+		width: 390px;
+	}
+	blockquote {
+		border-left:.5em solid #eee;
+		padding: 0 2em;
+		margin-left:0;
+		max-width: 476px;
+	}
+	blockquote  cite {
+		font-size:14px;
+		line-height:20px;
+		color:#bfbfbf;
+	}
+	blockquote cite:before {
+		content: '\2014 \00A0';
+	}
+
+	blockquote p {
+		color: #666;
+		max-width: 460px;
+	}
+	hr {
+		width: 540px;
+		text-align: left;
+		margin: 0 auto 0 0;
+		color: #999;
+	}
+	</style>
+</head>
+<body>
+	<h1>ZORD</h1>
+	<p>Licence GNU Lesser General Public Licence see LICENCE file or <a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a></p>
+	<h2>Configuration</h2>
+	<p>See <code>lib/core/config.php</code> for all configuration</p>
+	<h2>Module exemple</h2>
+	<p>See <code>lib/modules/Start.php</code></p>
+	<h2>PHP Debug</h2>
+	<p>See <code>lib/core/config.php</code> section debug</p>
+	<p>For more information <a href="https://github.com/barbushin/php-console">PHP Console</a></p>
+	<h2>API documentation generate</h2>
+	<h3>PHP</h3>
+	<pre><code>
+	cd ~/doc
+	php apigen.phar generate
+	</code></pre>
+	<p>For more information <a href="https://github.com/apigen/apigen">ApiGen</a></p>
+	<h3>JS</h3>
+	<pre><code>
+	cd ~/doc
+	yuidoc -c zord_yuidoc.json --themedir ./theme_zord_yuidoc
+	</code></pre>
+	<p>For more information <a href="http://yui.github.io/yuidoc/">YUIDoc</a></p>
+	<h2>ZORD API</h2>
+	<p><a href="php/index.html">API PHP</a></p>
+	<p><a href="js/index.html">API JS</a></p>
+</body>
+</html>
