@@ -53,7 +53,7 @@ if(!isset($_SERVER["SERVER_ADDR"])){
 								$doc = new DOMDocument();
 								$xsl = new XSLTProcessor();
 								$xsl->registerPHPFunctions();
-								$doc->load(LIB_FOLDER.'tools'.DS.'notes_end.xsl');
+								$doc->load(LIB_FOLDER.'xslt'.DS.'notes_end.xsl');
 								$xsl->importStyleSheet($doc);
 								$doc->load($fileSource);
 								$tei = $xsl->transformToXML($doc);

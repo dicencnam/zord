@@ -23,7 +23,9 @@ define('PROFILES_FOLDER',LIB_FOLDER.'profiles'.DS);
 
 require_once(ROOT.'config'.DS.'config_appli.php');
 
-define('BASEURL', strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://'.$_SERVER['HTTP_HOST'].PROJECT_FOLDER);
+if(isset($_SERVER["SERVER_PROTOCOL"]))
+	define('BASEURL', strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://'.$_SERVER['HTTP_HOST'].PROJECT_FOLDER);
+
 
 // ********************************************************************
 ?>

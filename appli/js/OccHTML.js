@@ -69,7 +69,7 @@ window.OccHTML = (function(undefined) {
 				var max = 20;
 				var occLength = 0;
 				var oldString = '';
-				if(highlighting[doc.id].content.length>0){
+				if(highlighting[doc.id].content && highlighting[doc.id].content.length>0){
 						highlighting[doc.id].content.forEach(function(item,i, arr){
 								item = item.replace(/<\/b> <b>/g,' ').replace(/\s+/g,' ');
 								var found = item.match(regItem);
