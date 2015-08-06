@@ -375,7 +375,7 @@ class demo extends Zord implements IZord {
 			if($book['novelty_b']){
 				$books['novelty'][] = $book;
 			} else {
-				$cat = $book['category_ss'];
+				$cat = $book['category_ss'][0];
 				if($cat=='bib'){
 					$bib[] = $book;
 				} else {
