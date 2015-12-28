@@ -32,10 +32,16 @@ class Tool {
 	*/
 	public static function json_encode($val) {
 		$val = self::_json_encode($val);
-		$val = preg_replace('#:"(\d+)"#s', ':$1' , $val);
-		return $val;
+		return preg_replace_callback('#:"(\d+)"#s', "self::replace", $val);
 	}
-
+	private static function replace($matches) {
+		$first = substr($matches[1], 0, 1);
+		if(substr($matches[1], 0, 1)=="0"){
+			return ':"'.$matches[1].'"';
+		} else {
+			return ':'.$matches[1];
+		}
+	}
 	private static function _json_encode($arr) {
 		array_walk_recursive($arr, function (&$item, $key) { if (is_string($item)) $item = mb_encode_numericentity($item, array (0x80, 0xffff, 0, 0xffff), 'UTF-8'); });
 		return mb_decode_numericentity(json_encode($arr), array (0x80, 0xffff, 0, 0xffff), 'UTF-8');
@@ -90,12 +96,13 @@ class Tool {
 	* @return string
 	*/
 	public static function getTitle($data){
-		$subtitle = '';
-		if(isset($data['subtitle']))
-			$subtitle = '. '.$data['subtitle'];
+
 		$title = '';
 		if(isset($data['title']))
 			$title = $data['title'];
+
+		if(isset($data['subtitle']))
+			$title .= '. '.$data['subtitle'];
 
 		if (strlen($title) > 40)
 			$title = substr($title, 0, 40) . "…";
@@ -104,13 +111,24 @@ class Tool {
 	}
 
 	/**
-	*  strip Non ASCII and '-' characters for domain name
+	*  Get domain name
 	*
 	* @param $name string
 	* @return string
 	*/
-	public static function stripCharDomainName($name){
-		return str_replace('-', '', preg_replace('/[^\x21-\x7E]/', '', $name));
+	public static function domainName($host=''){
+		if($host==''){
+			$domain = array_reverse(explode('.', $_SERVER['HTTP_HOST']));
+		} else {
+			$domain = array_reverse(explode('.', parse_url($host,PHP_URL_HOST)));
+		}
+		if(!isset($domain[1]))
+			$domain[1] = 'localhost';
+		if(!isset($domain[2]))
+			$domain[2] = 'www';
+		$name = $domain[2].'_'.$domain[1];
+
+		return str_replace('-', '',preg_replace('/[^\x21-\x7E]/', '', str_replace(array('é','è','ë','ç','à','ï'),array('e','e','e','c','a','i'),strtolower($name) ) ) );
 	}
 }
 ?>

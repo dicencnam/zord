@@ -12,6 +12,31 @@ define('bdl/admin/admin',function() {
 			window.STRBUNDLE = document.getElementById('strbundles');
 			// élément des messages
 			window.MSG = document.getElementById('msg');
+			// panels
+			window.$panelsTabs = function(element){
+				[].forEach.call(element.querySelectorAll('.tabs'), function (el) {
+					[].forEach.call(el.querySelectorAll('div[data-tab]'), function (tab,i) {
+						if(i==0)
+							tab.classList.add('tabselect');
+						tab.addEventListener("click", function(event) {
+							var v = this.getAttribute('data-tab');
+							[].forEach.call(element.querySelectorAll('div[data-tab]'), function (_tab) {
+								_tab.classList.remove('tabselect');
+							});
+							[].forEach.call(element.querySelectorAll('div[data-panel]'), function (panel) {
+								panel.classList.remove('paneselect');
+								if(panel.getAttribute('data-panel')==v)
+									panel.classList.add('paneselect');
+							});
+							this.classList.add('tabselect');
+						});
+					});
+					[].forEach.call(element.querySelectorAll('div[data-panel]'), function (panel,i) {
+						if(i==0)
+							panel.classList.add('paneselect');
+					});
+				});
+			};
 
 			var services = ['portal','source','publication','cache','users','counter','epub'];
 

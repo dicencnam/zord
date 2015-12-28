@@ -56,8 +56,10 @@ class DC_xml extends Meta {
 	*
 	* @param String $value
 	*/
-	public function description($value){
-		$this->_dc .= '<dc:description>'.$this->xmlspecialchars($value).'</dc:description>'.PHP_EOL;
+	public function description($variable){
+		foreach ($variable as $key => $value) {
+			$this->_dc .= '<dc:description xml:lang="'.$key.'">'.$this->xmlspecialchars($value).'</dc:description>'.PHP_EOL;
+		}
 	}
 	// Publisher -------------------------------------------------------------------
 	/**

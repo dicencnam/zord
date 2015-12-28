@@ -1,4 +1,16 @@
 
+tei\:tei *[rendition="#right"]{
+	text-align: right;
+}
+
+tei\:tei *[rendition="#left"]{
+	text-align: left;
+}
+
+tei\:tei *[rendition="#center"]{
+	text-align: center;
+}
+
 /* -------------------------------- ab -------------------------------- */
 
 tei\:ab {
@@ -61,10 +73,13 @@ tei\:caption {
 
 /* ---------------------------------- cell ---------------------------------- */
 
-tei\:cell {
-	display:table-cell;
+tei\:tei table td {
 	padding: 0 5px;
 	text-align: left;
+}
+
+tei\:tei table td[rowspan] {
+	vertical-align: top;
 }
 /*
 [rows]
@@ -178,7 +193,6 @@ tei\:facsimile img, tei\:figure[rend="group"] img {
 	cursor: pointer ! important;
 	margin-left: 5px ! important;
 }
-
 /* --------------------------------- figure --------------------------------- */
 
 tei\:figure {
@@ -228,13 +242,19 @@ tei\:l tei\:gloss {
 	display:block;
 	font-size:0.8em;
 	width:24em;
-	left:61em;
+	left:58%;
 	background:#ccd8ea;
 	padding:5px;
 	line-height:1.3em;
 	border-radius:8px;
 	margin-top: -26px;
 	text-indent:0;
+}
+
+@media screen and (max-width: 1135px) {
+	tei\:l tei\:gloss {
+		width: 18em;
+	}
 }
 
 /* --------------------------------- graphic --------------------------------- */
@@ -256,7 +276,7 @@ tei\:head[type="prpagetitle"] {
 	font-size: 130%;
 	padding-top: 1em;
 	margin-top: 0;
-	margin-bottom: 2em;
+	margin-bottom: 0.8em;
 	text-align: center;
 }
 
@@ -267,6 +287,7 @@ tei\:head[rendition="#sectiontitle"] {
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 130%;
 	padding-top: 1em;
+	margin-bottom: 0.5em;
 	margin-top: 0;
 }
 
@@ -276,7 +297,8 @@ tei\:head[rendition="#ssectiontitle"] {
 	line-height: 1.6em;
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 110%;
-	padding-top: 0.4em;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 	margin-top: 0;
 	font-weight:bold;
 }
@@ -286,18 +308,24 @@ tei\:head[rendition="#sssectiontitle"] {
 	font-style: italic;
 	font-size:1.1em;
 	text-indent:15px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 }
 tei\:head[rendition="ssssectiontitle"] {
 	margin-top:0.8em;
 	font-style: italic;
 	font-size:1em;
 	text-indent:25px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 }
 tei\:head[rendition="sssssectiontitle"] {
 	margin-top:0.8em;
 	font-style: italic;
 	font-size:1em;
 	text-indent:30px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 }
 
 tei\:div[type="part"] > tei\:head {
@@ -310,6 +338,17 @@ tei\:div[type="part"] > tei\:head {
 	margin-top: 0;
 	margin-bottom: 2em;
 	text-align: center;
+}
+
+tei\:tei table caption {
+	text-align: left;
+	margin-bottom: 0em;
+	color: #32455D;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-top: 0;
 }
 /*
 [type]
@@ -395,7 +434,7 @@ tei\:item > tei\:p {
 
 tei\:l {
 	display: block;
-	max-width: 345px;
+	max-width: 40%;
 	text-indent: -130px;
 	padding-left: 130px;
 	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAYCAYAAADOMhxqAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYIBggYunC3+QAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAA1SURBVDjLY/z///9/BihgZGRkwAaQlDAwMZAIWAiZiA5ItmFUw6iGUQ301IA1T6OXHhSVGgAgbQ0tkvTZNQAAAABJRU5ErkJggg==');
@@ -405,12 +444,19 @@ tei\:l {
 	line-height: 1.5em;
 }
 
+/*@media screen and (max-width: 1135px) {
+	tei\:l {
+		max-width: 250px;
+	}
+}*/
+
 tei\:l:before {
 	content:"";
 	text-indent:0;
 	width:45px;
 	display:inline-block;
 	font-size:0.8em;
+	color:gray;
 }
 
 tei\:l[ed="margin"][n]:before {
@@ -433,7 +479,7 @@ tei\:lb {
 }
 
 
-tei\:lb[ed="margin"] {
+tei\:lb[ed="margin"], tei\:lb[n] {
 	display:inline;
 }
 
@@ -442,14 +488,20 @@ tei\:lb[ed="margin"]:before {
 	font-family:Arial, sans-serif;
 	position:absolute;
 	font-size:10px;
-	left:calc( ( (100% - 855px) / 2) - 50px);
+	left:calc( ( (100% - 855px) / 2) - 25px);
 	font-style:normal;
 	text-indent:0;
 	content: attr(n);
 	margin-top:2px;
 }
 
-tei\:lb[ed="margin"]:after {
+@media screen and (max-width: 1135px) {
+	tei\:lb[ed="margin"]:before {
+		left:calc( ( (100% - 520px) / 2) - 45px);
+	}
+}
+
+tei\:lb[ed="margin"]:after, tei\:lb[n]:after {
 	color: gray;
 	font-family:Arial, sans-serif;
 	content:"|";
@@ -493,6 +545,11 @@ tei\:list[type="gloss"] {
 	list-style-position: inside;
 	display:block;
 	list-style: none inside;
+}
+
+tei\:list[type="gloss"] > tei\:label {
+	margin-top: 10px;
+	display: block;
 }
 
 tei\:list[type="toc"] tei\:list,
@@ -590,12 +647,23 @@ tei\:pb:before {
 }
 
 tei\:pb[ed="temoin"]:before {
-	left:calc( ( (100% - 855px) / 2) - 95px);
+	left:calc( ( (100% - 855px) / 2) - 70px);
 	content: "[" attr(n) "]" ! important;
+}
+
+tei\:head tei\:pb[ed="temoin"]:before {
+	left: -70px;
+}
+
+@media screen and (max-width: 1135px) {
+	tei\:pb[ed="temoin"]:before {
+		left:calc( ( (100% - 520px) / 2) - 70px);
+	}
 }
 
 tei\:pb[ed="temoin"]:after {
 	color:#0077FF;
+	font-family:Arial, sans-serif;
 	content: "|" ! important;
 }
 
@@ -643,9 +711,9 @@ tei\:ref[rendition="#notecall #app"] {
 }
 
 /* ----------------------------------- row ----------------------------------- */
-
-tei\:row {
-	display: table-row;
+tei\:tei table tr[role="label"], tei\:tei table tr[rend="thead"] {
+	font-variant: small-caps;
+	font-size: 1.2em;
 }
 /*
 [rend]
@@ -681,13 +749,13 @@ tei\:space {
 
 /* ---------------------------------- table ---------------------------------- */
 
-tei\:table {
-	display:table;
+tei\:tei table {
 	border-spacing: 0.7em;
 	width: 100%;
+	margin-bottom: 1em;
 }
 
-tei\:table[rend="vis-a-vis"] {
+tei\:tei table[rend="vis-a-vis"] {
 	table-layout: fixed;
 }
 
@@ -720,7 +788,8 @@ tei\:titlePage > tei\:docImprint {
 	display: block;
 }
 
-tei\:titlePage tei\:argument[rend="rights"] {
+tei\:titlePage tei\:argument[rend="rights"],
+tei\:titlePage tei\:argument[rend="right"] {
 	display: block;
 	margin: 2em 0 3em 0;
 	line-height: 140%;
@@ -864,6 +933,10 @@ tei\:speaker {
 	padding:5px 5px 5px 10px;
 }
 
+#footnotes tei\:note tei\:note tei\:p {
+	display:none;
+}
+
 #footnotes .footnote-counter {
 	content:attr(n);
 	cursor:pointer;
@@ -882,14 +955,58 @@ tei\:speaker {
 	font-size:0;
 }
 
+#footnotes tei\:note tei\:note:before {
+	color: black;
+	content: attr(n);
+	cursor: pointer;
+	position: relative;
+	top: -0.3em;
+	font-size: 1em;
+}
+
 .footnote-note {
 	border-left:1px solid gainsboro;
 	margin-top: -27px;
 	padding-top: 5px;
 }
 
-.footnote-select{
+.notesdouble .footnote-counter {
+	position: relative ! important;
+	left: -35px ! important;
+}
+
+.notesdouble .footnote-note {
+		padding-top: 0px ! important;
+}
+
+.notesdouble tei\:note tei\:p {
+	padding-left: 20px ! important;
+}
+
+.footnote-select {
 	background:#FFFFEE;
+}
+
+/* --------------------------------- letter --------------------------------- */
+
+tei\:div[type="letter"] > tei\:head {
+	margin-top: 35px;
+}
+
+tei\:opener {
+	display: block;
+	margin-bottom: 20px;
+}
+
+tei\:closer {
+	display: block;
+	margin-top: 20px;
+}
+
+tei\:postscript {
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 /* --------------------------------- switch --------------------------------- */
@@ -915,6 +1032,19 @@ tei\:speaker {
 	float:right;
 }
 
+@media screen and (max-width: 1135px) {
+	.__teiFloatContent0 {
+		display:block;
+		width: 270px;
+		float:left;
+	}
+
+	.__teiFloatContent1 {
+		display:block;
+		width: 270px;
+		float:right;
+	}
+}
 
 .__teiFloatContent0 tei\:pb,
 .__teiFloatContent1 tei\:pb {
@@ -929,8 +1059,14 @@ tei\:speaker {
 }
 
 .__teiFloatContent1 tei\:pb[ed="temoin"]:before {
-	left:calc( ( (100% - 855px) / 2) + (95px + 855px) );
+	left:calc( ( (100% - 855px) / 2) + (40px + 855px) );
 	content: "[" attr(n) "]" ! important;
+}
+
+@media screen and (max-width: 1135px) {
+	.__teiFloatContent1 tei\:pb[ed="temoin"]:before {
+		left:calc( ( (100% - 560px) / 2) + (35px + 560px) );
+	}
 }
 
 .__teiFloatContent1 tei\:lb[ed="margin"]:before {
@@ -938,11 +1074,17 @@ tei\:speaker {
 	font-family:Arial, sans-serif;
 	position:absolute;
 	font-size:10px;
-	left:calc( ( (100% - 855px) / 2) + (50px + 855px) );
+	left:calc( ( (100% - 855px) / 2) + (15px + 855px) );
 	font-style:normal;
 	text-indent:0;
 	content: attr(n);
 	margin-top:2px;
+}
+
+@media screen and (max-width: 1135px) {
+	.__teiFloatContent1 tei\:lb[ed="margin"]:before {
+		left:calc( ( (100% - 560px) / 2) + (14px + 560px) );
+	}
 }
 
 .__teiFloatContent0 tei\:head {
@@ -951,7 +1093,13 @@ tei\:speaker {
 
 .__teiFloatContent0 tei\:pb[id]:before {
 	position: absolute;
-	left:calc( ( (100% - 855px) / 2) - 135px);
+	left:calc( ( (100% - 855px) / 2) - 95px);
 	content: "p. " attr(n) "";
 	cursor:pointer;
+}
+
+@media screen and (max-width: 1135px) {
+	.__teiFloatContent0 tei\:pb[id]:before {
+		left:calc( ( (100% - 560px) / 2) - 77px);
+	}
 }

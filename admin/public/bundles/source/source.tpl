@@ -28,7 +28,7 @@
 {{/template}}
 
 {{template id="source_websites" overlay="source_websites" insert="beforeend" preload="true"}}
-<label><input type="checkbox" name="websites" value="{{$value}}" checked="checked"/>{{$label}}</label>
+<label><input type="checkbox" name="websites" value="{{$value}}"/>{{$label}}</label>
 {{/template}}
 
 {{template id="source_categories" overlay="source_categories" insert="beforeend" preload="true"}}

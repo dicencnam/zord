@@ -34,6 +34,8 @@ class CSL_json {
 		if(isset($metadata['title'])){
 			// TODO subtitle
 			$this->bib['title'] = $metadata['title'];
+			if(isset($metadata['subtitle']))
+				$this->bib['title'] .= '. '.$metadata['subtitle'];
 		}
 
 		if(isset($metadata['publisher']))

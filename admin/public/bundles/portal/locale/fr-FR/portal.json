@@ -1,7 +1,8 @@
 {
 	"portal_title": "Portails",
 	"addPortal" : "Ajouter un portail",
-	"Portal_name" : "Nom du portail",
+	"Portal_name" : "Portail",
+	"Portal_namelong" : "Nom du portail",
 	"Portal_url" : "URL",
 	"Portal_publisher" : "Nom de l'éditeur",
 	"addPortal_send" : "Ajouter",

@@ -70,6 +70,7 @@ window.OccHTML = (function(undefined) {
 				var occLength = 0;
 				var oldString = '';
 				if(highlighting[doc.id].content && highlighting[doc.id].content.length>0){
+
 						highlighting[doc.id].content.forEach(function(item,i, arr){
 								item = item.replace(/<\/b> <b>/g,' ').replace(/\s+/g,' ');
 								var found = item.match(regItem);
@@ -100,10 +101,17 @@ window.OccHTML = (function(undefined) {
 						msg = model.lang.before+occLength+model.lang.after;
 					else
 						msg = model.lang.before_p+occLength+model.lang.after_p;
-						html[chapter].occs.push({ sequence : doc.sequence_i, content : '<section class="chapter" data-sequence="'+doc.sequence_i+'"><header><h3>'+
-						doc.title_s+'<span class="chapter_occ">'+msg+'</span>'+
-						'</h3></header><div class="wraper_occ">'+items.join('')+'</div></section>'});
-						return occLength;
+
+					html[chapter].occs.push(
+						{ sequence : doc.sequence_i,
+							content : '<section class="chapter" data-sequence="'+doc.sequence_i+'"><header><h3>'+
+												doc.title_s+'<span class="chapter_occ">'+msg+'</span>'+
+												'</h3></header><div class="wraper_occ">'+items.join('')+
+												'</div></section>'
+						}
+					);
+
+					return occLength;
 				}
 			},
 			/**

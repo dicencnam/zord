@@ -8,9 +8,18 @@
 	padding:4px 8px;
 }
 
+#users_list input[type="text"]{
+	width: 124px;
+	font-size: 0.8em;
+}
+
 #users_list input[type="date"]{
 	width: 124px;
 	font-size: 0.8em;
+}
+
+#users_list input[type="number"]{
+	width: 85px;
 }
 
 .user_del {
@@ -27,4 +36,8 @@
 	width: 300px;
 	text-align: left;
 	display:inline-block;
+}
+
+.users_level1 {
+	background-color: #C9CAE5;
 }

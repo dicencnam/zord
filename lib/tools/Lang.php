@@ -52,7 +52,7 @@ class Lang {
 
 			reset($lang2pref);
 			$__l = key($lang2pref);
-			include(LIB_FOLDER.'zord'.DS.'zordLangs.php');
+			include(CONFIG_FOLDER.'config_language.php');
 			if (!in_array($__l, $zordLangs))
 				$__l = $zordLangs[0];
 			$_SESSION['___LANG___'] = $__l;

@@ -30,6 +30,8 @@
 				var nodeName = el.nodeName.toLowerCase();
 				if(nodeName=='tei:note' || nodeName=='tei:ref')
 					el.parentNode.removeChild(el);
+				if(nodeName=='tei:lb')
+					el.insertAdjacentHTML('afterEnd',' ');
 			});
 		} else {
 			var id = element.getAttribute('xml:id');
@@ -77,13 +79,16 @@
 	};
 
 	var getHeader = function(contentEl){
-		var headerEl = contentEl.querySelector('tei\\:teiHeader');
-		var headerString = (new XMLSerializer()).serializeToString(headerEl)
-			.replace(' xmlns="http://www.w3.org/1999/xhtml"','').replace(/tei:/g,'');
-		headerEl.parentNode.removeChild(headerEl);
-		return headerString;
+		if(contentEl){
+			var headerEl = contentEl.querySelector('tei\\:teiHeader');
+			var headerString = (new XMLSerializer()).serializeToString(headerEl)
+				.replace(' xmlns="http://www.w3.org/1999/xhtml"','').replace(/tei:/g,'');
+			headerEl.parentNode.removeChild(headerEl);
+			return headerString;
+		}
+		return '';
 	};
-/*
+
 	var getCategory = function(contentEl){
 		var seriesStmt = contentEl.querySelector('tei\\:seriesStmt');
 		if(seriesStmt){
@@ -91,9 +96,8 @@
 			if(id)
 				return id;
 		}
-		return null;
+		return 'undefined';
 	};
-*/
 
 	var getAbstract = function(contentEl){
 		var abstractEl = contentEl.querySelector('tei\\:front > tei\\:argument');
@@ -332,6 +336,32 @@
 		}
 	};
 
+	var imbrication = {
+		check : function(contentEl) {
+			var  truncate = function(str, length) {
+				 return str.length > length ? str.substring(0, length - 3) + '...' : str
+			};
+			var error = [];
+			var s = ['sssssection','ssssection','sssection','ssection','section','chapter','part'];
+			s.forEach(function(type,i){
+				var __s = s.slice(i);
+				__s.forEach(function(__type,i){
+					var t = contentEl.querySelectorAll('tei\\:div[type="'+type+'"] tei\\:div[type="'+__type+'"]');
+					if(t.length>0){
+						[].forEach.call(t, function (el) {
+							var head = el.querySelector(':scope > tei\\:head' );
+							if(head)
+								error.push(type+' -> '+__type+' : '+truncate(head.textContent));
+							else
+								error.push(type+' -> '+__type+' : NO HEAD ELEMENT !!');
+						});
+					}
+				});
+			});
+			return error;
+		}
+	};
+
 	var getContentType = function(el){
 		var type_el = el.getAttribute('type');
 		if(type_el=='index' || type_el=='bibliography' || type_el=='glossary' || type_el=='toc')
@@ -351,6 +381,7 @@
 			pages : [],
 			dates : [],
 			graphics : [],
+			imbrications : [],
 			floatingText : 0,
 			lbracket : 0
 		};
@@ -367,7 +398,9 @@
 
 		errors.lbracket = lbracket.check(contentEl);
 
-		// var category = getCategory(contentEl);
+		errors.imbrications = imbrication.check(contentEl);
+
+		errors.category = getCategory(contentEl);
 
 		var headerString = getHeader(contentEl);
 
@@ -430,14 +463,15 @@
 			toc : refs.toc,
 			errorRef : errorRef,
 			ids: ids,
-			// category : category,
+			category : errors.category,
 			noHead : errors.noHead,
 			pages : errors.pages,
 			dates : errors.dates,
 			graphics : errors.graphics,
 			floatingText : errors.floatingText,
 			lbracket : errors.lbracket,
-			abstract : abstract
+			abstract : abstract,
+			imbrications : errors.imbrications
 		}
 	};
 

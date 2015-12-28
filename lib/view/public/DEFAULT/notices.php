@@ -2,7 +2,7 @@
 <html lang="<?php echo LANG; ?>">
 <head id="head">
 	<meta charset="UTF-8" />
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/><link rel="icon" type="image/x-icon" href="<?php echo BASEURL.'public/img/'.$_SESSION['switcher']['name'].'/favicon.ico' ?>" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
 	<meta http-equiv="Cache-Control" content="no-cache" />
 	<meta http-equiv="Pragma" content="no-cache" />
@@ -22,7 +22,8 @@
 		<div style="height:30px;">
 			<button style="float:left;" id="allselect"><?php echo $v['lang']->allselect; ?></button>
 			<button style="float:left;" id="allunselect"><?php echo $v['lang']->allunselect; ?></button>
-			<button style="float:right;" id="create"><?php echo $v['lang']->create; ?></button>
+			<button style="float:right;" id="create_marcxml">MARC-XML</button>
+			<button style="float:right;" id="create_mods">MODS</button>
 		</div>
 	</div>
 	<div id="start_novelty" style="margin: 0px auto 50px auto;">

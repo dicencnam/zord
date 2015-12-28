@@ -51,21 +51,17 @@
 		</form>
 </div>
 
+<div class="panelsTabs" id="search_frames">
+	<div class="tabs">
+		<div data-tab="source" class="tab">
+			<div class="frame_title"><?php echo $v['lang']->source; ?></div><div id="dzFrameMsg_source" class="frame_subtitle"></div>
+		</div>
+		<div data-tab="nosource" class="tab">
+			<div class="frame_title"><?php echo $v['lang']->nosource; ?></div><div id="dzFrameMsg_nosource" class="frame_subtitle"></div>
+		</div>
+	</div>
 
-<div id="search_frames">
-	<div id="search_frame_select_source" class="framer paneselect">
-			<div class="frame_title"><?php echo $v['lang']->source; ?></div><div id="search_sourceMsg" class="frame_subtitle"></div>
-	</div>
-	<div id="search_frame_select_nosource" class="framer">
-		<div class="frame_title"><?php echo $v['lang']->nosource; ?></div><div id="search_nosourceMsg" class="frame_subtitle"></div>
-	</div>
-	<div id="search_frame_select_biblio" class="framer">
-		<div class="frame_title"><?php echo $v['lang']->bibliography; ?></div><div id="search_biblioMsg" class="frame_subtitle"></div>
-	</div>
-</div>
-
-<div id="publications">
-	<div id="search_frame_source">
+	<div class="panels" id="publications">
 		<div>
 			<div id="frieze"></div>
 			<div id="frieze_caption">
@@ -73,77 +69,56 @@
 				<span id="frieze_caption_book"><?php echo $v['lang']->book_p; ?></span>
 				<span id="frieze_caption_year"><?php echo $v['lang']->year_p; ?></span>
 			</div>
+		</div>
+		<div data-panel="source" class="panel">
 			<div>
-				<table id="publications_source">
-					<thead>
-						<tr>
-							<th style="width: 30px;"><?php echo $v['lang']->date; ?></th>
-							<th style="width: 30px;"><?php echo $v['lang']->date; ?></th>
-							<th style="width: 150px;"><?php echo $v['lang']->authors; ?></th>
-							<th style="width: 500px;"><?php echo $v['lang']->title; ?></th>
-							<th style="width: 150px;"><?php echo $v['lang']->editors; ?></th>
-							<th style="width: 55px;"><?php echo $v['lang']->publication_date; ?></th>
+				<table id="dz_source">
+					<thead id="dzHead_source">
+						<tr class="head_sources">
+							<th class="creation_date_i_Occ">[<?php echo $v['lang']->source_date; ?></th>
+							<th class="creation_date_after_i_Occ"><?php echo $v['lang']->source_date; ?>]</th>
+							<th class="creator_ss_Occ"><?php echo $v['lang']->authors; ?></th>
+							<th class="title_s_Occ"><?php echo $v['lang']->title; ?></th>
+							<th class="editor_ss_Occ"><?php echo $v['lang']->editors; ?></th>
+							<th class="date_i_Occ"><?php echo $v['lang']->publication_date; ?></th>
 						</tr>
 					</thead>
-					<tbody id="publicationsBody_source"></tbody>
+					<tbody></tbody>
 				</table>
 			</div>
+			<div id="dzOccHead_source" class="occurrences_header head_sources">
+				<span class="creation_date_i_Occ">[<?php echo $v['lang']->source_date; ?></span>
+				<span class="creation_date_after_i_Occ"><?php echo $v['lang']->source_date; ?>]</span>
+				<span class="creator_ss_Occ"><?php echo $v['lang']->authors; ?></span>
+				<span class="title_s_Occ"><?php echo $v['lang']->title; ?></span>
+				<span class="editor_ss_Occ"><?php echo $v['lang']->editors; ?></span>
+				<span class="date_i_Occ"><?php echo $v['lang']->publication_date; ?></span>
+			</div>
+			<article class="occurrences head_sources" id="dzOcc_source"></article>
 		</div>
-		<div id="occurrences_header_source" class="occurrences_header">
-			<span style="width: 55px;"><?php echo $v['lang']->date; ?></span>
-			<span style="width: 55px;"><?php echo $v['lang']->date; ?></span>
-			<span style="width: 140px;"><?php echo $v['lang']->authors; ?></span>
-			<span style="width: 330px;"><?php echo $v['lang']->title; ?></span>
-			<span style="width: 145px;"><?php echo $v['lang']->editors; ?></span>
-			<span style="width: 90px;"><?php echo $v['lang']->publication_date; ?></span>
-		</div>
-		<article class="occurrences" id="occurrences_source"></article>
-	</div>
-	<div id="search_frame_nosource" style="display:none;">
-		<div>
-			<table id="publications_nosource">
-				<thead>
-					<tr>
-						<th style="width: 150px;"><?php echo $v['lang']->authors; ?></th>
-						<th style="width: 500px;"><?php echo $v['lang']->title; ?></th>
-						<th style="width: 150px;"><?php echo $v['lang']->editors; ?></th>
-						<th style="width: 55px;"><?php echo $v['lang']->publication_date; ?></th>
-					</tr>
-				</thead>
-				<tbody id="publicationsBody_nosource"></tbody>
-			</table>
-		</div>
-		<div id="occurrences_header_nosource" class="occurrences_header">
-			<span style="width: 150px;"><?php echo $v['lang']->authors; ?></span>
-			<span style="width: 500px;"><?php echo $v['lang']->title; ?></span>
-			<span style="width: 200px;"><?php echo $v['lang']->editors; ?></span>
-			<span style="width: 55px;"><?php echo $v['lang']->publication_date; ?></span>
-		</div>
-		<article class="occurrences" id="occurrences_nosource"></article>
-	</div>
 
-	<div id="search_frame_biblio" style="display:none;">
-		<div>
+		<div data-panel="nosource" class="panel">
 			<div>
-				<table id="publications_biblio">
-					<thead>
-						<tr>
-							<th style="width: 30px;"><?php echo $v['lang']->date; ?></th>
-							<th style="width: 30px;"><?php echo $v['lang']->date; ?></th>
-							<th style="width: 150px;"><?php echo $v['lang']->authors; ?></th>
-							<th style="width: 500px;"><?php echo $v['lang']->title; ?></th>
-							<th style="width: 150px;"><?php echo $v['lang']->editors; ?></th>
-							<th style="width: 55px;"><?php echo $v['lang']->publication_date; ?></th>
+				<table id="dz_nosource">
+					<thead id="dzHead_nosource">
+						<tr class="head_nosources">
+							<th class="creator_ss_Occ"><?php echo $v['lang']->authors; ?></th>
+							<th class="title_s_Occ"><?php echo $v['lang']->title; ?></th>
+							<th class="editor_ss_Occ"><?php echo $v['lang']->editors; ?></th>
+							<th class="date_i_Occ"><?php echo $v['lang']->publication_date; ?></th>
 						</tr>
 					</thead>
-					<tbody id="publicationsBody_biblio"></tbody>
+					<tbody></tbody>
 				</table>
 			</div>
+			<div id="dzOccHead_nosource" class="occurrences_header head_nosources">
+				<span class="creator_ss_Occ"><?php echo $v['lang']->authors; ?></span>
+				<span class="title_s_Occ"><?php echo $v['lang']->title; ?></span>
+				<span class="editor_ss_Occ"><?php echo $v['lang']->editors; ?></span>
+				<span class="date_i_Occ"><?php echo $v['lang']->publication_date; ?></span>
+			</div>
+			<article class="occurrences head_nosources" id="dzOcc_nosource"></article>
 		</div>
-		<div id="occurrences_header_biblio" class="occurrences_header">
-			<span style="width: 112px;"><?php echo $v['lang']->date; ?></span><span style="width: 151px;"><?php echo $v['lang']->authors; ?></span><span style="width: 451px;"><?php echo $v['lang']->title; ?></span><span style="width: 201px;"><?php echo $v['lang']->editors; ?></span><span style="width: 57px;"><?php echo $v['lang']->publication_date; ?></span>
-		</div>
-		<article class="occurrences" id="occurrences_biblio"></article>
-	</div>
 
+	</div>
 </div>

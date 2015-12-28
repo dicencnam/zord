@@ -63,8 +63,14 @@ class DC_html extends Meta {
 	*
 	* @param String $value
 	*/
-	public function description($value){
-		$this->_dc .= '	<meta name="DC.description" content="'.htmlspecialchars($value, ENT_QUOTES, 'UTF-8').'"/>'.PHP_EOL;
+	public function description($variable){
+		if(gettype($variable)=='string'){
+			$this->_dc .= '	<meta name="DC.description" content="'.htmlspecialchars($variable, ENT_QUOTES, 'UTF-8').'"/>'.PHP_EOL;
+		} else {
+			foreach ($variable as $key => $value) {
+				$this->_dc .= '	<meta name="DC.description" xml:lang="'.$key.'" content="'.htmlspecialchars($value, ENT_QUOTES, 'UTF-8').'"/>'.PHP_EOL;
+			}
+		}
 	}
 	// Publisher -------------------------------------------------------------------
 	/**

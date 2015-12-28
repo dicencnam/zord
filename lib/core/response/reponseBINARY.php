@@ -179,14 +179,15 @@ Class Response_BINARY extends Response {
 			// Determine Content Type
 			$ext = strtolower(pathinfo($this->content,PATHINFO_EXTENSION));
 
+			$this->_headers['Content-Description'] = 'File Transfer';
 			$this->_setContentType($ext);
 
 			// file name
-			//$this->_headers['Content-Disposition'] = 'attachment; filename="'.basename($this->content).'"';
+			// $this->_headers['Content-Disposition'] = 'attachment; filename="'.basename($this->content).'"';
 
 			// File size
-			$fsize = filesize($this->content);
-			$this->_headers['Content-Length'] = $fsize;
+			// $fsize = filesize($this->content);
+			// $this->_headers['Content-Length'] = $fsize;
 
 			$this->sendHeaders();
 			readfile($this->content);

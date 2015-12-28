@@ -63,12 +63,20 @@ class Portal {
 	public $websitesDomain = null;
 
 	/**
+	* Websites Domain in Zord
+	*
+	* @var array
+	*/
+	public $websitesDomain = null;
+
+	/**
 	* Files list
 	*
 	* @var array
 	*/
 	public $files = array(
 		'admin/js/TEI_DEFAULT.js',
+		'admin/js/TEITOHTML_DEFAULT.js',
 
 		'appli/public/css/DEFAULT/frieze.css',
 		'appli/public/css/DEFAULT/main.css',
@@ -90,6 +98,7 @@ class Portal {
 
 		'appli/public/css/DEFAULT/obf/.gitignore',
 
+		'appli/public/js/DEFAULT/admin.js',
 		'appli/public/js/DEFAULT/book.js',
 		'appli/public/js/DEFAULT/main.js',
 		'appli/public/js/DEFAULT/search.js',
@@ -98,6 +107,8 @@ class Portal {
 		'appli/public/img/DEFAULT/wait.gif',
 		'appli/public/img/DEFAULT/search.png',
 
+		'lib/locale/LOCALE/DEFAULT/admin.json',
+		'lib/locale/LOCALE/DEFAULT/adminconnect.json',
 		'lib/locale/LOCALE/DEFAULT/book.json',
 		'lib/locale/LOCALE/DEFAULT/categories.json',
 		'lib/locale/LOCALE/DEFAULT/connexion.json',
@@ -109,14 +120,15 @@ class Portal {
 		'lib/locale/LOCALE/DEFAULT/notices.json',
 		'lib/locale/LOCALE/DEFAULT/search.json',
 		'lib/locale/LOCALE/DEFAULT/start_books.json',
+		'lib/locale/LOCALE/DEFAULT/subscription.json',
 
 		'lib/modules/admin/Admin_TEI_DEFAULT.php',
 
 		'lib/profiles/DEFAULT/cover.jpg',
-		'lib/profiles/DEFAULT/def.php',
 		'lib/profiles/DEFAULT/epub.css',
-		'lib/profiles/DEFAULT/to.xsl',
 
+		'lib/view/public/DEFAULT/admin.php',
+		'lib/view/public/DEFAULT/adminconnect.php',
 		'lib/view/public/DEFAULT/book.php',
 		'lib/view/public/DEFAULT/citations.php',
 		'lib/view/public/DEFAULT/connexion.php',
@@ -129,6 +141,8 @@ class Portal {
 		'lib/view/public/DEFAULT/search.php',
 		'lib/view/public/DEFAULT/start.php',
 		'lib/view/public/DEFAULT/start_books.php',
+		'lib/view/public/DEFAULT/subscription.php',
+		'lib/view/public/DEFAULT/subscription_portal.php',
 
 		'lib/view/public/DEFAULT/pages/LOCALE/xxx.php',
 
@@ -144,6 +158,7 @@ class Portal {
 	*/
 	public $deleteFiles = array(
 		'admin/js/TEI_DEFAULT.js',
+		'admin/js/TEITOHTML_DEFAULT.js',
 		'lib/modules/admin/Admin_TEI_DEFAULT.php'
 	);
 
@@ -151,12 +166,13 @@ class Portal {
 	* Constructor
 	*/
 	public function __construct() {
-		include(LIB_FOLDER.'zord/zordLangs.php');
+		include(CONFIG_FOLDER.'config_language.php');
 		$this->zordLangs = $zordLangs;
-		include(LIB_FOLDER.'zord/websites.php');
+		include(CONFIG_FOLDER.'config_portals.php');
 		$this->websites = $websites;
 		$this->websitesURL = $websitesURL;
 		$this->websitesDomain = $websitesDomain;
+		$this->websitesNames = $websitesNames;
 	}
 
 	/**
@@ -168,7 +184,7 @@ class Portal {
 	*/
 	private function _saveConfig() {
 		Config::saveToPHP(
-			LIB_FOLDER.'zord/websites.php',
+			CONFIG_FOLDER.'config_portals.php',
 			array(
 				'websites' => array(
 					'type' => 'array',
@@ -184,6 +200,11 @@ class Portal {
 					'type' => 'arraykey',
 					'comment' => 'Portal list domain',
 					'val' => $this->websitesDomain
+				),
+				'websitesNames' => array(
+					'type' => 'arraykey',
+					'comment' => 'Portal list name',
+					'val' => $this->websitesNames
 				),
 			),
 			'Portals configuration'
@@ -203,10 +224,13 @@ class Portal {
 		if(isset($this->websitesURL[$portalName]))
 			unset($this->websitesURL[$portalName]);
 
-		$portalDomainName = $this->getPortalDomainName($url);
+		$portalDomainName = Tool::domainName($url);
 
 		if(isset($this->websitesDomain[$portalDomainName]))
 			unset($this->websitesDomain[$portalDomainName]);
+
+		if(isset($this->websitesNames[$portalDomainName]))
+			unset($this->websitesNames[$portalName]);
 
 		$this->_saveConfig();
 
@@ -233,25 +257,23 @@ class Portal {
 		}
 	}
 
-	protected function getPortalDomainName($url) {
-		$_domain = array_reverse(explode('.', parse_url($url,PHP_URL_HOST)));
-		return Tool::stripCharDomainName($_domain[2].'_'.$_domain[1]);
-	}
-
 	/**
 	* Create portal
 	*
 	* @param String $portalName Portal name
 	* @param String $url
 	* @param String $publisher
+	* @param String $name
 	* @return Boolean
 	*/
-	public function create($portalName,$url,$publisher) {
+	public function create($portalName,$url,$publisher,$name) {
 		if(!isset($this->websites[$portalName])){
 			$this->websites[] = $portalName;
 			$this->websitesURL[$portalName] = $url;
-			$portalDomainName = $this->getPortalDomainName($url);
+			$portalDomainName = Tool::domainName($url);
 			$this->websitesDomain[$portalDomainName] = $portalName;
+
+			$this->websitesNames[$portalName] = htmlentities($name,ENT_QUOTES);
 
 			$this->_saveConfig();
 

@@ -4,12 +4,29 @@
 	margin:auto;
 }
 
-#publication_table, #publication_table th, #publication_table td {
+#publication_table table {
+	width: 100%;
+}
+
+#publication_table table, #publication_table th, #publication_table td {
 	border: 1px solid gray;
 	border-collapse: collapse;
 	padding:2px 3px;
 }
 
+.frame_title {
+	text-transform: uppercase;
+}
+
 #publication_table .draft {
 	background:#ffd1d1 ! important;
+}
+
+#publication_table .pub-href {
+	text-decoration: none;
+	color: black;
+}
+
+#publication_table .pub-href:hover {
+	color: gray;
 }

@@ -47,7 +47,10 @@ class Book extends Module {
 				if($metadata['level']==0)
 					Counter::setReport_2($_SESSION['user']['id'],$this->request['book'],$this->request['part']);
 				$cl = Tool::getSwitcherClass();
-				$html = $cl->getBook($this->request['book'],$this->request['part'],$metadata['level'],Tool::getTitle($metadata));
+				if(Subscription::validBook($this->request['book']))
+					$html = $cl->getBook($this->request['book'],$this->request['part'],$metadata['level'],Tool::getTitle($metadata));
+				else
+					$html = $cl->getBook($this->request['book'],null,$metadata['level'],Tool::getTitle($metadata));
 				return $html;
 			}
 		}

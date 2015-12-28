@@ -58,14 +58,20 @@ class EncodeTEI {
 	*/
 	protected $_els = array(
 		'pb' => array('n','ed'),
+		'lb' => array('ed'),
 		'graphic' => array('url'),
 		'note' => array('place','n'),
 		'ref' => array(),
 		'head' => array(),
 		'emph' => array(),
 		'p' => array(),
+		'table' => array(),
+		'head' => array(),
+		'row' => array(),
+		'cell' => array('cols','rows'),
 		'facsimile' => array(),
-		'ref' => array('target','cReferencing'),
+		'figure' => array('rend'),
+		'ref' => array('target','creferencing','rendition'),
 		'hi' => array('rend'),
 	);
 
@@ -175,7 +181,7 @@ class EncodeTEI {
 	*/
 	private function _compilCSS($fileIn,$fileOut){
 		$CSS = file_get_contents($fileIn);
-		$CSS = preg_replace_callback('#tei\\\:(\w+)([\s|\[]|:)#si', array($this, 'replaceElementCSS'), $CSS);
+		$CSS = preg_replace_callback('#tei\\\:(\w+)([\s|\[]|:|\{|,)#si', array($this, 'replaceElementCSS'), $CSS);
 		$CSS = preg_replace_callback('#\[(\w+)([=|\[])#si', array($this, 'replaceAttributeCSS'), $CSS);
 		$CSS = preg_replace_callback('#attr\(\s*(\w+)\s*\)#si', array($this, 'replaceContentCSS'), $CSS);
 		$CSS = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $CSS);

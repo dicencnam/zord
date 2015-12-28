@@ -1,0 +1,49 @@
+
+ncx\:navMap {
+	display: block;
+}
+
+ncx\:navPoint {
+	position:relative;
+	display: block;
+	margin:0 0 0 6px;
+	border:1px solid transparent;
+	border-left:1px solid silver;
+	padding-left: 5px;
+	background:white;
+}
+
+ncx\:text {
+	font-size:14px;
+	background:white;
+	cursor:pointer;
+}
+
+ncx\:text content {
+	display: block;
+	margin: 4px 0;
+}
+
+ncx\:text content:hover {
+	background: #D7DEF2;
+}
+
+ncx\:navPoint ncx\:navPoint ncx\:text {
+	font-size: 13px;
+}
+
+ncx\:navPoint ncx\:navPoint ncx\:text content {
+	margin: 2px 0;
+}
+
+ncx\:navPoint[selected="true"] > content > ncx\:navlabel > content > ncx\:text content {
+	background:#DCDCDC;
+}
+
+ncx\:navPoint ncx\:navPoint ncx\:navPoint ncx\:text {
+	font-size: 11px;
+}
+
+.ncxsrc {
+	display:none;
+}

@@ -100,8 +100,8 @@ define('cp/popupboxes/cp_popupboxes',function() {
 					this.message('','wait');
 				},
 
-				waitM : function (msg) {
-					this.message(msg,'waitM');
+				waitM : function (msg,modal) {
+					this.message(msg,'waitM',modal);
 				},
 
 				box : function (msg,modal,callback) {

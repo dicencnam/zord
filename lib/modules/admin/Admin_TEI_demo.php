@@ -34,9 +34,8 @@ class Admin_TEI_demo extends Module {
 	public function validation() {
 		$repository = $this->request['params']['repository'];
 		$folder = $this->request['params']['folder'];
-		require_once(LIB_FOLDER.'zord'.DS.'websites.php');
-		if (in_array($repository, $websites)) {
-			if($folder!=''){
+		if(Filter::validPortal($repository)){
+			if(Filter::validEAN13($folder)){
 				// Get all graphics
 				$graphicsFiles = Dirs::globRecursive(MEDIA_FOLDER.$folder.DS.'*');
 				$graphics = array();
@@ -68,7 +67,7 @@ class Admin_TEI_demo extends Module {
 				file_put_contents($file,$this->request['params']['xml']);
 
 				$msg = array();
-				$er = shell_exec('jing '.$file_rng.' '.$file);
+				$er = Cmd::jing($repository,$folder);
 				if($er!='')
 					$msg[] = str_replace($file,'line',$er);
 
@@ -78,16 +77,22 @@ class Admin_TEI_demo extends Module {
 				$xsl->registerPHPFunctions();
 				$doc->load(LIB_FOLDER.'xslt'.DS.'prefixTEI.xsl');
 				$xsl->importStyleSheet($doc);
-				$doc->load($file);
-				$tei = $xsl->transformToXML($doc);
 
-				$result = array(
-					'rng' => implode("\n",$msg),
-					'graphics' => $graphics,
-					'tei' => $tei
-				);
+				try {
+						@$doc->load($file);
+						$tei = $xsl->transformToXML($doc);
 
-				return $result;
+						$result = array(
+							'rng' => implode("\n",$msg),
+							'graphics' => $graphics,
+							'tei' => $tei
+						);
+
+						return $result;
+				} catch (Exception $e) {
+						echo 'Exception reçue : ',  $e->getMessage(), "\n";
+						return $this->error(303,'Exception reçue : ',  $e->getMessage(), "\n");
+				}
 			} else {
 				return $this->error(303,'Error file name');
 			}
@@ -121,12 +126,17 @@ class Admin_TEI_demo extends Module {
 		$ids = $this->request['params']['ids'];
 
 		$solr = new Solr();
-		if(is_dir(TEI_FOLDER.$repository)){
-			if($document!=''){
+
+		$categories = array();
+		$file = LIB_FOLDER.'zord'.DS.'demo'.DS.'categories.json';
+		if(file_exists($file))
+			$categories = Tool::objectToArray(json_decode(file_get_contents($file)));
+
+		if(Filter::validPortal($repository)){
+			if(Filter::validEAN13($document)){
 				$docFolder = TEI_FOLDER.$repository.DS.$document.DS;
 
 				// metadata ----------------------------------------------------------
-				include(LIB_FOLDER.'zord'.DS.'websites.php');
 
 				$metadata = Tei::parseHeader(
 					$this->request['params']['header'],
@@ -141,11 +151,8 @@ class Admin_TEI_demo extends Module {
 					'repository' => $repository
 				));
 
-				if($abstract!='')
-					$metadata['description'] = $abstract;
-
-				if(!isset($metadata['category']))
-					$metadata['category'] = $repository;
+				if(!isset($metadata['category']) || !array_key_exists($metadata['category'][0], $categories))
+					$metadata['category'] = array($repository);
 
 				// metadata save
 				file_put_contents($docFolder.'header.json',Tool::json_encode($metadata));

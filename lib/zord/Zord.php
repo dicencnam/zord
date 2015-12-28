@@ -9,11 +9,11 @@
 interface IZord {
 	public function getStart();
 
-	public function getPage($page);
+	public function getPage($page,$data);
 
 	public function getBook($name,$part,$level,$title);
 
-	public function getSearch();
+	public function getSearch($data);
 }
 
 /**
@@ -77,6 +77,7 @@ abstract Class Zord {
 		$jscss = new JsCss();
 		$jscss->setValue('string','PATH',BASEURL);
 		$jscss->setValue('string','WEBSITE',$_SESSION["switcher"]["name"]);
+		$jscss->setScript('js/compatibility');
 		$jscss->setScript('js/dialog');
 		$jscss->setScript('public/js/'.$_SESSION['switcher']['name'].'/main');
 		$jscss->setLink('main');

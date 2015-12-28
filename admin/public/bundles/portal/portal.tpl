@@ -12,6 +12,10 @@
 			<input type="text" id="addPortal_name" placeholder="portal"/>
 		</p>
 		<p>
+			<label>{{$Portal_namelong}} </label>
+			<input type="text" id="addPortal_namelong" placeholder="portal name"/>
+		</p>
+		<p>
 			<label>{{$Portal_url}} </label>
 			<input type="text" id="addPortal_url"  placeholder="http://portal.domain.com"/>
 		</p>

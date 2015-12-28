@@ -1,0 +1,741 @@
+
+html, body {
+	margin:0;
+}
+
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 15px;
+	margin:0;
+	padding:0;
+}
+
+/* -------------------------------- ab -------------------------------- */
+
+.tei-a {
+	display:block;
+	text-align: center;
+	margin: 1em auto;
+}
+
+.tei-a > .tei-lb {
+	display: block ! important;
+	margin-top: -0.9em ! important;
+}
+
+/* --------------------------------- add -------------------------------- */
+
+.tei-add {
+
+}
+
+/* -------------------------------- addrLine -------------------------------- */
+
+.tei-addrLine {
+	display:block;
+}
+
+/* --------------------------------- address --------------------------------- */
+
+.tei-address {
+	font-style: normal;
+	line-height: 110%;
+}
+
+/* -------------------------------- argument -------------------------------- */
+
+.tei-argument {}
+
+/* ---------------------------------- bibl ---------------------------------- */
+
+.tei-bibl {
+	display:block;
+	text-indent:-25px;
+	padding-left:25px;
+	margin:3px 0;
+}
+
+/* --------------------------------- byline --------------------------------- */
+
+.tei-byline {
+
+}
+
+/* --------------------------------- caption --------------------------------- */
+
+.tei-caption {
+	display:block;
+	text-align: center;
+	margin-top:0.2em;
+	font-size: 0.9em;
+}
+/* --------------------------------- castitem -------------------------------- */
+
+.tei-castitem {
+	list-style-position: outside;
+	margin-left: 33px;
+}
+
+/* --------------------------------- castlist -------------------------------- */
+
+.tei-castlist {
+	list-style: none inside;
+}
+
+/* ---------------------------------- cell ---------------------------------- */
+
+table td {
+	padding: 0 5px;
+	text-align: left;
+}
+
+table td[rowspan] {
+	vertical-align: top;
+}
+
+/* --------------------------------- closer --------------------------------- */
+
+.tei-closer {
+	display: block;
+	margin-top: 20px;
+}
+
+/* ---------------------------------- date ---------------------------------- */
+
+.tei-date {
+
+}
+
+/* ---------------------------------- desc ---------------------------------- */
+
+.tei-desc {
+	text-align: center;
+	margin-top:0.2em;
+	font-size: 0.9em;
+}
+
+/* ----------------------------------- div ----------------------------------- */
+
+.tei-div.type-section {
+	margin: 25px 0;
+}
+
+.tei-div.type-letter > .tei-head {
+	margin-top: 35px;
+}
+
+/* -------------------------------- docAuthor -------------------------------- */
+
+.tei-docAuthor {
+	display:block;
+}
+
+/* ------------------------------- docEdition ------------------------------- */
+
+.tei-docEdition {
+
+}
+
+/* ------------------------------- docImprint ------------------------------- */
+
+.tei-docImprint > .tei-date {
+	display:block;
+}
+
+/* -------------------------------- docTitle -------------------------------- */
+
+.tei-docTitle {
+	display:block;
+}
+
+/* ---------------------------------- emph ---------------------------------- */
+
+.tei-emph {
+	font-style: oblique;
+}
+
+/* -------------------------------- epigraph -------------------------------- */
+
+.tei-epigraph {
+	text-align: right;
+	margin: 1em 0 2em auto;
+	max-width: 50%;
+	font-size: 0.8em;
+}
+
+.tei-epigraph .tei-p {
+	text-indent: 0;
+	margin: 0;
+	text-align: right;
+}
+
+/* ---------------------------------- facsimile ---------------------------------- */
+
+.tei-facsimile, .tei-figure.rend-group {
+	display: block;
+	height: 400px;
+	background: whitesmoke;
+}
+.tei-facsimile .navigator, .tei-figure.rend-group .navigator {
+	background: gainsboro ! important;
+	border: none ! important;
+}
+.tei-facsimile .displayregion, .tei-figure.rend-group .displayregion {
+	border: 1px solid #990000 ! important;
+}
+.tei-facsimile img, .tei-figure.rend-group img {
+	cursor: pointer ! important;
+	margin-left: 5px ! important;
+}
+
+/* --------------------------------- figure --------------------------------- */
+
+.tei-figure {
+	display: block;
+	margin: 2em auto;
+	text-align: center;
+}
+
+/* ------------------------------ floatingText ------------------------------ */
+
+.tei-floatingText {
+	display:block;
+	outline:1px solid orange;
+}
+
+/* --------------------------------- foreign --------------------------------- */
+
+.tei-foreign {
+
+}
+
+/* --------------------------------- forename -------------------------------- */
+
+.tei-forename {
+
+}
+
+/* ---------------------------------- fw ---------------------------------- */
+
+.tei-fw {
+
+}
+
+/* ---------------------------------- gloss ---------------------------------- */
+
+.tei-gloss {
+	display:inline;
+	background:#ccd8ea;
+	padding:0 5px;
+	font-size:0.8em;
+	border-radius:4px;
+}
+
+.tei-l .tei-gloss {
+	position:absolute;
+	display:block;
+	font-size:0.8em;
+	width:24em;
+	left:58%;
+	background:#ccd8ea;
+	padding:5px;
+	line-height:1.3em;
+	border-radius:8px;
+	margin-top: -26px;
+	text-indent:0;
+}
+
+/* --------------------------------- graphic --------------------------------- */
+
+.tei-graphic {
+
+}
+
+/* ---------------------------------- head ---------------------------------- */
+.tei-head,
+.tei-head.rendition-chaptertitle,
+.tei-head.type-prepagetitle,
+.tei-head.type-prepageTitle,
+.tei-head.type-prpagetitle {
+	color:#1f4a7f;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-top: 0;
+	margin-bottom: 0.8em;
+	text-align: center;
+}
+
+.tei-head.rendition-sectiontitle {
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-bottom: 0.5em;
+	margin-top: 0;
+}
+
+.tei-head.rendition-ssectiontitle {
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 110%;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
+	margin-top: 0;
+	font-weight:bold;
+}
+
+.tei-head.rendition-sssectiontitle {
+	margin-top:0.8em;
+	font-style: italic;
+	font-size:1.1em;
+	text-indent:15px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
+}
+.tei-head.rendition-ssssectiontitle {
+	margin-top:0.8em;
+	font-style: italic;
+	font-size:1em;
+	text-indent:25px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
+}
+.tei-head.rendition-sssssectiontitle {
+	margin-top:0.8em;
+	font-style: italic;
+	font-size:1em;
+	text-indent:30px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
+}
+
+.tei-div.type-part > .tei-head {
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 200%;
+	padding-top: 1em;
+	margin-top: 0;
+	margin-bottom: 2em;
+	text-align: center;
+}
+
+.tei-tei table caption {
+	text-align: left;
+	margin-bottom: 0em;
+	color: #1f4a7f;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-top: 0;
+}
+
+/* ----------------------------------- hi ----------------------------------- */
+
+.tei-hi.rend-sc {
+	font-variant:small-caps;
+}
+.tei-hi.rend-small {
+	font-size:0.8em;
+}
+.tei-hi.rend-big {
+	font-size:1.2em;
+}
+.tei-hi.rend-underline {
+	text-decoration:underline;
+}
+
+/* ---------------------------------- item ---------------------------------- */
+
+.tei-item {
+	list-style-position: outside;
+	margin-left: 33px;
+}
+
+.tei-item > .tei-p {
+	text-indent:0;
+}
+
+/* ------------------------------------ l ------------------------------------ */
+
+.tei-l {
+	display: block;
+}
+
+/* ---------------------------------- label ---------------------------------- */
+
+.tei-label {
+
+}
+
+/* ----------------------------------- lb ----------------------------------- */
+
+.tei-lb {
+	display:block;
+}
+
+
+.tei-lb.ed-margin, .tei-lb {
+	display:inline;
+}
+
+
+/* ----------------------------------- lg ----------------------------------- */
+
+.tei-lg {
+	margin:8px 0px 15px 0px;
+}
+
+/* ---------------------------------- list ---------------------------------- */
+
+.tei-list {
+	list-style-position: inside;
+	list-style: none inside;
+}
+
+.tei-list.type-ordered {
+	list-style-position: inside;
+	list-style: none inside;
+	position: relative;
+}
+
+.tei-list.type-toc,
+.tei-list.type-index,
+.tei-list.type-gloss {
+	list-style-position: inside;
+	list-style: none inside;
+}
+
+.tei-list.type-gloss > .tei-label {
+	margin-top: 10px;
+	display: block;
+}
+
+.tei-list.type-toc .tei-list,
+.tei-list.type-index .tei-list,
+.tei-list.type-gloss .tei-list {
+	list-style-position: inside;
+	list-style: none inside;
+}
+
+.tei-div.type-toc .tei-list,
+.tei-div.type-index .tei-list {
+	list-style-position: inside;
+	list-style: none inside;
+}
+
+/* -------------------------------- listBibl -------------------------------- */
+
+.tei-listBibl {
+	display:block;
+	padding:15px 0;
+}
+
+/* --------------------------------- name -------------------------------- */
+
+.tei-name {
+
+}
+
+/* ---------------------------------- note ---------------------------------- */
+
+.tei.tei .tei-note {
+
+}
+
+.tei-tei .tei-note a {
+	text-decoration: none;
+	color:black;
+}
+
+/* --------------------------------- opener --------------------------------- */
+
+.tei-opener {
+	margin-bottom: 20px;
+}
+
+/* ----------------------------------- p ------------------------------------ */
+
+.tei-p {
+	margin:0;
+	text-indent: 15px;
+	text-align: justify;
+}
+
+/* ----------------------------------- pb ----------------------------------- */
+
+.tei-pb {
+	color:#35486d;
+	padding: 0 2px;
+	font-size: 11px;
+}
+
+.tei-pb.ed-temoin {
+	color:gray;
+	padding: 0 2px;
+	font-size: 11px;
+}
+
+
+.tei-head .tei-pb {
+	display: block;
+}
+
+.tei-head .tei-pb.ed-temoin {
+	display: block;
+}
+
+/* --------------------------------- postscript --------------------------------- */
+
+.tei-postscript {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+/* ---------------------------------- quote ---------------------------------- */
+
+.tei-quote {
+	padding-left:45px;
+	line-height:1.3em;
+	font-size:0.91em;
+	margin:10px 0;
+}
+
+.tei-quote .tei-p {
+	text-indent: 0;
+}
+
+/* ----------------------------------- ref ----------------------------------- */
+
+.tei-ref {
+	text-decoration: none;
+	border-bottom: dotted 1px #999;
+	color: #0D3996;
+	cursor:pointer;
+}
+
+.tei-ref.rendition-notecall-app {
+	border-bottom: none;
+	cursor:pointer;
+	position:relative;
+	top:-0.6em;
+	font-size:0.8em;
+}
+
+/* ----------------------------------- role ---------------------------------- */
+
+.tei-role {
+	font-variant: small-caps;
+}
+
+/* --------------------------------- roledesc -------------------------------- */
+
+.tei-roledesc {
+	font-style: italic;
+}
+
+/* ----------------------------------- row ----------------------------------- */
+
+.tei-tei table tr.role.label, .tei-tei table tr.rend-thead {
+	font-variant: small-caps;
+	font-size: 1.2em;
+}
+
+/* --------------------------------- salute -------------------------------- */
+
+.tei-salute {
+
+}
+
+/* ----------------------------------- seg ----------------------------------- */
+
+.tei-seg {
+
+}
+
+/* --------------------------------- signed -------------------------------- */
+
+.tei-signed {
+
+}
+
+/* ---------------------------------- sp --------------------------------- */
+
+.tei-sp {
+
+}
+
+/* ---------------------------------- space --------------------------------- */
+
+.tei-space {
+
+}
+
+/* ---------------------------------- stage --------------------------------- */
+.tei-stage {
+	margin: 0.6em 0;
+	font-style: italic;
+	font-size: 0.9em;
+	display: block;
+}
+
+/* ---------------------------------- table ---------------------------------- */
+
+table {
+	border-spacing: 0.7em;
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+table[rend="vis-a-vis"] {
+	table-layout: fixed;
+}
+
+/* -------------------------------- titlepage -------------------------------- */
+
+.tei-titlePage {
+	text-align:center;
+}
+
+
+.tei-titlepage img {
+	width:200px;
+}
+
+.tei-titlePage .tei-docAuthor {
+	font-size: 28px;
+	font-variant: small-caps;
+	margin: 35px 0 10px 0;
+	color:#1f4a7f;
+}
+
+.tei-titlePage > .tei-docImprint {
+	font-size: 80%;
+	line-height: 120%;
+	margin-top: 90px;
+	display: block;
+}
+
+.tei-titlePage .tei-argument[rend="rights"],
+.tei-titlePage .tei-argument[rend="right"] {
+	display: block;
+	margin: 2em 0 3em 0;
+	line-height: 140%;
+	font-size: 65%;
+}
+
+/* -------------------------------- titlePart -------------------------------- */
+
+.tei-titlePart {
+	text-align:center;
+	color: #1f4a7f;
+}
+
+.tei-titlePart.type-collection, .tei-titlePart.type-collection-sub {
+	font-size:12px;
+	text-transform: uppercase;
+	margin:2px 0;
+	text-align:center;
+}
+
+.tei-titlePart.type-collection-sub-num {
+	font-size:12px;
+	text-transform: uppercase;
+	margin:2px 0;
+	text-align:center;
+}
+
+.tei-titlePart.type-desc {
+	margin:35px 0;
+	font-size: 15px;
+	line-height: 1em;
+}
+
+.tei-titlePart.type-main {
+	font-size:30px;
+	margin: 10px 0;
+	line-height: 1em;
+}
+
+.tei-titlePart.type-sub {
+	font-size:20px;
+	margin: 10px 0;
+	line-height: 1em;
+}
+
+/* ------------------------------------ sp ----------------------------------- */
+
+.tei-sp {
+	display: block;
+	margin: 1.5em 0;
+}
+
+/* --------------------------------- speaker -------------------------------- */
+
+.tei-speaker {
+	padding-left: 9em;
+	font-variant: small-caps;
+}
+
+
+/* --------------------------------------------------------------------------- */
+/* -------------------------------- footnotes -------------------------------- */
+
+#footnotes {
+	clear: both;
+	margin-left: 25px;
+}
+
+#footnotes .foot-page {
+	font-weight: bold;
+	font-size: 0.8em;
+	position: relative;
+	left: -25px;
+	margin: 20px 0 10px 0;
+}
+
+#footnotes .tei-note .tei-p {
+	text-indent:0px;
+	padding:5px 5px 5px 10px;
+}
+
+#footnotes .tei-note .tei-note .tei-p {
+	display:none;
+}
+
+#footnotes .footnote-counter {
+	cursor:pointer;
+	font-size: 0.9em;
+	color:#31455D;
+}
+
+#footnotes .footnote-counter a {
+	cursor:pointer;
+	color:#31455D;
+	text-decoration: none;
+}
+
+
+.footnote-note {
+	margin-bottom: 1em;
+}
+
+
+.notesdouble .footnote-counter {
+	position: relative ! important;
+	left: -35px ! important;
+}
+
+.notesdouble .footnote-note {
+		padding-top: 0px ! important;
+}
+
+.notesdouble .tei-note .tei-p {
+	padding-left: 20px ! important;
+}
+
+.footnote-select {
+	background:#FFFFEE;
+}

@@ -16,16 +16,7 @@ class SimpleUrl extends Url implements IUrl {
 	* @return Array
 	*/
 	public function getRequest(){
-		// switcher
-		$domain = array_reverse(explode('.', $_SERVER['HTTP_HOST']));
-		if(!isset($domain[1]))
-			$domain[1] = 'localhost';
-		if(!isset($domain[2]))
-			$domain[2] = 'www';
-
-		// Domain name
-		$this->_domain = Tool::stripCharDomainName($domain[2].'_'.$domain[1]);
-
+		$this->_domain = Tool::domainName();
 		if(!isset($_SESSION['domaine_name']) || $_SESSION['domaine_name']!=$this->_domain){
 			$this->_loadPortal($this->_domain);
 		}
@@ -33,7 +24,7 @@ class SimpleUrl extends Url implements IUrl {
 	}
 
 	public function _loadPortal($name){
-		include(LIB_FOLDER.'zord'.DS.'websites.php');
+		include(CONFIG_FOLDER.'config_portals.php');
 		if(array_key_exists($name, $websitesDomain)) {
 			$portal = $websitesDomain[$name];
 		} else {
@@ -69,6 +60,8 @@ class SimpleUrl extends Url implements IUrl {
 					$this->request['action'] = 'page';
 					if (count($this->request['params_path']) > 0)
 						$this->request['page'] = filter_var(array_shift($this->request['params_path']), FILTER_SANITIZE_STRING);
+
+
 				} else if($this->request['params_path'][0]=='portal'){
 					array_shift($this->request['params_path']);
 					if (count($this->request['params_path']) > 0){

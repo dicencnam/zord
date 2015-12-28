@@ -28,8 +28,7 @@ Class Response_JSON extends Response {
 	*/
 	public function printOut(){
 		$this->_headers['Content-Type'] = 'application/json';
-		$json = $this->_json_encode($this->content);
-		$json = preg_replace('#:"(\d+)"#s', ':$1' , $json);
+		$json = Tool::json_encode($this->content);
 		$this->_httpHeaders['Content-length'] = strlen($json);
 		$this->sendHeaders();
 		echo $json;
@@ -44,16 +43,6 @@ Class Response_JSON extends Response {
 			'message' => $this->content['message']
 		);
 		$this->printOut();
-	}
-
-	/**
-	* JSON UTF-8 encode
-	*
-	* @return string
-	*/
-	private function _json_encode($arr){
-		array_walk_recursive($arr, function (&$item, $key) { if (is_string($item)) $item = mb_encode_numericentity($item, array (0x80, 0xffff, 0, 0xffff), 'UTF-8'); });
-		return mb_decode_numericentity(json_encode($arr), array (0x80, 0xffff, 0, 0xffff), 'UTF-8');
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 
 /**
-* demo principal
+* __PORTALDEFAULT__ principal
 *
 * Header, Navigation, Footer, Connexion, Book, Citations
 *
@@ -724,7 +724,7 @@ body {
 }
 
 .dialog-wait {
-	background: url(../../img/demo/wait.gif) white no-repeat;
+	background: url(../../img/__PORTALDEFAULT__/wait.gif) white no-repeat;
 	background-position: center;
 	width: 60px;
 	height: 60px;

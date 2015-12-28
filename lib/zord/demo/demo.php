@@ -21,14 +21,21 @@ class demo extends Zord implements IZord {
 	*
 	* @var String
 	*/
-	public $title = 'demo';
+	public $title = 'Démo';
 
 	/**
 	* Pages list
 	*
 	* @var array
 	*/
-	public $pages = array('xxx');
+	public $pages = array('presentation','subscription','contact','help','search');
+
+	/**
+	* Specific pages list
+	*
+	* @var array
+	*/
+	public $spcPages = array('search','marker','notices','adminconnect','admin');
 
 	/**
 	* Get home page
@@ -67,13 +74,9 @@ class demo extends Zord implements IZord {
 	* @param String $page Page name
 	* @return string
 	*/
-	public function getPage($page) {
-		if($page=='search'){
-			return $this->getSearch();
-		} else if($page=='marker'){
-			return $this->getMarker();
-		} else if($page=='marcxml'){
-			return $this->getMarcxml();
+	public function getPage($page,$data) {
+		if(in_array($page,$this->spcPages)){
+			return call_user_func(array(&$this, 'get'.ucfirst($page)),$data);
 		} else {
 			$tpl = 'public'.DS.$_SESSION['switcher']['name'].DS.'pages'.DS.LANG.DS.$page;
 			$file = VIEW_FOLDER.$tpl.'.php';
@@ -125,6 +128,8 @@ class demo extends Zord implements IZord {
 
 		$jscss = $this->_JsCss_main();
 		$jscss->setScript('public/js/'.$_SESSION['switcher']['name'].'/book');
+		$jscss->setScript('js/XSLDom');
+		$jscss->setScript('js/XMLWrite');
 		$cssFileName = $EncodeTEI->getCSS($_SESSION['switcher']['name']);
 		$jscss->setLink($cssFileName);
 		$jscss->setLink($cssFileName.'_print','print');
@@ -159,7 +164,7 @@ class demo extends Zord implements IZord {
 	*
 	* @return string
 	*/
-	public function getSearch() {
+	public function getSearch($data) {
 		$langName = $_SESSION['switcher']['name'].'/categories';
 		Lang::load($langName);
 		$searchValue = array(
@@ -178,6 +183,12 @@ class demo extends Zord implements IZord {
 		$jscss->setScript('js/tablesort.min');
 		$jscss->setScript('public/js/'.$_SESSION['switcher']['name'].'/search');
 		$jscss->setLink('search');
+
+		if(isset($data['default']))
+			$jscss->setValue('boolean','SEARCHLAST',true);
+		else
+			$jscss->setValue('boolean','SEARCHLAST',false);
+
 		$jscss->setValue('json','DOCS',json_encode($documents));
 
 		return Tpl::render('public/'.$_SESSION['switcher']['name'].'/start',
@@ -232,12 +243,12 @@ class demo extends Zord implements IZord {
 	}
 
 	/**
-	* Get MARC-XML page
+	* Get notices page
 	*
 	* @return string
 	*/
-	public function getMarcxml() {
-		$langName = $_SESSION['switcher']['name'].DS.'marcxml';
+	public function getNotices() {
+		$langName = $_SESSION['switcher']['name'].DS.'notices';
 		Lang::load($langName);
 		$jscss = new JsCss();
 		$jscss->setValue('string','PATH',BASEURL);
@@ -246,7 +257,7 @@ class demo extends Zord implements IZord {
 		$jscss->setLink('table');
 		$jscss->setScript('public/js/'.$_SESSION['switcher']['name'].'/main');
 		$jscss->setScript('js/tablesort.min');
-		$jscss->setScript('js/marcxml');
+		$jscss->setScript('js/notices');
 		$solr = new Solr();
 		$response = $solr->getBooks(0,10000);
 		$books = array('docs'=>array(),'novelty'=>array());
@@ -288,17 +299,88 @@ class demo extends Zord implements IZord {
 		}
 		$noveltyHtml = $Table->get();
 
-		return Tpl::render('public/'.$_SESSION['switcher']['name'].'/marcxml',
+		return Tpl::render('public/'.$_SESSION['switcher']['name'].'/notices',
 			array(
 				'lang' => Lang::get($langName),
 				'title' => $this->title,
 				'jscss' => $jscss->get(),
 				'header' => $this->_getHeader(),
+				'navigation' => $this->_getNavigation(),
 				'docsHtml' => $docsHtml,
 				'noveltyHtml' => $noveltyHtml
 			)
 		);
 	}
+
+	/**
+	* Get page Admin connexion
+	*
+	* @return string
+	*/
+	public function getAdminconnect() {
+		$langName = $_SESSION['switcher']['name'].DS.'adminconnect';
+		Lang::load($langName);
+		$langs = Lang::get($langName);
+		$jscss = $this->_JsCss_main();
+		return Tpl::render('public/'.$_SESSION['switcher']['name'].'/start',
+			array(
+				'jscss' => $jscss->get(),
+				'title' => $this->title,
+				'navigation' => $this->_getNavigation(),
+				'header' => $this->_getHeader(),
+				'dialog' => $this->_getDialog(),
+				'content' =>
+				Tpl::render('public/'.$_SESSION['switcher']['name'].'/adminconnect',array('lang' => $langs)),
+				'footer' => $this->_getFooter()
+			)
+		);
+	}
+
+	/**
+	* Get page admin
+	*
+	* @return string
+	*/
+	public function getAdmin() {
+		if(isset($_SESSION["connect_USER_ADMINNISTRATION"]) &&
+		$_SESSION["connect_USER_ADMINNISTRATION"]===true){
+			$langName = $_SESSION['switcher']['name'].DS.'admin';
+			Lang::load($langName);
+			$langs = Lang::get($langName);
+			$jscss = $this->_JsCss_main();
+			$jscss->setLink('table');
+			$jscss->setScript('js/tablesort.min');
+			$jscss->setScript('public/js/'.$_SESSION['switcher']['name'].'/admin');
+			// subscription
+			$sub = false;
+			if(isset($_SESSION["user"]) && $_SESSION["user"]['subscription']>0)
+				$sub = true;
+
+			$jscss->setValue('boolean','SUBSCRIPTION',$sub);
+			$data = array(
+				'lang' => $langs
+			);
+			return Tpl::render('public/'.$_SESSION['switcher']['name'].'/start',
+				array(
+					'jscss' => $jscss->get(),
+					'title' => $this->title,
+					'navigation' => $this->_getNavigation(),
+					'header' => $this->_getHeader(),
+					'dialog' => $this->_getDialog(),
+					'content' =>
+					Tpl::render('public/'.$_SESSION['switcher']['name'].'/admin',$data),
+					'footer' => $this->_getFooter()
+				)
+			);
+		} else {
+			return array(
+				'__error__' => true,
+				'code' => 404,
+				'message' => ''
+			);
+		}
+	}
+
 	/**
 	* Get connexion page
 	*
@@ -367,27 +449,21 @@ class demo extends Zord implements IZord {
 	*/
 	protected function sortBooks($docs){
 
-		$books = array('source'=>array(),'nosource'=>array(),'biblio'=>array(),'novelty'=>array());
-
-		$bib = array();
+		$books = array('source'=>array(),'nosource'=>array(),'novelty'=>array());
 
 		foreach($docs as $book){
 			if($book['novelty_b']){
 				$books['novelty'][] = $book;
 			} else {
 				$cat = $book['category_ss'][0];
-				if($cat=='bib'){
-					$bib[] = $book;
+				if(isset($book['creation_date_i'])){
+					if(!isset($books['source'][$cat]))
+						$books['source'][$cat] = array();
+					$books['source'][$cat][] = $book;
 				} else {
-					if(isset($book['creation_date_i'])){
-						if(!isset($books['source'][$cat]))
-							$books['source'][$cat] = array();
-						$books['source'][$cat][] = $book;
-					} else {
-						if(!isset($books['nosource'][$cat]))
-							$books['nosource'][$cat] = array();
-						$books['nosource'][$cat][] = $book;
-					}
+					if(!isset($books['nosource'][$cat]))
+						$books['nosource'][$cat] = array();
+					$books['nosource'][$cat][] = $book;
 				}
 			}
 		}
@@ -439,25 +515,6 @@ class demo extends Zord implements IZord {
 				'date_i'
 			)
 		));
-
-		$bib = $SortBooks->sortCreationDate($bib);
-
-		foreach($bib as $book)
-			$Table->set($book);
-		$books['biblio'] = $Table->get();
-
-		$books['novelty'] = array_reverse($books['novelty']);
-
-		$Table = new TableHTML(array(
-			'tpl' => array(
-				'creation_date_i',
-				'creation_date_after_i',
-				'creator_ss',
-				'title',
-				'editor_ss',
-				'date_i'
-			)
-		));
 		foreach($books['novelty'] as $book)
 			$Table->set($book);
 
@@ -469,55 +526,10 @@ class demo extends Zord implements IZord {
 	/**
 	* Update epub
 	*
-	* @param object $EpubInsert
+	* @param object $Epub
 	*/
-	public function epub($EpubInsert){
+	public function epub($Epub){
 
-		/*
-		//  ---------------- ajouter une source xhtml ------------------------------
-		$spinePosition = $EpubInsert->getSpineCount();
-		// $spinePosition -> dernier
-		// $spinePosition-1 -> avant dernier
-		// $spinePosition = 0 -> premier
-		// $spinePosition = 1 -> deuxième
-
-		$guidePosition = $EpubInsert->getGuideCount();
-		// $guidePosition -> dernier
-		// $guidePosition-1 -> avant dernier
-		// $guidePosition = 0 -> premier
-		// $guidePosition = 1 -> deuxième
-
-		$content = file_get_contents('/path/web/pagex.html');
-
-		$EpubInsert->addXHTML(
-			$content,
-			array(
-				'content' => $content,
-
-				'spine' 	=> array(
-					'position'	=> $guidePosition,
-					'linear'		=> 'yes'
-				),
-				'guide' 	=> array(
-					'position'	=> $guideMax,
-					'title'			=> 'titl dfsfd sdfsdf e',
-					'type'			=> 'text'
-				)
-			)
-		);
-		//  -------------------- ajouter une resource ------------------------------
-		$EpubInsert->addSource('/path/images/imagex.png','newname.png');
-
-		//  ------------------ supprimer une resource ------------------------------
-		// path -> package/manifest/item[href]
-		$EpubInsert->removeFile('pagex.html');
-		$EpubInsert->removeFile('imagex.jpg');
-
-		//  --------------- mise à jour de la couverture ---------------------------
-		$EpubInsert->updateCover('/path/covers/coverfile.jpg');
-
-
-		*/
 	}
 }
 ?>

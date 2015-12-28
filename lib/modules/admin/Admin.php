@@ -46,7 +46,7 @@ class Admin extends Module {
 	}
 
 	private function check($login, $password) {
-		include_once(ROOT.'config'.DS.'config_orm_admin.php');
+		include_once(CONFIG_FOLDER.'config_db_admin.php');
 		$user = ORM::for_table('admin', 'zord_admin')
 			->where_raw('(`login` = ? AND `password` = ?)', array($login, hash('sha256', SALT.$password)))
 			->find_one();
@@ -60,7 +60,7 @@ class Admin extends Module {
 			$_SESSION["connect_admin"] = true;
 
 			// appli user
-			include(LIB_FOLDER.'zord'.DS.'websites.php');
+			include(CONFIG_FOLDER.'config_portals.php');
 			$Auth_user = new Auth_user();
 			$Auth_user->userAssign(array(
 				"id" => $data["id"],
@@ -71,8 +71,10 @@ class Admin extends Module {
 				"start" => '2000-01-01',
 				"end" => '3000-01-01',
 				"email" => $data["login"],
-				"websites" => $websites
-			));
+				"websites" => $websites,
+				"ip" => '',
+				"subscription" => '',
+			),false);
 			return true;
 		}
 		return false;

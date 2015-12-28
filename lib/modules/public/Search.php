@@ -55,6 +55,25 @@ class Search extends Module {
 		return $this->error(303,'No file');
 	}
 
+	// getCSLdata --------------------------------------------------------------------
+	public $getCSLdata_filter = array(
+		'style' => FILTER_SANITIZE_STRING,
+		'lang' => FILTER_SANITIZE_STRING
+	);
+	public $getCSLdata_filter_path = array();
+	/**
+	* CSL - Citation Style Language get data of a style and lang
+	*
+	* @return JSON
+	*/
+	public function getCSLdata() {
+		$styleFile = CSL_FOLDER.'styles'.DS.$this->request['params']['style'].'.csl';
+		$langFile = CSL_FOLDER.'locales'.DS.'locales-'.$this->request['params']['lang'].'.xml';
+		if(file_exists($styleFile) && file_exists($langFile))
+			return array('style' => file_get_contents($styleFile), 'lang' => file_get_contents($langFile));
+		return $this->error(303,'No file');
+	}
+
 	// lang --------------------------------------------------------------------
 	public $lang_filter = array('lang' => FILTER_SANITIZE_STRING);
 	public $lang_filter_path = array();
@@ -64,7 +83,7 @@ class Search extends Module {
 	* @return JSON
 	*/
 	public function lang() {
-		include(LIB_FOLDER.'zord'.DS.'zordLangs.php');
+		include(CONFIG_FOLDER.'config_language.php');
 		if(in_array($this->request['params']['lang'],$zordLangs))
 			$_SESSION['___LANG___'] = $this->request['params']['lang'];
 

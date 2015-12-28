@@ -7,11 +7,10 @@ Chargée de projet : Chloé Girard
 
 Développeur : David Dauvergne
 
-Publication html de fichiers XML-TEI, 
-Export TEI to ePUB 2.1, 
-Mesures d'usage Counter, 
-Export métadonnées MarcXML, 
-Recherche à facettes, 
-Concordancier, 
-Export des citations format Word.
-
+- Publication de fichiers XML-TEI,
+- Export TEI to ePUB 2.1,
+- Mesures d'usage Counter,
+- Export métadonnées MarcXML,
+- Recherche à facettes,
+- Concordancier,
+- Export des citations format Word.

@@ -29,7 +29,9 @@ class Start extends Module {
 	}
 
 	// page --------------------------------------------------------------------
-	public $page_filter = array();
+	public $page_filter = array(
+		'default' => FILTER_SANITIZE_STRING,
+	);
 	public $page_filter_path = array();
 	/**
 	* Get page
@@ -39,7 +41,7 @@ class Start extends Module {
 	public function page() {
 		if(isset($this->request['page'])){
 			$cl = Tool::getSwitcherClass();
-			return $cl->getPage($this->request['page']);
+			return $cl->getPage($this->request['page'],$this->request['params']);
 		} else {
 			return $this->redirection(array('module'=>'Start','action'=>'index'));
 		}
@@ -59,6 +61,8 @@ class Start extends Module {
 			foreach($_SESSION["user"]['websites'] as $website)
 				unset($_SESSION['connect_user_'.$website]);
 			unset($_SESSION['user']);
+			if(isset($_SESSION["connect_USER_ADMINNISTRATION"]))
+				unset($_SESSION['connect_USER_ADMINNISTRATION']);
 			$_SESSION['level'] = 0;
 		}
 		return $this->redirection(array('module'=>MODULE_DEFAULT,'action'=>ACTION_DEFAULT));
@@ -96,6 +100,7 @@ class Start extends Module {
 	public function connect() {
 		$Auth_user = new Auth_user();
 		if( $Auth_user->checkUser($this->request['params']['login'],trim($this->request['params']['password']) ) ){
+			Subscription::load();
 			if($this->request['params']['lasthref']){
 				// redirection from last request
 				$url = array(
@@ -111,6 +116,27 @@ class Start extends Module {
 			}
 		}
 		return $this->connexion($this->request['params']['lasthref']);
+	}
+
+	// Connect admin -------------------------------------------------------------
+	public $connectAdmin_filter = array(
+		'login'   => FILTER_SANITIZE_STRING,
+		'password' => FILTER_FLAG_NONE,
+		'lasthref' => FILTER_VALIDATE_URL
+	);
+	public $connectAdmin_filter_path = array();
+	/**
+	* Check connect admin (user admin !)
+	*
+	* @return HTML
+	*/
+	public function connectAdmin() {
+		$this->request['page'] = 'adminconnect';
+		$Auth_user = new Auth_user();
+		if( $Auth_user->checkUser($this->request['params']['login'],trim($this->request['params']['password']),true ) ){
+				$this->request['page'] = 'admin';
+		}
+		return $this->page();
 	}
 }
 ?>

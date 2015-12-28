@@ -75,5 +75,20 @@ class Dirs {
 			$files = array_merge($files, self::globRecursive($dir.'/'.basename($pattern)));
 		return $files;
 	}
+
+	/**
+	* Clear tempory directory
+	*/
+	static public function clearTempDirectory($folder,$delay=1200) {
+		$now = time();
+		foreach (glob($folder."*") as $file){
+			if(filemtime($file)+$delay<$now){//20mn
+				if(is_dir($file))
+				self::deleteDirectory($file);
+				else
+				unlink($file);
+			}
+		}
+	}
 }
 ?>

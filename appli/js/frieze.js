@@ -2,8 +2,6 @@
 window.$frieze = (function(undefined) {
 var initGroup = function(prefix,msgTable,msgOcc,data){
 	var name = data.name;
-	var tableEl = document.getElementById(prefix+'_'+name);
-	var tableBodyEl = document.getElementById(prefix+'Body_'+name);
 	var occurrencesEl = document.getElementById(prefix+'Occ_'+name);
 
 	var occHeadEl = document.getElementById(prefix+'OccHead_'+name);
@@ -26,9 +24,9 @@ var initGroup = function(prefix,msgTable,msgOcc,data){
 		},
 
 		tableSet : function(docs,pos){
+			if(occurrencesEl){
 			var table = new window.TableHTML(data.tableTPL);
 			occurrencesEl.style.display = 'none';
-			tableEl.style.display = 'table';
 
 			if(data.type=='source'){
 				if(docs[pos]!=undefined){
@@ -41,12 +39,19 @@ var initGroup = function(prefix,msgTable,msgOcc,data){
 					table.set(data);
 				});
 			}
+			// ie9 bug
+			var head = document.getElementById(prefix+'Head_'+name).innerHTML;
+			var parent = document.getElementById(prefix+'_'+name).parentNode;
+			parent.innerHTML = '<table id="'+prefix+'_'+name+'"><thead id="'+prefix+'Head_'+name+'">'+head+'</thead><tbody>'+table.get()+'</tbody></table>';
 
-			tableBodyEl.innerHTML = table.get();
-			this.msg(table.getCounter());
+
+			var tableEl = document.getElementById(prefix+'_'+name);
+			tableEl.style.display = 'table';
+
+			this.msg(table.getCounter());}
 		},
 		occSet : function(docs,search,pos){
-			tableEl.style.display = 'none';
+			document.getElementById(prefix+'_'+name).style.display = 'none';
 			occurrencesEl.style.display = 'block';
 
 			var OccHTML = new window.OccHTML(data.occTPL);
@@ -56,15 +61,17 @@ var initGroup = function(prefix,msgTable,msgOcc,data){
 
 			if(data.type=='source'){
 				if(search.response.numFound>0 && docs[pos]!=undefined){
+
 					docs[pos].forEach(function(doc,i){
 						OccHTML.createSection(doc);
 						OccHTML.setTitle(doc);
 						var occCount = 0;
 						search.response.docs.forEach(function(d,i){
-							if(doc.book_s == d.book_s+'')
+							if(doc.book_s == d.book_s+''){
 								occCount += OccHTML.setOcc(d,search.highlighting);
+								Occs[doc.book_s] = occCount;
+							}
 						});
-						Occs[doc.book_s] = occCount;
 						OccHTML.closeSection();
 					});
 					result = OccHTML.get();
@@ -80,9 +87,12 @@ var initGroup = function(prefix,msgTable,msgOcc,data){
 						OccHTML.setTitle(doc);
 						var occCount = 0;
 						search.response.docs.forEach(function(d,i){
-							if(doc.book_s == d.book_s+'')
+							if(doc.book_s == d.book_s+''){
 								occCount += OccHTML.setOcc(d,search.highlighting);
+								Occs[doc.book_s] = occCount;
+							}
 						});
+
 						OccHTML.closeSection();
 					});
 					result = OccHTML.get();
@@ -92,7 +102,6 @@ var initGroup = function(prefix,msgTable,msgOcc,data){
 					occHeadEl.style.display = 'none';
 				}
 			}
-			console.log(occHeadEl);
 			occurrencesEl.innerHTML = result;
 			this.occMsg(OccHTML.getCounters());
 			return Occs;
@@ -156,15 +165,15 @@ var pushInGroup = function(){
 	return function(doc,posBlock){
 		var name = this.getGroupName(doc.category_ss[0]); // TODO: categ !!!!
 		if(name==''){
-			name = 'nosource';
 			console.log('ERROR category ('+doc.book_s+'):'+doc.category_ss[0]);
-		}
-		if(this.type=='source'){
-			if(this.actions[name].group[posBlock] == undefined)
-				this.actions[name].group[posBlock] = [];
-			this.actions[name].group[posBlock].push(doc);
 		} else {
-			this.actions[name].group.push(doc);
+			if(this.type=='source'){
+				if(this.actions[name].group[posBlock] == undefined)
+					this.actions[name].group[posBlock] = [];
+				this.actions[name].group[posBlock].push(doc);
+			} else {
+				this.actions[name].group.push(doc);
+			}
 		}
 	};
 };
@@ -177,8 +186,6 @@ var frieze = {
 		var _this = this;
 		// assign vars
 		this.def = def;
-		this.bars = this.def.bars;
-		this.steps = this.def.steps;
 		// initGroup
 
 		this.groupSource = {
@@ -218,60 +225,68 @@ var frieze = {
 		_this.groupNoSource.render = renderGroup(_this.groupNoSource.data);
 		_this.groupNoSource.inCategories = inCategories();
 
-		// init html
-		var marginMark = (this.bars.height/2)-12;
-		this.bars.element.style.height = (this.bars.height+70)+'px';
-		this.bars.element.innerHTML = [
-		'<div id="friezeBarTop" style="width:'+(this.bars.width+50)+'px;">▲</div>',
-		'<div id="friezeBarLeft" style="height:'+this.bars.height+'px;" data-display="false">',
-			'<span style="margin-top:'+marginMark+'px;">❮</span>',
-		'</div>',
-		'<div id="friezeWarp" style="width:'+this.bars.width+'px;"><div id="friezeSlider"></div></div>',
-		'<div id="friezeBarRight" style="height:'+this.bars.height+'px;" data-display="false">',
-			'<span style="margin-top:'+marginMark+'px;">❯</span>',
-		'</div>'
-		].join('');
+		if(this.def.bars!=undefined){
+			this.bars = this.def.bars;
+			this.steps = this.def.steps;
+			// init html
+			var marginMark = (this.bars.height/2)-12;
+			this.bars.element.style.height = (this.bars.height+70)+'px';
+			this.bars.element.innerHTML = [
+			'<div id="friezeBarTop" style="width:'+(this.bars.width+50)+'px;">▲</div>',
+			'<div id="friezeBarLeft" style="height:'+this.bars.height+'px;" data-display="false">',
+				'<span style="margin-top:'+marginMark+'px;">❮</span>',
+			'</div>',
+			'<div id="friezeWarp" style="width:'+this.bars.width+'px;"><div id="friezeSlider"></div></div>',
+			'<div id="friezeBarRight" style="height:'+this.bars.height+'px;" data-display="false">',
+				'<span style="margin-top:'+marginMark+'px;">❯</span>',
+			'</div>'
+			].join('');
 
-		// assign elements
-		this.bars.friezeWarp = document.getElementById('friezeWarp');
-		this.bars.friezeSlider = document.getElementById('friezeSlider');
-		this.bars.leftEl = document.getElementById('friezeBarLeft');
-		this.bars.rightEl = document.getElementById('friezeBarRight');
-		this.bars.topEl = document.getElementById('friezeBarTop');
+			// assign elements
+			this.bars.friezeWarp = document.getElementById('friezeWarp');
+			this.bars.friezeSlider = document.getElementById('friezeSlider');
+			this.bars.leftEl = document.getElementById('friezeBarLeft');
+			this.bars.rightEl = document.getElementById('friezeBarRight');
+			this.bars.topEl = document.getElementById('friezeBarTop');
 
-		// events
-		this.bars.leftEl.addEventListener('click', function() {
-			if(this.getAttribute('data-display')=='true')
-				_this.toSlide(_this.posStart-1)
-		});
-		this.bars.rightEl.addEventListener('click', function() {
-			if(this.getAttribute('data-display')=='true')
-				_this.toSlide(_this.posStart+1)
-		});
-		this.bars.friezeSlider.addEventListener('click', function(event) {
-			if(event.target && event.target.nodeName == 'DIV'){
-				var bar = event.target.getAttribute('data-bar');
-				if(bar!=undefined){
-					var start = _this.def.start+(bar*_this.steps[_this.step].increment);
-					var nStep = _this.step+1;
-					if(_this.steps[nStep]!=undefined){
-						_this.step = nStep;
-						if(_this.step>0)
-							_this.bars.topEl.style.visibility = 'visible';
-						frieze.parse(start,_this.steps[_this.step].bars,_this.steps[_this.step].increment);
+			// events
+			this.bars.leftEl.addEventListener('click', function() {
+				if(this.getAttribute('data-display')=='true')
+					_this.toSlide(_this.posStart-1)
+			});
+			this.bars.rightEl.addEventListener('click', function() {
+				if(this.getAttribute('data-display')=='true')
+					_this.toSlide(_this.posStart+1)
+			});
+			this.bars.friezeSlider.addEventListener('click', function(event) {
+				if(event.target && event.target.nodeName == 'DIV'){
+					var bar = event.target.getAttribute('data-bar');
+					if(bar!=undefined){
+						var start = _this.def.start+(bar*_this.steps[_this.step].increment);
+						var nStep = _this.step+1;
+						if(_this.steps[nStep]!=undefined){
+							_this.step = nStep;
+							if(_this.step>0)
+								_this.bars.topEl.style.visibility = 'visible';
+							frieze.parse(start,_this.steps[_this.step].bars,_this.steps[_this.step].increment);
+						}
 					}
 				}
-			}
-		});
-		this.bars.topEl.addEventListener('click', function(event) {
-			if(_this.step>0){
-				var date = _this.def.start+(_this.posStart*(_this.steps[_this.step].bars*_this.steps[_this.step].increment));
-				_this.step--;
-				if(_this.step==0)
-					this.style.visibility = 'hidden';
-				frieze.parse(date,_this.steps[_this.step].bars,_this.steps[_this.step].increment);
-			}
-		});
+			});
+			this.bars.topEl.addEventListener('click', function(event) {
+				if(_this.step>0){
+					var date = _this.def.start+(_this.posStart*(_this.steps[_this.step].bars*_this.steps[_this.step].increment));
+					_this.step--;
+					if(_this.step==0)
+						this.style.visibility = 'hidden';
+					frieze.parse(date,_this.steps[_this.step].bars,_this.steps[_this.step].increment);
+				}
+			});
+		} else {
+			this.def.start = -5000;
+			this.def.end = 5000;
+			this.steps = [{bars:10000,increment:1}];
+		}
 	},
 
 	start :function(){
@@ -374,45 +389,57 @@ var frieze = {
 				});
 			}
 		}
-		var posStart = this.getPosFromDate(start);
-		if(start == this.def.start && _this.booksOcc!=null){
-				for (var i = 0; i < barsCount.length; i++) {
-					if(barsCount[i]>0){
-						posStart = Math.floor(i/increment);
-						break;
+		if(this.bars!=undefined){
+			var posStart = this.getPosFromDate(start);
+			if(start == this.def.start && _this.booksOcc!=null){
+					for (var i = 0; i < barsCount.length; i++) {
+						if(barsCount[i]>0){
+							posStart = Math.floor(i/increment);
+							break;
+						}
 					}
-				}
-		}
-		this.toSlide(posStart);
+			}
+			this.toSlide(posStart);
 
-		var htmlBar = ['<div class="friezeBar"><div style="width:0px;height:'+this.bars.height+'px;"></div>'];
-		var htmlDate = ['<div class="friezeDate">'];
-		var height = Math.floor(this.bars.height/Math.max.apply( Math, barsCount ));
-		var width = Math.floor(this.bars.width/this.steps[this.step].bars);
-		this.barsWidth = (width+1)*this.steps[this.step].bars;
-		this.bars.friezeWarp.style.width = (this.barsWidth-1)+'px';
-		this.bars.element.style.width = (this.barsWidth+50)+'px';
-		this.bars.topEl.style.width = (this.barsWidth+50)+'px';
-		if(docsOccs){
-			docsOccs.forEach(function(value,i){
-				if(typeof value =='object'){
-					var _dd = 0;
-					value.forEach(function(v){_dd += _this.Occs[v];});
-					docsOccs[i] = _dd;
-				}
+			var htmlBar = ['<div class="friezeBar"><div style="width:0px;height:'+this.bars.height+'px;"></div>'];
+			var htmlDate = ['<div class="friezeDate">'];
+			var height = Math.floor(this.bars.height/Math.max.apply( Math, barsCount ));
+			var width = Math.floor(this.bars.width/this.steps[this.step].bars);
+			this.barsWidth = (width+1)*this.steps[this.step].bars;
+			this.bars.friezeWarp.style.width = (this.barsWidth-1)+'px';
+			this.bars.element.style.width = (this.barsWidth+50)+'px';
+			this.bars.topEl.style.width = (this.barsWidth+50)+'px';
+			if(docsOccs){
+				docsOccs.forEach(function(value,i){
+					if(typeof value =='object'){
+						var _dd = 0;
+						value.forEach(function(v){_dd += _this.Occs[v];});
+						docsOccs[i] = _dd;
+					}
+				});
+			}
+			barsCount.forEach(function(value,i){
+				var occ = '';
+				if(docsOccs && docsOccs[i]>0)
+					occ = '<span class="bar_occ">'+docsOccs[i]+'</span>';
+				htmlBar.push('<div style="width:'+width+'px;height:'+(value*height)+'px" data-bar="'+i+'">'+occ+'<span class="bar_book">'+value+'</span></div>');
+				htmlDate.push('<div style="width:'+width+'px;"><span>'+(_this.def.start+(increment*i))+'</span></div>');
 			});
+			htmlBar.push('</div>');
+			htmlDate.push('</div>');
+			this.bars.friezeSlider.innerHTML = htmlBar.join('')+htmlDate.join('');
+			this.bars.friezeSlider.setAttribute('data-transition','none');
+		} else {
+			if(_this.booksOcc==null){
+				_this.groupSource.render('table',null,0);
+			} else {
+				var occCount = _this.groupSource.render('occ',_this.search,pos);
+				for (var book in _this.Occs) {
+					if(occCount[book]!=undefined)
+						_this.Occs[book] = occCount[book];
+				}
+			}
 		}
-		barsCount.forEach(function(value,i){
-			var occ = '';
-			if(docsOccs && docsOccs[i]>0)
-				occ = '<span class="bar_occ">'+docsOccs[i]+'</span>';
-			htmlBar.push('<div style="width:'+width+'px;height:'+(value*height)+'px" data-bar="'+i+'">'+occ+'<span class="bar_book">'+value+'</span></div>');
-			htmlDate.push('<div style="width:'+width+'px;"><span>'+(_this.def.start+(increment*i))+'</span></div>');
-		});
-		htmlBar.push('</div>');
-		htmlDate.push('</div>');
-		this.bars.friezeSlider.innerHTML = htmlBar.join('')+htmlDate.join('');
-		this.bars.friezeSlider.setAttribute('data-transition','none');
 
 		// ----------------------------------------------------------------------
 		// noSources
@@ -425,7 +452,6 @@ var frieze = {
 
 	occurrences : function(data){
 		this.step = 0
-		this.bars.topEl.style.visibility = 'hidden';
 		this.search = data;
 		this.booksOcc = [];
 		this.categsOcc = [];
@@ -437,6 +463,8 @@ var frieze = {
 				this.booksOcc.push(id);
 			}
 		}
+		if(this.bars!=undefined)
+			this.bars.topEl.style.visibility = 'hidden';
 		this.parse(this.def.start,this.steps[0].bars,this.steps[0].increment);
 	},
 

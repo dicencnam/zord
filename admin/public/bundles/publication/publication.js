@@ -15,19 +15,20 @@ define('bdl/publication/publication',function() {
 				action : 'getDocs'
 			},
 			success : function (data) {
+				var tplPanelContent = $bundles.tpls.publication_item;
 				for(var portal in data.books){
-					$bundles.tpls.publication_portal({
-						portal:portal,
-						label_isbn : locale.label_isbn,
-						label_title : locale.label_title,
-						label_date : locale.label_date,
-						label_status : locale.label_status,
-						label_novelty : locale.label_novelty,
-						label_download : locale.label_download
+
+					$bundles.tpls.publication_tab({
+						portal:portal
 					});
-					for(var isbn in data.books[portal]){
-						var level = data.books[portal][isbn].level*1;
-						var novelty = data.books[portal][isbn].novelty;
+
+					var content = '';
+					var thePortal = data.books[portal];
+
+					for(var isbn in thePortal){
+
+						var level = thePortal[isbn].level*1;
+						var novelty = thePortal[isbn].novelty;
 						var cl = '';
 						var selected_draft = '';
 
@@ -42,12 +43,13 @@ define('bdl/publication/publication',function() {
 							checked_novelty = ' checked="checked"';
 						}
 
-						var title = data.books[portal][isbn].title.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+						var title = thePortal[isbn].title.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
 							 return '&#'+i.charCodeAt(0)+';';
 						});
-						$bundles.tpls.publication_item({
+
+						var _data = {
 							title:title,
-							date:data.books[portal][isbn].date_i,
+							date:thePortal[isbn].date_i,
 							isbn:isbn,
 							portal:portal,
 							level:cl,
@@ -55,12 +57,28 @@ define('bdl/publication/publication',function() {
 							issued:locale.issued,
 							selected_draft:selected_draft,
 							checked_novelty:checked_novelty,
-							downlod:PATH+'Admin_binary/getTEIfile/'+portal+'/'+isbn
-						});
+							href:WEBSITESURL[portal]+'/'+isbn,
+							load:PATH+'Admin_binary/loadTEIfile/'+portal+'/'+isbn,
+							download:PATH+'Admin_binary/getTEIfile/'+portal+'/'+isbn
+						};
+						content += $tpl.render(tplPanelContent, _data);
 					}
+
+					$bundles.tpls.publication_panels({
+						portal:portal,
+						label_isbn : locale.label_isbn,
+						label_title : locale.label_title,
+						label_date : locale.label_date,
+						label_status : locale.label_status,
+						label_novelty : locale.label_novelty,
+						label_download : locale.label_download,
+						content : content
+					});
 				}
-				[].forEach.call(document.getElementById('publication_table')
-					.querySelectorAll('.pub-draft'), function (el) {
+				var publicationEl = document.getElementById('publication_table');
+				$panelsTabs(publicationEl);
+
+				[].forEach.call(publicationEl.querySelectorAll('.pub-draft'), function (el) {
 						var parent = el.parentNode.parentNode;
 						switch (el.className) {
 							case 'pub-draft':
@@ -78,8 +96,7 @@ define('bdl/publication/publication',function() {
 					}
 				);
 
-				[].forEach.call(document.getElementById('publication_table')
-					.querySelectorAll('input[data-type="novelty"]'), function (el) {
+				[].forEach.call(publicationEl.querySelectorAll('input[data-type="novelty"]'), function (el) {
 						var parent = el.parentNode.parentNode;
 						el.addEventListener('change', function(event){
 							MSG.wait();

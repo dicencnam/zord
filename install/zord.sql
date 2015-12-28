@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 CREATE TABLE IF NOT EXISTS `users` (
 `id` int(11) unsigned NOT NULL,
   `login` varchar(255) NOT NULL,
+  `ip` varchar(15) NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(256) NOT NULL,
   `type` varchar(10) NOT NULL,
@@ -44,8 +45,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `end` date NOT NULL,
   `email` varchar(255) NOT NULL,
   `websites` varchar(255) NOT NULL,
-  `level` int(1) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `level` int(1) unsigned NOT NULL,
+  `subscription` int(6) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Index pour les tables exportées

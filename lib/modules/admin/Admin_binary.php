@@ -40,5 +40,43 @@ class Admin_binary extends Module {
 			'content' => file_get_contents(TEI_FOLDER.$repository.DS.$book.DS.$book.'.xml')
 		);
 	}
+
+	// loadTEIfile --------------------------------------------------------------------
+	public $loadTEIfile_filter = array();
+	public $loadTEIfile_filter_path = array(
+		'repository' => FILTER_SANITIZE_STRING,
+		'book' => FILTER_SANITIZE_NUMBER_INT
+	);
+	/**
+	* Load TEI file
+	*
+	* @return BINARY
+	*/
+	public function loadTEIfile() {
+		$book = $this->request['params_path']['book'];
+		$repository = $this->request['params_path']['repository'];
+		return TEI_FOLDER.$repository.DS.$book.DS.$book.'.xml';
+	}
+
+	// getEPUBfile --------------------------------------------------------------------
+	public $getEPUBfile_filter = array();
+	public $getEPUBfile_filter_path = array(
+		'repository' => FILTER_SANITIZE_STRING,
+		'book' => FILTER_SANITIZE_NUMBER_INT
+	);
+	/**
+	* Get EPUB file
+	*
+	* @return BINARY
+	*/
+	public function getEPUBfile() {
+		$book = $this->request['params_path']['book'];
+		$repository = $this->request['params_path']['repository'];
+		return array(
+			'extension' => 'epub',
+			'filename' => $book.'.epub',
+			'content' => file_get_contents(EPUBS_FOLDER.$repository.DS.$book.'.epub')
+		);
+	}
 }
 ?>

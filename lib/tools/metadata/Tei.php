@@ -33,9 +33,9 @@ class Tei {
 		if(isset($data->filedesc->titlestmt->title)){
 			foreach ($data->filedesc->titlestmt->title as $title){
 				if(isset($title['type']) && $title['type']=='sub')
-					$metadata['subtitle'] = $title.'';
+					$metadata['subtitle'] = str_replace(array("\r\n", "\r", "\n"), ' ', $title.'');
 				else
-					$metadata['title'] = $title.'';
+					$metadata['title'] = str_replace(array("\r\n", "\r", "\n"), ' ', $title.'');
 			}
 		}
 
@@ -70,7 +70,19 @@ class Tei {
 				$unit = $measure['unit'].'';
 				if($unit=='pages'){
 					$metadata['pages']  = $measure['quantity'].'';
+				} else {
+					$metadata['pages_'.$unit]  = $measure['quantity'].'';
 				}
+			}
+		}
+
+		if(isset($data->profiledesc->abstract)){
+			foreach ($data->profiledesc->abstract as $abstract){
+				if(!isset($metadata['description']))
+					$metadata['description'] = array();
+
+				$lang = $abstract['xmllang'].'';
+				$metadata['description'][$lang] = $abstract->p.'';
 			}
 		}
 
@@ -110,7 +122,7 @@ class Tei {
 
 				if($type=='num')
 					$metadata['collection_number'] = $line.'';
-				else if($type=='')
+				else if($type=='main')
 					$relation[] = $line.'';
 			}
 			$metadata['relation'] = implode(", ", $relation);
@@ -146,47 +158,46 @@ class Tei {
 		}
 
 		if(isset($data->profiledesc->creation->date)){
-			if(isset($data->profiledesc->creation->date['when'])){
-				if($data->profiledesc->creation->date['when']!='')
+				if(isset($data->profiledesc->creation->date['when']) && $data->profiledesc->creation->date['when']!='')
 					$metadata['creation_date'] = Tei::setDateInteger($data->profiledesc->creation->date['when'].'');
-			} else if(isset($data->profiledesc->creation->date['notbefore'])){
-				if($data->profiledesc->creation->date['notbefore']!='')
+
+				if(isset($data->profiledesc->creation->date['notbefore']) && $data->profiledesc->creation->date['notbefore']!='')
 					$metadata['creation_date'] = Tei::setDateInteger($data->profiledesc->creation->date['notbefore'].'');
-			} else if(isset($data->profiledesc->creation->date['notafter'])){
-				if($data->profiledesc->creation->date['notafter']!='')
+
+				if(isset($data->profiledesc->creation->date['notafter']) && $data->profiledesc->creation->date['notafter']!='')
 					$metadata['creation_date_after'] = Tei::setDateInteger($data->profiledesc->creation->date['notafter'].'');
-			} else if(isset($data->profiledesc->creation->date['from'])){
-				if($data->profiledesc->creation->date['from']!='')
+
+				if(isset($data->profiledesc->creation->date['from']) && $data->profiledesc->creation->date['from']!='')
 					$metadata['creation_date'] = Tei::setDateInteger($data->profiledesc->creation->date['from'].'');
-			} else if(isset($data->profiledesc->creation->date['to'])){
-				if($data->profiledesc->creation->date['to']!='')
+
+				if(isset($data->profiledesc->creation->date['to']) && $data->profiledesc->creation->date['to']!='')
 					$metadata['creation_date_after'] = Tei::setDateInteger($data->profiledesc->creation->date['to'].'');
-			}
 		}
 
 		if(isset($data->profiledesc->langusage->language))
 			$metadata['language'] = $data->profiledesc->langusage->language['ident'].'';
 
-		$category = array();
+		$metadata['subjectCodes'] = array();
+
 		if(isset($data->profiledesc->textclass)){
 			if(isset($data->profiledesc->textclass->keywords)){
 				foreach ($data->profiledesc->textclass->keywords as $keywords){
 					$scheme = $keywords['scheme'].'';
-					$load = false;
-					if($scheme=='BISAC' || $scheme=='CLIL')
-						$load = true;
-					if($scheme=='Droz' && $keywords['xmllang']=='fr')
-						$load = true;
-					if($load){
-						foreach ($keywords->term as $term){
-							$category[] = mb_strtoupper(trim($term.''));
-						}
+					$subjectCodes = array();
+
+					$load = mb_strtoupper($scheme);
+					$lang = '';
+
+					if(isset($keywords['xmllang']))
+						$lang = '_'.mb_strtoupper($keywords['xmllang'].'');
+
+					foreach ($keywords->term as $term){
+						$subjectCodes[] = mb_strtoupper(trim($term.''));
 					}
+					$metadata['subjectCodes'][$load.$lang] = $subjectCodes;
 				}
 			}
 		}
-		if(count($category)>0)
-			$metadata['category']  = $category;
 
 		return $metadata;
 	}

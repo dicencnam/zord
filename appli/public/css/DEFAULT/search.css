@@ -1,5 +1,5 @@
 /**
-* Calvin search & frieze
+* __PORTALDEFAULT__ Search & frieze
 *
 */
 
@@ -14,15 +14,38 @@
 }
 
 #search_frames {
-	text-align:center;
-	margin: 35px auto;
+	text-align: center;
+	margin: 10px auto 35px auto;
 }
 
+#search_frames .panels {
+	border-top: 0;
+}
+/*
 #search_frames .framer > div {
 	width: 219px;
 	height: 13px;
 	margin-top: 2px;
 	cursor:inherit;
+}*/
+#search_frames .tab {
+	width: 180px;
+	display: inline-table;
+	border-left: 9px solid gainsboro;
+	border-bottom: 0;
+	text-transform: uppercase;
+	height: 37px;
+	color: gainsboro;
+	font-weight: bold;
+	padding: 0px 10px;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background: white;
 }
 
 #search_frames .frame_subtitle .frame_book {
@@ -31,8 +54,9 @@
 	font-size: 0.8em;
 }
 
-#search_frames .framer.paneselect .frame_subtitle .frame_book {
+#search_frames .tab.paneselect .frame_subtitle .frame_book {
 	color: #454C52;
+	cursor: default;
 }
 
 #search_frames .frame_subtitle .frame_occ {
@@ -64,10 +88,10 @@
 }
 
 #query {
-	width: 820px;
-	height: 30px;
+	width: 800px;
+	height: 28px;
 	position: relative;
-	top: -1px;
+	top: -2px;
 	padding-left: 15px;
 	border: 0;
 	font-size: 1.1em;
@@ -254,17 +278,9 @@
 .occurrences_header span {
 	display: table-cell;
 	color: black;
-	padding: 10px 0;
+	padding: 3px;
 	text-align: center;
 	border-left:1px solid white;
-}
-
-.occurrences_header span:first-child {
-	border-top-left-radius: 16px;
-}
-
-.occurrences_header span:last-child {
-	border-top-right-radius: 16px;
 }
 
 /* title book */
@@ -278,6 +294,7 @@
 	width: 850px;
 	margin:auto;
 	font-weight:normal;
+	font-size:16px;
 }
 
 .occurrences h1 > span {
@@ -289,40 +306,83 @@
 	border: 1px solid lightgray;
 }
 
-.creation_date_i_Occ {
-	max-width: 40px;
-	width:5%;
-}
+/*
 
-.creation_date_after_i_Occ {
-	max-width: 40px;
+40 5%
+40 5%
+150 18%
+435 49%
+150 18%
+40  5%
+
+----
+
+180 21%
+435 51%
+180 21%
+60 7%
+
+855 -> 100
+*/
+
+.head_sources .creation_date_i_Occ {
+	min-width: 40px;
 	width:5%;
 }
-.creator_ss_Occ {
+.head_sources .creation_date_after_i_Occ {
+	min-width: 40px;
+	width:5%;
+}
+.head_sources .creator_ss_Occ {
 	max-width: 150px;
 	width:18%;
 	font-weight:bold;
 }
-
-.title_s_Occ {
-	max-width: 435px;
-	width:50%;
+.head_sources .title_s_Occ {
+	min-width: 435px;
+	width:49%;
 }
+.head_sources .editor_ss_Occ {
+	min-width: 150px;
+	width:18%;
+	font-weight:bold;
+}
+.head_sources .date_i_Occ {
+	min-width: 40px;
+	width:5%;
+}
+
+.head_nosources .creation_date_i_Occ {
+	max-width: 0px;
+}
+.head_nosources .creation_date_after_i_Occ {
+	max-width: 0px;
+}
+.head_nosources .creator_ss_Occ {
+	max-width: 180px;
+	width:21%;
+	font-weight:bold;
+}
+.head_nosources .title_s_Occ {
+	max-width: 445px;
+	width:51%;
+}
+.head_nosources .editor_ss_Occ {
+	max-width: 180px;
+	width:21%;
+	font-weight:bold;
+}
+.head_nosources .date_i_Occ {
+	max-width: 60px;
+	width:7%;
+}
+
 .title_s_Occ a {
 	text-decoration: none;
 	color:#6A737E
 }
 .title_s_Occ a:hover {
 	text-decoration: underline;
-}
-.editor_ss_Occ {
-	max-width: 150px;
-	width:18%;
-	font-weight:bold;
-}
-.date_i_Occ {
-	max-width: 40px;
-	width:5%;
 }
 
 /* title chapter */
@@ -338,7 +398,6 @@
 	font-weight:normal;
 	border-left: 1px solid #808489;
 	padding: 10px;
-	display: inline-block;
 }
 
 .occurrences .chapter .chapter_occ {

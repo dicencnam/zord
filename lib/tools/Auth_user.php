@@ -13,27 +13,30 @@ class Auth_user {
 	* Constructor
 	*/
 	public function __construct(){
-		include_once(ROOT.'config'.DS.'config_orm_user.php');
+		include_once(CONFIG_FOLDER.'config_db_user.php');
 	}
 
 	/**
 	* Check IP
 	*/
 	public function checkIp() {
+
 		$_SESSION["IPCONNEXION"] = false;
 		$_SESSION["CONNECT"] = false;
-		if($IP = $this->_getIp() && !MODE_ADMIN){
+
+		$IP = $_SERVER['REMOTE_ADDR'];
+		if(filter_var( $IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 )){
 			$IP = explode('.',$IP);
 			$users = ORM::for_table('users', 'zord_user')
 			->where('type', 'IP')
 			->find_array();
 			if($users){
 				foreach ($users as $key => $value) {
-					$IPList = explode(',',$value['login']);
+					$IPList = explode(',',$value['ip']);
 					foreach ($IPList as $v) {
 						$userIP = explode('.',$v);
 						if($this->_validIP($IP,$userIP)){
-							$this->_validUser($users[$key]);
+							$this->_validUser($users[$key],false);
 							$_SESSION["IPCONNEXION"] = true;
 							$_SESSION["CONNECT"] = true;
 						}
@@ -52,12 +55,12 @@ class Auth_user {
 	* @param String $password Password
 	* @return boolean
 	*/
-	public function checkUser($login, $password) {
+	public function checkUser($login, $password, $admin=false) {
 		$user = ORM::for_table('users', 'zord_user')
 		->where_raw('(`login` = ? AND `password` = ?)', array($login, hash('sha256', SALT.$password)))
 		->find_one();
 		if($user)
-			return $this->_validUser($user->as_array());
+			return $this->_validUser($user->as_array(),$admin);
 		return FALSE;
 	}
 
@@ -66,7 +69,7 @@ class Auth_user {
 	*
 	* @param array $data
 	*/
-	public function userAssign($data) {
+	public function userAssign($data,$admin) {
 		session_regenerate_id();
 		$_SESSION["user"] = array(
 			"id" => $data["id"],
@@ -77,11 +80,16 @@ class Auth_user {
 			"end" => $data['end'],
 			"email" => $data['email'],
 			"level" => $data['level'],
-			"websites" => $data['websites']
+			"websites" => $data['websites'],
+			"ip" => $data['ip'],
+			"subscription" => (int) $data['subscription']
 		);
 		$_SESSION['level'] = (int) $data['level'];
 
 		$_SESSION["CONNECT"] = true;
+
+		if($admin)
+			$_SESSION["connect_USER_ADMINNISTRATION"] = true;
 		// login for websites
 		foreach($data['websites'] as $website)
 			$_SESSION['connect_user_'.$website] = true;
@@ -97,19 +105,16 @@ class Auth_user {
 	protected function _validIP($IP,$userIP) {
 		return min(array_map(
 			function($n,$m){
-				if($n===$m || $m==='*')
+				if(strpos($m, '-')){
+					$pl = explode('-',$m);
+					$n = (int) $n;
+					if($n>=(int)$pl[0] && $n<=(int)$pl[1])
+						return 1;
+				} else if($n===$m || $m==='*'){
 					return 1;
+				}
 				return 0;
 			},$IP,$userIP));
-	}
-
-	/**
-	* Get IP
-	*
-	* @return String
-	*/
-	protected function _getIp() {
-		return filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 );
 	}
 
 	/**
@@ -118,7 +123,7 @@ class Auth_user {
 	* @param array $data User data
 	* @return boolean
 	*/
-	protected function _validUser($data) {
+	protected function _validUser($data,$admin) {
 		// website
 		$data['websites'] = explode(',', trim($data['websites']));
 		// dates
@@ -128,7 +133,7 @@ class Auth_user {
 		$expire = $expire->format('Ymd');
 
 		if (in_array($_SESSION['switcher']['name'], $data['websites']) && $expire>$now) {
-			$this->userAssign($data);
+			$this->userAssign($data,$admin);
 			return true;
 		}
 		return false;

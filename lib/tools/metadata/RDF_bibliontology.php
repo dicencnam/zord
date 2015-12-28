@@ -46,9 +46,14 @@ class RDF_bibliontology extends EasyRdf_Graph {
 			$this->bibo->set('dcterms:title', $title);
 		}
 
-
-			if(isset($metadata['description']))
+		if(isset($metadata['description'])){
+			if(gettype($metadata['description'])=='string'){
 				$this->bibo->set('dcterms:abstract', $metadata['description']);
+			} else {
+				foreach ($metadata['description'] as $key => $value)
+					$this->bibo->addLiteral('dcterms:abstract', $value, $key);
+			}
+		}
 
 		if(isset($metadata['publisher'])){
 			$Organization = $this->newBnode('foaf:Organization');

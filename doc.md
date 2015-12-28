@@ -10,19 +10,6 @@ yuidoc -c zord_yuidoc.json --themedir ./theme_zord_yuidoc
 cd ~/doc/
 php apigen.phar generate
 
-## ePub
-
-Le nom du fichier de couverture doit être : frontcover.jpg
-
-Et il doit avoir comme adresse :
-
-	../appli/medias/ID_DU_FICHIER/frontcover.jpg
-
-
-## Création d'un nouveau portail
-
-/usr/bin/php -f /zord_adress/services/services.php newportal portal_name;
-
 #### definition
 
 	- PORTAL
@@ -35,6 +22,7 @@ Et il doit avoir comme adresse :
 		− admin
 			− js
 				TEI_PORTAL.js
+				TEITOHTML_PORTAL.js
 		− appli
 			− public
 				− css
@@ -43,13 +31,14 @@ Et il doit avoir comme adresse :
 						main.css
 						main_small.css
 						marker.css
-						TEICSSNAMEFILE.css
-						TEICSSNAMEFILE_print.css
 						print.css
 						search.css
 						table.css
+						TEICSSNAMEFILE.css
+						TEICSSNAMEFILE_print.css
 				− js
 					− PORTAL
+						admin.js
 						book.js
 						main.js
 						search.js
@@ -58,6 +47,8 @@ Et il doit avoir comme adresse :
 			− locale
 				− LOCALE
 					− PORTAL
+						admin.json
+						adminconnect.json
 						book.json
 						categories.json
 						connexion.json
@@ -69,6 +60,7 @@ Et il doit avoir comme adresse :
 						notices.json
 						search.json
 						start_books.json
+						subscription.json
 			− modules
 				− admin
 					Admin_TEI_PORTAL.php
@@ -76,12 +68,12 @@ Et il doit avoir comme adresse :
 				− PORTAL
 					− epub
 						cover.jpg
-						def.php
 						epub.css
-						to.xsl
 			− view
 				− zord
 					− PORTAL
+						admin.php
+						adminconnect.php
 						book.php
 						citations.php
 						connexion.php
@@ -94,6 +86,8 @@ Et il doit avoir comme adresse :
 						search.php
 						start.php
 						start_books.php
+						subscription.php
+						subscription_portal.php
 						− pages
 							− LOCALE
 								xxx.php
@@ -106,27 +100,8 @@ Et il doit avoir comme adresse :
 #### var in file
 
 	− zord
-		− lib
-			− zord
-				websites.php
-
-
-## Infos droz
-
-http://wikinum.droz.org/
-http://wikiportails.droz.org/doku.php?id=archicol
-http://wikiportails.droz.org/doku.php?id=cdcf
-
-
-## git
-
-Supprimer dossier lib/switcher
-
-
-## Problèmes
-
-- champ pour la langue : fre, lat ?? (FR-fr ou fr mais pas fre ; quelle norme ?)
-
+		− config
+			config_portals.php
 
 ## Dépendances
 - base de données : MySQL Version 5.5 min encodage UTF-8
@@ -134,29 +109,33 @@ Supprimer dossier lib/switcher
 - langage côté client : ECMAScript Version 5 (javaScript)
 - Pages web : HTML5 + CSS3
 - Moteur de recherche : Solr Version 4 min
-- Création des ePub : TEI XSL Stylesheets (teitoepub) Version 7.28 min
-	- Automatisation : Ant Apache Version 1.9.3 min
 - Analyse RNG : Jing Version 20081028 min
 - Analyse ePub : EpubCheck V3.0.1 min
+- Débugage : extension Chrome https://craig.is/writing/chrome-logger
 
-- libPHP ?
-
-## Docs
-
-http://www.loc.gov/marc/marc-functional-analysis/tool.html
-
-https://www.digitalocean.com/community/tutorials/how-to-install-solr-on-ubuntu-14-04
-sudo service tomcat6 restart
-
-
-http://blog.hemantthorat.com/php-solr-integration/#sthash.zZniYj5Z.dpbs
-
-http://www.kingstonlabs.com/blog/how-to-install-solr-36-on-ubuntu-1204/
-
-https://github.com/kcl-ddh/kiln/blob/master/webapps/ROOT/kiln/stylesheets/solr/tei-eats-to-solr.xsl
-
-
-https://github.com/csupnig/Solr-PHP-Example/blob/master/index.php
+- PHP extensions :
+	- Core
+	- ctype
+	- date
+	- dom
+	- filter
+	- hash
+	- json
+	- libxml
+	- mbstring
+	- pcre
+	- PDO
+	- pdo_mysql
+	- Phar
+	- session
+	- SimpleXML
+	- solr
+	- SPL
+	- standard
+	- tokenizer
+	- xsl
+	- xml
+	- zip
 
 ## Indexation "cron"
 

@@ -24,6 +24,7 @@ class SimpleControler extends Controler implements IControler {
 			$Auth_user = new Auth_user();
 			$Auth_user->checkIp();
 		}
+		Subscription::create();
 		$this->_redirection();
 	}
 }

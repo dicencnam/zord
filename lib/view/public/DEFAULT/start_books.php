@@ -1,67 +1,53 @@
-<?php
-echo <<<EOD
 
 <div id="start_novelty">
+	<h1><?php echo $v['lang']->new; ?></h1>
+	<table id="table_novelty">
+		<thead>
+			<tr>
+			<th style="width: 30px;">[<?php echo $v['lang']->source_date; ?></th>
+			<th style="width: 30px;"><?php echo $v['lang']->source_date; ?>]</th>
+			<th style="width: 150px;"><?php echo $v['lang']->authors; ?></th>
+			<th style="width: 450px;"><?php echo $v['lang']->title; ?></th>
+			<th style="width: 200px;"><?php echo $v['lang']->editors; ?></th>
+			<th style="width: 55px;"><?php echo $v['lang']->publication_date; ?></th>
+			</tr>
+		</thead>
+		<tbody><?php echo $v['books']['novelty']; ?></tbody>
+	</table>
+</div>
 
-<h1>{$v['lang']->new}</h1>
-<table id="table_novelty">
-	<thead>
-		<tr>
-		<th style="width: 30px;">{$v['lang']->date}</th>
-		<th style="width: 30px;">{$v['lang']->date}</th>
-		<th style="width: 150px;">{$v['lang']->authors}</th>
-		<th style="width: 450px;">{$v['lang']->title}</th>
-		<th style="width: 200px;">{$v['lang']->editors}</th>
-		<th style="width: 55px;">{$v['lang']->publication_date}</th>
-		</tr>
-	</thead>
-	<tbody>{$v['books']['novelty']}</tbody>
-</table>
-
+<div class="panelsTabs" id="start_source">
+	<div class="tabs">
+		<div data-tab="source" class="tab"><div class="frame_title"><?php echo $v['lang']->source; ?></div></div>
+		<div data-tab="nosource" class="tab"><div class="frame_title"><?php echo $v['lang']->nosource; ?></div></div>
+	</div>
+	<div class="panels">
+		<div data-panel="source" class="panel">
+			<table id="table_source">
+				<thead>
+					<tr>
+						<th style="width: 30px;">[<?php echo $v['lang']->source_date; ?></th>
+						<th style="width: 30px;"><?php echo $v['lang']->source_date; ?>]</th>
+						<th style="width: 150px;"><?php echo $v['lang']->authors; ?></th>
+						<th style="width: 450px;"><?php echo $v['lang']->title; ?></th>
+						<th style="width: 200px;"><?php echo $v['lang']->editors; ?></th>
+						<th style="width: 55px;"><?php echo $v['lang']->publication_date; ?></th>
+					</tr>
+				</thead>
+				<tbody><?php echo $v['books']['source']; ?></tbody>
+			</table>
+		</div>
+		<div data-panel="nosource" class="panel">
+			<table id="table_nosource">
+				<thead>
+					<tr>
+						<th style="width: 150px;"><?php echo $v['lang']->authors; ?></th>
+						<th style="width: 500px;"><?php echo $v['lang']->title; ?></th>
+						<th style="width: 200px;"><?php echo $v['lang']->editors; ?></th>
+						<th style="width: 55px;"><?php echo $v['lang']->publication_date; ?></th>
+					</tr>
+				</thead>
+				<tbody><?php echo $v['books']['nosource']; ?></tbody>
+			</table>
+		</div>
 </div>
-<div id="start_source">
-<div id="frame_source" class="framer paneselect"><div class="frame_title">{$v['lang']->source}</div></div>
-<div id="frame_nosource" class="framer"><div class="frame_title">{$v['lang']->nosource}</div></div>
-<div id="frame_biblio" class="framer"><div class="frame_title">{$v['lang']->bibliography}</div></div>
-</div>
-<div id="start_tables">
-<table id="table_source">
-	<thead>
-		<tr>
-			<th style="width: 30px;">{$v['lang']->date}</th>
-			<th style="width: 30px;">{$v['lang']->date}</th>
-			<th style="width: 150px;">{$v['lang']->authors}</th>
-			<th style="width: 450px;">{$v['lang']->title}</th>
-			<th style="width: 200px;">{$v['lang']->editors}</th>
-			<th style="width: 55px;">{$v['lang']->publication_date}</th>
-		</tr>
-	</thead>
-	<tbody>{$v['books']['source']}</tbody>
-</table>
-<table id="table_nosource">
-	<thead>
-		<tr>
-			<th style="width: 150px;">{$v['lang']->authors}</th>
-			<th style="width: 500px;">{$v['lang']->title}</th>
-			<th style="width: 200px;">{$v['lang']->editors}</th>
-			<th style="width: 55px;">{$v['lang']->publication_date}</th>
-		</tr>
-	</thead>
-	<tbody>{$v['books']['nosource']}</tbody>
-</table>
-<table id="table_biblio">
-	<thead>
-		<tr>
-			<th style="width: 30px;">{$v['lang']->date}</th>
-			<th style="width: 30px;">{$v['lang']->date}</th>
-			<th style="width: 150px;">{$v['lang']->authors}</th>
-			<th style="width: 450px;">{$v['lang']->title}</th>
-			<th style="width: 200px;">{$v['lang']->editors}</th>
-			<th style="width: 55px;">{$v['lang']->publication_date}</th>
-		</tr>
-	</thead>
-	<tbody>{$v['books']['biblio']}</tbody>
-</table>
-</div>
-EOD;
-?>

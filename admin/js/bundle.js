@@ -97,7 +97,7 @@ window.$bundles = (function(undefined) {
 					if (tpls) {
 						for (var t in tpls) {
 							// on passe par un moteur de template JS si la langue existe
-							if (tpls[t] && lang)
+							if (tpls[t] && lang && tpls[t].lang===undefined)
 								tplRender = $tpl.render(tpls[t].content,lang);
 							else
 								tplRender = tpls[t].content;

@@ -11,9 +11,10 @@ define('bdl/portal/portal',function() {
 			var locale = $definition.get('i18n!bdl/portal/locale/portal');
 			document.getElementById('addPortal_send').addEventListener('click', function(event){
 				var portal = document.getElementById('addPortal_name').value;
+				var portalname = document.getElementById('addPortal_namelong').value;
 				var url = document.getElementById('addPortal_url').value;
 				var publisher = document.getElementById('addPortal_publisher').value;
-				if(portal!='' && url!='' && publisher!=''){
+				if(portal!='' && url!='' && publisher!='' && portalname!=''){
 					MSG.wait();
 					$ajax.getJSON({
 						url : 'index.php',
@@ -22,6 +23,7 @@ define('bdl/portal/portal',function() {
 							action : 'portalNew',
 							portal : portal,
 							url : url,
+							portalname:portalname,
 							publisher : publisher
 						},
 						success : function (data) {

@@ -30,10 +30,25 @@ define('bdl/source/source',function() {
 		var fileHeadReport = '------------------------------\n'+fileName+' - '+portal+'\n\n';
 		if(testRNG!=''){
 			report.push(testRNG);
+			if(testRNG=='Error check RNG file')
+				save = false;
 		}
 		if(teiObj.structure==null){
 			report.push('Undefined struture (titlePage) !!!!! ');
 			save = false;
+		}
+		if(teiObj.imbrications!=undefined && teiObj.imbrications.length>0){
+			report.push('Imbrication : ');
+			report.push(teiObj.imbrications.join('\n'));
+			save = false;
+		}
+		if(teiObj.dates!=undefined && teiObj.dates.length>0){
+			report.push('Dates : ');
+			report.push(teiObj.dates.join(', '));
+			save = false;
+		}
+		if(teiObj.category==undefined || teiObj.category == 'undefined'){
+			report.push('Category : undefined !');
 		}
 		if(teiObj.graphics!=undefined && teiObj.graphics.length>0){
 			report.push('Graphics not found : ');
@@ -51,11 +66,6 @@ define('bdl/source/source',function() {
 			report.push('No head in div : ');
 			report.push(teiObj.noHead.join(', '));
 		}
-		if(teiObj.dates!=undefined && teiObj.dates.length>0){
-			report.push('Dates : ');
-			report.push(teiObj.dates.join(', '));
-			save = false;
-		}
 		if(teiObj.pages!=undefined && teiObj.pages.length>0){
 			report.push('Pages errors : ');
 			report.push(teiObj.pages.join(', '));
@@ -68,7 +78,7 @@ define('bdl/source/source',function() {
 		}
 		if(report.length>0){
 			if(!save)
-				report.push('File not saved !!!');
+				report.unshift('File not saved !!!!!!!!!!!!!!!');
 			finalContentReport.push(fileHeadReport+'Errors :-(\n\n'+report.join('\n\n'));
 		} else {
 			finalContentReport.push(fileHeadReport+'No error  :-)');

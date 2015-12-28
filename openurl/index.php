@@ -12,8 +12,9 @@ if(isset($_GET['id'])){
 	if($id!=null){
 		define('DS',DIRECTORY_SEPARATOR);
 		define('ROOT',dirname(dirname(__file__)).DS);
+		define('CONFIG_FOLDER',ROOT.'config'.DS);
 		define('LIB_FOLDER',ROOT.'lib'.DS);
-		require_once(ROOT.'config'.DS.'config_solr.php');
+		require_once(CONFIG_FOLDER.'config_solr.php');
 		$options = array (
 			'hostname' => SOLR_SERVER_HOSTNAME,
 			'path' => SOLR_SERVER_PATH,
@@ -34,7 +35,7 @@ if(isset($_GET['id'])){
 		$responseArr = $response->getResponse();
 
 		if($responseArr['response']['numFound']>0){
-			require_once(LIB_FOLDER.'zord'.DS.'websites.php');
+			include(CONFIG_FOLDER.'config_portals.php');
 			$doc = $responseArr['response']['docs'][0];
 			// todo plusieurs URL !
 			$url = $websitesURL[$doc['repository_s']].'/'.$doc['book_s'];

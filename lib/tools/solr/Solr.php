@@ -20,7 +20,7 @@ class Solr {
 	* Constructor
 	*/
 	public function __construct(){
-		require_once(ROOT.'config'.DS.'config_solr.php');
+		require_once(CONFIG_FOLDER.'config_solr.php');
 		$this->options = array (
 			'hostname' => SOLR_SERVER_HOSTNAME,
 			'path' => SOLR_SERVER_PATH,
@@ -142,6 +142,7 @@ class Solr {
 		$SolrQuery->setHighlightSimplePost('</b>');
 		$SolrQuery->setHighlightSnippets(100000);
 		$SolrQuery->setHighlightFragsize(200);
+		$SolrQuery->setHighlightMaxAnalyzedChars(-1);
 		$SolrQuery->setHighlight(true);
 		$query_response = $client->query($SolrQuery);
 		return $query_response->getResponse();

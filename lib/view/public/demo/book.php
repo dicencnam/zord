@@ -28,9 +28,6 @@
 						<img src="<?php echo BASEURL ?>public/img/demo/search.png" />
 					</button><input id="tocSearchQuery" type="search" placeholder="<?php echo $v['lang']->search; ?>" required/><br/>
 				</div>
-				<div id="tocSearchBack">
-					<a href="<?php echo BASEURL ?>page/search"><?php echo $v['lang']->search_back; ?></a>
-				</div>
 			</div>
 			<div id="tocContent">
 				<?php echo $v['toc']; ?>

@@ -1,5 +1,5 @@
 /**
-* __PORTALDEFAULT__ shearch
+* __PORTALDEFAULT__ search
 */
 (function(undefined) {
 
@@ -22,8 +22,6 @@
 		$dialog.wait();
 		query = JSON.stringify(query);
 		sessionStorage.setItem('searchLast',query);
-		var d = new Date();
-		var t1 = d.getTime();
 		$getJSON({
 			url : 'index.php',
 			data : {
@@ -34,9 +32,6 @@
 			},
 			success : function(data){
 				$frieze.occurrences(data.content);
-				d = new Date();
-				console.log((d.getTime() - t1) / 1000);
-
 				$dialog.hideDelay();
 			}
 		});
@@ -59,7 +54,7 @@
 		if(count.occ<2)
 			occL = LOCALES.occMsg;
 		el.innerHTML = '<span class="frame_occ">'+count.occ+occL+
-			' </span><span class="frame_book">'+
+			'<br/></span><span class="frame_book">'+
 			count.book+bookL+'</span>';
 	};
 
@@ -91,6 +86,7 @@
 				var file = parent.getAttribute('data-file');
 				var mark = parent.getAttribute('data-mark');
 				var match = parent.getAttribute('data-match');
+
 				if(file && mark && match){
 					sessionStorage.setItem("getSearch", 'true');
 					sessionStorage.setItem("mark", mark);
@@ -115,32 +111,13 @@
 		// elements
 		var formSearchEl = document.getElementById('form_search');
 		var queryEl = document.getElementById('query');
+		var searchBookEl = document.getElementById('searchBook');
 		var categoryEl = document.getElementById('search_category');
 		var searchStartEl = document.getElementById('searchStart');
 		var searchEndEl = document.getElementById('searchEnd');
 		var searchInIndexEl = document.getElementById('searchInIndex');
 		var historicEl = document.getElementById('searchHistoricSelect');
-		var tableSourceEl = document.getElementById('publications_source');
-		var tableNosourceEl = document.getElementById('publications_nosource');
-		var tableBiblioEl = document.getElementById('publications_biblio');
-
-		var frameSourceEl = document.getElementById('search_frame_source');
-		var frameNosourceEl = document.getElementById('search_frame_nosource');
-		var frameBiblioEl = document.getElementById('search_frame_biblio');
-
-		var occSourceEl = document.getElementById('occurrences_source');
-		var occNosourceEl = document.getElementById('occurrences_nosource');
-		var occBiblioEl = document.getElementById('occurrences_biblio');
-
-		var nosourceMsgEl = document.getElementById('search_nosourceMsg');
-		var sourceMsgEl = document.getElementById('search_sourceMsg');
-		var biblioMsgEl = document.getElementById('search_biblioMsg');
-
 		var searchFilterBlockEl = document.getElementById('search_filter_block');
-
-		var headOccSourceEl = document.getElementById('occurrences_header_source');
-		var headOccNoSourceEl = document.getElementById('occurrences_header_nosource');
-		var headOccBiblioEl = document.getElementById('occurrences_header_biblio');
 
 		// -------------------------------------------------------------------
 		// VARS & DISPPLAY
@@ -161,7 +138,7 @@
 		searchStartEl.setAttribute('max',nowYear);
 		searchEndEl.setAttribute('max',nowYear);
 
-		var occTPL = {
+		var occSourceTPL = {
 			lang : {
 				before : LOCALES.occBefore,
 				after : LOCALES.occAfter,
@@ -171,6 +148,43 @@
 			tpl : [
 				'creation_date_i',
 				'creation_date_after_i',
+				'creator_ss',
+				'title',
+				'editor_ss',
+				'date_i'
+			]
+		};
+
+		var occNoSourceTPL = {
+			lang : {
+				before : LOCALES.occBefore,
+				after : LOCALES.occAfter,
+				before_p : LOCALES.occBefore_p,
+				after_p : LOCALES.occAfter_p
+			},
+			tpl : [
+				'creator_ss',
+				'title',
+				'editor_ss',
+				'date_i'
+			]
+		};
+
+		var tableSourceTPL = {
+			table : false,
+			tpl : [
+				'creation_date_i',
+				'creation_date_after_i',
+				'creator_ss',
+				'title',
+				'editor_ss',
+				'date_i'
+			]
+		};
+
+		var tableNoSourceTPL = {
+			table : false,
+			tpl : [
 				'creator_ss',
 				'title',
 				'editor_ss',
@@ -239,34 +253,14 @@
 		});
 
 		// frames
-		var tables = ['source','nosource','biblio'];
-		var show = function(name){
-			tables.forEach(function(n){
-				var elT = document.getElementById('search_frame_'+n);
-				var elF = document.getElementById('search_frame_select_'+n);
-				if(name==n){
-					elT.style.display = 'block';
-					if(!elF.classList.contains('paneselect'))
-						elF.classList.add('paneselect');
-				} else {
-					elT.style.display = 'none';
-					if(elF.classList.contains('paneselect'))
-						elF.classList.remove('paneselect');
-				}
-			});
-		};
-		tables.forEach(function(name){
-			document.getElementById('search_frame_select_'+name).addEventListener("click", function(event) {
-				show(name);
-			});
-		});
+		$panelsTabs(document.getElementById('search_frames'));
 
 		// bookmark
-		occSourceEl.addEventListener("click", function(event) {
-			toBookmark(event);
-		});
-		occNosourceEl.addEventListener("click", function(event) {
-			toBookmark(event);
+		var dzOCC = ['dzOcc_source','dzOcc_nosource'];
+		dzOCC.forEach(function(id){
+			document.getElementById(id).addEventListener("click", function(event) {
+				toBookmark(event);
+			});
 		});
 
 		// -------------------------------------------------------------------
@@ -283,8 +277,9 @@
 					categoryEl.querySelector('input[value="'+item[key]+'"]').checked = true;
 				else if(key=='text')
 					queryEl.value = item[key];
-				else if(key=='book_s')
+				else if(key=='book_s'){
 					queryParams.book = item[key];
+				}
 			});
 			queryParams.range.forEach(function(item){
 				var key = Object.keys(item)[0];
@@ -302,6 +297,10 @@
 				name : queryEl.value,
 				query : [{'text' : queryEl.value}]
 			};
+
+			if(searchBookEl.style.display == 'block'){
+				_q.query.push({'book_s' : searchBookEl.getAttribute('data-book')});
+			}
 
 			[].forEach.call(categoryEl.querySelectorAll('input'), function (el) {
 				if(el.checked)
@@ -362,107 +361,33 @@
 				//steps : [{bars:4,increment:10},{bars:5,increment:2},{bars:2,increment:1}],,
 				bars : {
 					element:document.getElementById('frieze'),
-					height:120,
-					width:750
+					height:100,
+					width:740
 				},
 				lang : {
 					noresult : LOCALES.noresult
 				},
-				tableEl : tableSourceEl,
-				tableCategEl : tableBiblioEl,
-				tableBodyEl : document.getElementById('publicationsBody_source'),
-				tableBodyCategEl : document.getElementById('publicationsBody_biblio'),
-				occurrencesEl : occSourceEl,
-				occurrencesCategEl : occBiblioEl,
-				tableTPL : {
-					table : false,
-					tpl : [
-						'creation_date_i',
-						'creation_date_after_i',
-						'creator_ss',
-						'title',
-						'editor_ss',
-						'date_i'
-					]
-				},
-				occTPL : occTPL,
-				tableMsg : function(count){
-					headOccSourceEl.style.display = 'none';
-					msgTable(sourceMsgEl,count);
-				},
-				tableCategMsg : function(count){
-					headOccBiblioEl.style.display = 'none';
-					msgTable(biblioMsgEl,count);
-				},
-				tableNosource : function(docs){
-					var table = new window.TableHTML({
-						table : false,
-						tpl : [
-							'creator_ss',
-							'title',
-							'editor_ss',
-							'date_i'
-						]
-					});
-					occNosourceEl.style.display = 'none';
-					tableNosourceEl.style.display = 'table';
-					docs.forEach(function(data){
-						table.set(data);
-					});
-					document.getElementById('publicationsBody_nosource').innerHTML = table.get();
-					msgTable(nosourceMsgEl,table.getCounter());
-				},
-				occMsg : function(count){
-					if(count.occ!=0)
-						headOccSourceEl.style.display = 'block';
-					else
-						headOccSourceEl.style.display = 'none';
-
-					msgOcc(sourceMsgEl,count);
-				},
-				occCategMsg : function(count){
-					if(count.occ!=0)
-						headOccBiblioEl.style.display = 'block';
-					else
-						headOccBiblioEl.style.display = 'none';
-
-					msgOcc(biblioMsgEl,count);
-				},
-				occNosource : function(docs,search){
-					// show occurences nosource
-					tableNosourceEl.style.display = 'none';
-					occNosourceEl.style.display = 'block';
-
-					var OccHTML = new window.OccHTML(occTPL);
-					var result = '<p class="no-result">'+LOCALES.noresult+'</p>';
-					if(search.response.numFound>0 && docs.length>0){
-						docs.forEach(function(doc){
-							OccHTML.createSection(doc);
-							OccHTML.setTitle(doc);
-							search.response.docs.forEach(function(d,i){
-								if(doc.book_s == d.book_s+'')
-									OccHTML.setOcc(d,search.highlighting);
-							});
-							OccHTML.closeSection();
-						});
-						result = OccHTML.get();
-
-						headOccNoSourceEl.style.display = 'block';
-					} else {
-						headOccNoSourceEl.style.display = 'none';
+				prefix : 'dz',
+				msgTable : msgTable,
+				msgOcc : msgOcc,
+				defineFrame : [
+					{
+						name : 'source',
+						type : 'source',
+						tableTPL : tableSourceTPL,
+						occTPL : occSourceTPL,
+						categories : ['source']
+					},
+					{
+						name : 'nosource',
+						type : 'nosource',
+						tableTPL : tableNoSourceTPL,
+						occTPL : occNoSourceTPL,
+						categories : ['nosource']
 					}
-					occNosourceEl.innerHTML = result;
-					msgOcc(nosourceMsgEl,OccHTML.getCounters());
-				},
-				category : 'bib',
-
+				]
 			}
 		);
-
-		// sort tables elements
-		new Tablesort(tableSourceEl);
-		new Tablesort(tableNosourceEl);
-		new Tablesort(tableBiblioEl);
 
 		// historic
 		updateHistoric(historicEl,searchHistoric);
@@ -471,19 +396,31 @@
 		if(searchInBook!=null){
 			searchInBook = JSON.parse(searchInBook);
 			sessionStorage.removeItem('searchInBook');
+			var category_ss = [];
+			[].forEach.call(categoryEl.querySelectorAll('input'), function (el) {
+				category_ss.push({'category_ss' :el.value});
+			});
 			var searchInBookQuery = {
 				name : searchInBook.value,
 				query : [{'text' : searchInBook.value},{'book_s': searchInBook.book}],
 				range : [{'date_i':{'min':'','max':''}}]
 			};
+			searchBookEl.style.display = 'block';
+			searchBookEl.setAttribute('data-book',searchInBook.book);
+			document.getElementById('searchBookTxt').innerHTML = '<a href="'+PATH+searchInBook.book+'">'+searchInBook.title+'</a>';
+			searchInBookQuery.query = searchInBookQuery.query.concat(category_ss);
 			generateSearch(searchInBookQuery);
 			search(searchInBookQuery);
-		} else if(searchLast!=null){
+		} else if(searchLast!=null && !SEARCHLAST){
 			searchLast = JSON.parse(searchLast);
 			generateSearch(searchLast);
 			search(searchLast);
 		} else {
 			$frieze.start();
+			// sort tables elements
+			[].forEach.call(document.getElementById('search_frames').querySelectorAll('table'), function (el) {
+				new Tablesort(el);
+			});
 		}
 	});
 })();

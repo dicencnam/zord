@@ -1,5 +1,17 @@
 /* specific print */
 
+tei\:tei *[rendition="#right"]{
+	text-align: right;
+}
+
+tei\:tei *[rendition="#left"]{
+	text-align: left;
+}
+
+tei\:tei *[rendition="#center"]{
+	text-align: center;
+}
+
 /* -------------------------------- ab -------------------------------- */
 
 tei\:ab {
@@ -62,10 +74,13 @@ tei\:caption {
 
 /* ---------------------------------- cell ---------------------------------- */
 
-tei\:cell {
-	display:table-cell;
+tei\:tei table td {
 	padding: 0 5px;
 	text-align: left;
+}
+
+tei\:tei table td[rowspan] {
+	vertical-align: top;
 }
 /*
 [rows]
@@ -234,31 +249,35 @@ tei\:head[type="prepagetitle"],
 tei\:head[type="prepageTitle"],
 tei\:head[type="prpagetitle"] {
 	display:block;
-	display:block;
+	color: #32455D;
 	line-height: 1.6em;
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 130%;
 	padding-top: 1em;
 	margin-top: 0;
-	margin-bottom: 1.5em;
+	margin-bottom: 0.8em;
 	text-align: center;
 }
 
 tei\:head[rendition="#sectiontitle"] {
 	display:block;
+	color: #32455D;
 	line-height: 1.6em;
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 130%;
 	padding-top: 1em;
+	margin-bottom: 0.5em;
 	margin-top: 0;
 }
 
 tei\:head[rendition="#ssectiontitle"] {
 	display:block;
+	color: #32455D;
 	line-height: 1.6em;
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 110%;
-	padding-top: 0.4em;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 	margin-top: 0;
 	font-weight:bold;
 }
@@ -268,22 +287,29 @@ tei\:head[rendition="#sssectiontitle"] {
 	font-style: italic;
 	font-size:1.1em;
 	text-indent:15px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 }
 tei\:head[rendition="ssssectiontitle"] {
 	margin-top:0.8em;
 	font-style: italic;
 	font-size:1em;
 	text-indent:25px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 }
 tei\:head[rendition="sssssectiontitle"] {
 	margin-top:0.8em;
 	font-style: italic;
 	font-size:1em;
 	text-indent:30px;
+	padding-top: 0.6em;
+	margin-bottom: 0.3em;
 }
 
 tei\:div[type="part"] > tei\:head {
 	display:block;
+	color: #32455D;
 	line-height: 1.6em;
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 200%;
@@ -291,6 +317,17 @@ tei\:div[type="part"] > tei\:head {
 	margin-top: 0;
 	margin-bottom: 2em;
 	text-align: center;
+}
+
+tei\:tei table caption {
+	text-align: left;
+	margin-bottom: 0em;
+	color: #32455D;
+	line-height: 1.6em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 130%;
+	padding-top: 1em;
+	margin-top: 0;
 }
 /*
 [type]
@@ -417,7 +454,7 @@ tei\:lb {
 }
 
 
-tei\:lb[ed="margin"] {
+tei\:lb[ed="margin"], tei\:lb[n] {
 	display:inline;
 }
 
@@ -432,7 +469,7 @@ tei\:lb[ed="margin"]:before {
 	margin-top:5px;
 }
 
-tei\:lb[ed="margin"]:after {
+tei\:lb[ed="margin"]:after, tei\:lb[n]:after {
 	color: gray;
 	font-family:Arial, sans-serif;
 	content:"|";
@@ -476,6 +513,11 @@ tei\:list[type="gloss"] {
 	list-style-position: inside;
 	display:block;
 	list-style: none inside;
+}
+
+tei\:list[type="gloss"] > tei\:label {
+	margin-top: 10px;
+	display: block;
 }
 
 tei\:list[type="toc"] tei\:list,
@@ -584,6 +626,7 @@ tei\:pb[ed="temoin"]:before {
 
 tei\:pb[ed="temoin"]:after {
 	color:#0077FF;
+	font-family:Arial, sans-serif;
 	content: "|" ! important;
 }
 
@@ -634,9 +677,9 @@ tei\:ref[rendition="#notecall #app"] {
 	outline:1px solid red;
 }*/
 /* ----------------------------------- row ----------------------------------- */
-
-tei\:row {
-	display: table-row;
+tei\:tei table tr[role="label"], tei\:tei table tr[rend="thead"] {
+	font-variant: small-caps;
+	font-size: 1.2em;
 }
 /*
 [rend]
@@ -690,13 +733,13 @@ tei\:space {
 
 /* ---------------------------------- table ---------------------------------- */
 
-tei\:table {
-	display:table;
+tei\:tei table {
 	border-spacing: 0.7em;
 	width: 100%;
+	margin-bottom: 1em;
 }
 
-tei\:table[rend="vis-a-vis"] {
+tei\:tei table[rend="vis-a-vis"] {
 	table-layout: fixed;
 }
 
@@ -847,6 +890,7 @@ tei\:speaker {
 /* -------------------------------- footnotes -------------------------------- */
 
 #footnotes {
+	clear: both;
 	margin-left: 25px;
 }
 
@@ -858,14 +902,13 @@ tei\:speaker {
 	margin: 20px 0 10px 0;
 }
 
-/*#footnotes tei\:note > * {
-	display: block;
-	padding:5px 5px 5px 10px;
-}*/
-
 #footnotes tei\:note tei\:p {
 	text-indent:0px;
 	padding:5px 5px 5px 10px;
+}
+
+#footnotes tei\:note tei\:note tei\:p {
+	display:none;
 }
 
 #footnotes .footnote-counter {
@@ -885,12 +928,56 @@ tei\:speaker {
 	font-size:0;
 }
 
+#footnotes tei\:note tei\:note:before {
+	color: black;
+	content: attr(n);
+	cursor: pointer;
+	position: relative;
+	top: -0.3em;
+	font-size: 1em;
+}
+
 .footnote-note {
 	border-left:1px solid gainsboro;
 	margin-top: -27px;
 	padding-top: 5px;
 }
 
-.footnote-select{
+.notesdouble .footnote-counter {
+	position: relative ! important;
+	left: -35px ! important;
+}
+
+.notesdouble .footnote-note {
+		padding-top: 0px ! important;
+}
+
+.notesdouble tei\:note tei\:p {
+	padding-left: 20px ! important;
+}
+
+.footnote-select {
 	background:#FFFFEE;
+}
+
+/* --------------------------------- letter --------------------------------- */
+
+tei\:div[type="letter"] > tei\:head {
+	margin-top: 35px;
+}
+
+tei\:opener {
+	display: block;
+	margin-bottom: 20px;
+}
+
+tei\:closer {
+	display: block;
+	margin-top: 20px;
+}
+
+tei\:postscript {
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }

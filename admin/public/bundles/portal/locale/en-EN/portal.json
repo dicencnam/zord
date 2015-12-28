@@ -1,7 +1,8 @@
 {
 	"portal_title": "Portal",
 	"addPortal" : "Add portal",
-	"Portal_name" : "Portal name",
+	"Portal_name" : "Portal",
+	"Portal_namelong" : "Portal name",
 	"Portal_url" : "URL",
 	"Portal_publisher" : "Publisher Name",
 	"addPortal_send" : "Add",

@@ -4,12 +4,63 @@
 	margin:auto;
 }
 
-#epubs_table, #epubs_table th, #epubs_table td {
+#epubs_table table {
+	width: 100%;
+}
+
+#epubs_table table, #epubs_table th, #epubs_table td {
 	border: 1px solid gray;
 	border-collapse: collapse;
 	padding:2px 3px;
 }
 
+.frame_title {
+	text-transform: uppercase;
+}
+
 #epubs_table .draft {
 	background:#ffd1d1 ! important;
+}
+
+
+#_epub_counter {
+	font-weight: bold;
+}
+
+#_epub_book {
+
+}
+
+#_epub_parse {
+	margin-top: 8px;
+	width:200px;
+	height:15px;
+	outline: 1px solid gray;
+}
+
+#_epub_bar {
+	height:8px;
+	width:0px;
+	height:15px;
+	background: #93b5ff;
+	text-align: center;
+	font-size: 10px;
+	line-height: 18px;
+}
+
+span[data-isbn] {
+	cursor: pointer;
+}
+
+span[data-isbn]:hover {
+	color:gray;
+}
+
+#_epub_check {
+	width:800px;
+	height:400px;
+}
+
+#_epub_check div {
+	text-align: center;
 }

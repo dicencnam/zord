@@ -1,0 +1,229 @@
+
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot');
+	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf') format('truetype'),
+		url('fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	display: inline-block;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	margin: 5px 0 3px 0;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+cp\:epubliseuse {
+	display:block;
+	margin:0;
+}
+
+cp\:epubliseuse iframe::-webkit-scrollbar {
+	display: none;
+}
+
+cp\:epubliseuse .liseuse_liseuse {
+	float:right;
+	background: black;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+cp\:epubliseuse div[anonid^="screen"] {
+	background:white;
+	border-radius:5px;
+	margin-left:35px;
+	margin-top:35px;
+	overflow:hidden;
+	position: relative;
+}
+
+cp\:epubliseuse .liseuse_nav {
+	width:450px;
+	float:left;
+	overflow: auto;
+	display:none;
+	margin: 0;
+	background: white;
+}
+
+cp\:epubliseuse .liseuse_iframe_nav {
+	width:445px;
+	padding: 10px 0 0 5px;
+	height:92%;
+	border: 0;
+	background: white;
+}
+
+cp\:epubliseuse .liseuse_buttons {
+	margin-top: 5px;
+	width:35px;
+	height:30px;
+	cursor:pointer;
+	-webkit-tap-highlight-color: blue;
+}
+
+/* ----------- bl ------------- */
+cp\:epubliseuse .liseuse_bl {
+	background: url(images/bl.png);
+	float:left;
+}
+
+cp\:epubliseuse .liseuse_bl:hover {
+	background: url(images/bl_hover.png);
+}
+
+cp\:epubliseuse .liseuse_bl:active {
+	background: url(images/bl_active.png);
+}
+
+/* ----------- br ------------- */
+cp\:epubliseuse .liseuse_br {
+	background: url(images/br.png);
+	float:right;
+}
+
+cp\:epubliseuse .liseuse_br:hover {
+	background: url(images/br_hover.png);
+}
+
+cp\:epubliseuse .liseuse_br:active {
+	background: url(images/br_active.png);
+}
+
+/* ----------- nav ------------- */
+cp\:epubliseuse .liseuse_bnav {
+	background: url(images/nav.png);
+	float:left;
+}
+
+cp\:epubliseuse .liseuse_bnav:hover {
+	background: url(images/nav_hover.png);
+}
+
+cp\:epubliseuse .liseuse_bnav:active {
+	background: url(images/nav_active.png);
+}
+
+/* ----------- cp ------------- */
+cp\:epubliseuse .liseuse_cp {
+	background: url(images/cp.png);
+	float:left;
+}
+
+cp\:epubliseuse .liseuse_cp:hover {
+	background: url(images/cp_hover.png);
+}
+
+cp\:epubliseuse .liseuse_cp:active {
+	background: url(images/cp_active.png);
+}
+
+/* ----------- cm ------------- */
+cp\:epubliseuse .liseuse_cm {
+	background: url(images/cm.png);
+	float:left;
+}
+
+cp\:epubliseuse .liseuse_cm:hover {
+	background: url(images/cm_hover.png);
+}
+
+cp\:epubliseuse .liseuse_cm:active {
+	background: url(images/cm_active.png);
+}
+
+/* ----------- trn ------------- */
+cp\:epubliseuse .liseuse_trn {
+	background: url(images/trn.png);
+	float:left;
+}
+
+cp\:epubliseuse .liseuse_trn:hover {
+	background: url(images/trn_hover.png);
+}
+
+cp\:epubliseuse .liseuse_trn:active {
+	background: url(images/trn_active.png);
+}
+
+/* ----------------------------- */
+
+cp\:epubliseuse .liseuse_iframe {
+	overflow:hidden;
+	border:0;
+}
+
+cp\:epubliseuse .liseuse_tools {
+	margin:0 auto;
+	height:40px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+cp\:epubliseuse .liseuse_tools > * {
+	position:relative;
+}
+
+cp\:epubliseuse .liseuse_v {
+	height:35px;
+	color:white;
+	text-align:center;
+	font-size:12px;
+	line-height:35px;
+	float:left;
+}
+
+cp\:epubliseuse .archicol {
+	float:right;
+	margin-right: -15px;
+	display: inline-block;
+	color:white;
+	font-size:9px;
+	font-family:sans-serif;
+	text-decoration: none;
+}
+
+cp\:epubliseuse .liseuse_slider {
+	float:left;
+	margin:5px 0;
+	text-align:center;
+	list-style:none;
+	padding:0;
+}
+
+cp\:epubliseuse .liseuse_slider li{
+	display:inline-block;
+	width:6px;
+	height:6px;
+	border-radius:6px;
+	background:#424242;
+	margin:0 2px;
+	cursor:pointer
+}
+
+cp\:epubliseuse .liseuse_slider li.on{
+	background: white;
+}
+
+cp\:epubliseuse .liseuse_slider li:hover{
+	background: #b6d8ff;
+}

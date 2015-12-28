@@ -11,29 +11,13 @@
 if(!isset($_SERVER["SERVER_ADDR"])){
 	define('DS',DIRECTORY_SEPARATOR);
 	define('ROOT',dirname(dirname(__file__)).DS);
+	define('CONFIG_FOLDER',ROOT.'config'.DS);
 	define('LIB_FOLDER',ROOT.'lib'.DS);
-	require_once(ROOT.'config'.DS.'config.php');
+	require_once(CONFIG_FOLDER.'config.php');
 	require_once(LIB_FOLDER.'core'.DS.'Autoloader.php');
 	Autoloader::start();
 	$service = $_SERVER['argv'][1];
 	switch ($service) {
-		case 'teitoepub':
-			$fileName = $_SERVER['argv'][2];
-			$portal = $_SERVER['argv'][3];
-			try {
-				$Teitoepub = new Teitoepub();
-				$result = $Teitoepub->create($fileName,$portal);
-				$logContent = $fileName.' '.$portal.' ';
-				if($result['error'])
-					$logContent .= ":-(\n".$result['errorMsg']."\n\n";
-				else
-					$logContent .= ":-)\n\n";
-
-				echo date("[d-m-Y H:i:s]").' '.$logContent;
-			} catch (Exception $e) {
-				echo date("[d-m-Y H:i:s]").' Exception:'.$e->getMessage()."\n";
-			}
-		break;
 		case 'indexation':
 			$start = time();
 			$delay = 300-15;// cron time

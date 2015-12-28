@@ -14,6 +14,8 @@ var PATH = '<?php echo BASEURL ?>';
 var WEBSITES = <?php echo $v['websites'] ?>;
 var WEBSITESURL = <?php echo $v['websitesURL'] ?>;
 </script>
+</head>
+<body id="body">
 <div class="admin-logout">
 	<form method="post" action="<?php echo BASEURL; ?>">
 		<input type="hidden" value="Adminconnect" name="module"/>
@@ -23,7 +25,7 @@ var WEBSITESURL = <?php echo $v['websitesURL'] ?>;
 </div>
 
 <div>
-	<h1 style="text-align:center;" ><?php echo $v['lang']->backOffice ?></h1>
+	<h1 style="text-align:center;" ><?php echo ZORD.' '.ZORD_VERSION.'<br/>'.$v['lang']->backOffice ?></h1>
 	<div id="bartools" style="text-align:center;border-top:1px solid gray;border-bottom:1px solid gray;padding:5px;"></div>
 </div>
 
@@ -31,7 +33,6 @@ var WEBSITESURL = <?php echo $v['websitesURL'] ?>;
 <script type="text/javascript" src="<?php echo BASEURL; ?>js/req.js"></script>
 <script type="text/javascript" src="<?php echo BASEURL; ?>js/browserDetect.js"></script>
 <script type="text/javascript" src="<?php echo BASEURL; ?>public/init.js"></script>
-</head>
-<body id="body">
+
 </body>
 </html>

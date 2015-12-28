@@ -62,7 +62,7 @@ define('bdl/admin/admin_bdl',function() {
 			components : {},
 			tpl : 'tpl!bdl/epub/epub',
 			locale : 'i18n!bdl/epub/locale/epub!default:fr-FR',
-			init : 'bdl/epub/epub',
+			init : ['library/XMLWrite','library/XSLDom','bdl/epub/epub'],
 			css : 'css!bdl/epub/epub'
 		}
 	};

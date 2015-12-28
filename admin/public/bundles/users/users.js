@@ -21,7 +21,9 @@ define('bdl/users/users',function() {
 				websites: values.websites,
 				users_level: values.users_level,
 				users_type: values.users_type,
-				users_name: values.users_name
+				users_name: values.users_name,
+				users_subscription: values.users_subscription,
+				users_ip: values.users_ip
 			},
 			success : function (data) {
 				MSG.hide();
@@ -37,7 +39,7 @@ define('bdl/users/users',function() {
 		});
 	};
 
-	var updateUser = function(id,email,end,login,start,websites,name){
+	var updateUser = function(id,email,end,login,start,websites,name,subscription,ip){
 		MSG.wait();
 		$ajax.getJSON({
 			url : 'index.php',
@@ -50,7 +52,9 @@ define('bdl/users/users',function() {
 				login: login,
 				start: start,
 				websites: websites,
-				name: name
+				name: name,
+				subscription: subscription,
+				ip: ip
 			},
 			success : function (data) {
 				MSG.hide();
@@ -115,6 +119,10 @@ define('bdl/users/users',function() {
 		$bundles.tpls.users_item_title();
 		for(var user in users){
 			users[user].websites = viewWebsites(users[user].websites);
+			if(users[user].type=='USER')
+				users[user].ipcl = 'disabled';
+			else
+				users[user].ipcl = 'false';
 			$bundles.tpls.users_item(users[user]);
 		}
 
@@ -130,6 +138,9 @@ define('bdl/users/users',function() {
 				);
 			});
 		});
+		[].forEach.call(document.getElementById('users_list').querySelectorAll('input[disabled="false"]'), function (el,i) {
+			el.removeAttribute('disabled');
+		});
 		[].forEach.call(document.getElementById('users_list').querySelectorAll('.user_update'), function (el,i) {
 			el.addEventListener('click', function(e) {
 				MSG.confirm(
@@ -144,6 +155,8 @@ define('bdl/users/users',function() {
 							var login = parent.querySelector('input[name="login"]').value;
 							var start = parent.querySelector('input[name="start"]').value;
 							var name = parent.querySelector('input[name="name"]').value;
+							var ip = parent.querySelector('input[name="ip"]').value;
+							var subscription = parent.querySelector('input[name="subscription"]').value;
 							var websites = '';
 							[].forEach.call(parent.querySelectorAll('input[name="websites"]:checked'), function (web,i) {
 								if(websites=='')
@@ -151,7 +164,7 @@ define('bdl/users/users',function() {
 								else
 									websites += ','+web.value;
 							});
-							updateUser(id,email,end,login,start,websites,name);
+							updateUser(id,email,end,login,start,websites,name,subscription,ip);
 						}
 					}
 				);
@@ -162,6 +175,13 @@ define('bdl/users/users',function() {
 	var usersView = {
 		init : function () {
 			locale = $definition.get('i18n!bdl/users/locale/users');
+
+			document.getElementById('users_type').addEventListener('change', function(e) {
+				if(this.value=='IP')
+					document.getElementById('users_ip').style.display = 'block';
+				else
+					document.getElementById('users_ip').style.display = 'none';
+			});
 			document.getElementById('user_add_send').addEventListener('click', function(e) {
 				var v = $ajax.getFormValues('users_add');
 				if(!v.empty){

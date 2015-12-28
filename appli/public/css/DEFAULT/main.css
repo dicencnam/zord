@@ -55,6 +55,7 @@ body {
 	height: 39px;
 }
 
+
 #lang_choise span {
 	display: inline-block;
 	padding: 0 6px;
@@ -292,7 +293,11 @@ body {
 	margin: 10px auto 35px auto;
 }
 
-.framer {
+#start_source .panels {
+	border-top: 0;
+}
+
+#start_source .tab {
 	width: 180px;
 	display: inline-table;
 	border-left: 9px solid gainsboro;
@@ -309,9 +314,10 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	background: white;
 }
 
-.framer.paneselect {
+#start_source .tab.tabselect .frame_title {
 	color: #6C747F;
 	cursor: default;
 }
@@ -325,21 +331,24 @@ body {
 	border-collapse: collapse;
 }
 
-#table_nosource, #table_biblio {
-	display:none;
-}
-
 /* -------------------------------- Connexion ------------------------------- */
 /* ^form */
-#connexion {
+#connexion, #connexion-admin  {
 	width:450px;
 	margin:70px auto;
 	text-align:center;
 	padding:10px;
-	border-radius:10px;
 }
 
-#connexion label {
+#connexion-admin  {
+	margin:20px auto 70px auto;
+}
+
+#connexion-admin > h1 {
+	text-transform: uppercase;
+}
+
+#connexion label, #connexion-admin label {
 	width:150px;
 	display: inline-block;
 	text-align: right;
@@ -347,6 +356,16 @@ body {
 
 #connexion input[type='text'], #connexion input[type='password'] {
 	background:#D6E8FF;
+	width: 250px;
+	height: 25px;
+	margin-left: 20px;
+	margin-bottom: 15px;
+	padding:5px;
+	border:0;
+}
+
+#connexion-admin input[type='text'], #connexion-admin input[type='password'] {
+	background:#ffd6d6;
 	width: 250px;
 	height: 25px;
 	margin-left: 20px;
@@ -368,7 +387,20 @@ body {
 	background: #9BB7DC;
 }
 
-#connexion input[type='submit'] {
+#connexion-admin input[type='text']:-webkit-autofill, #connexion-admin input[type='password']:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px #ffd6d6 inset;
+}
+#connexion-admin input[type='text']:-moz-autofill, #connexion-admin input[type='password']:-moz-autofill {
+	background: #ffd6d6;
+}
+#connexion-admin input[type='text']:-o-autofill, #connexion-admin input[type='password']:-o-autofill {
+	background: #ffd6d6;
+}
+#connexion-admin input[type='text']:-khtml-autofill, #connexion-admin input[type='password']:-khtml-autofill {
+	background: #ffd6d6;
+}
+
+#connexion input[type='submit'], #connexion-admin input[type='button'] {
 	background:#C0392B;
 	color:white;
 	border:0;
@@ -378,11 +410,11 @@ body {
 	text-transform: uppercase;
 }
 
-#connexion input[type='submit']:hover {
+#connexion input[type='submit']:hover, #connexion-admin input[type='button']:hover {
 	background:#ff8043;
 }
 
-#connexion div {
+#connexion div, #connexion-admin div {
 	text-align:right;
 }
 
@@ -465,7 +497,7 @@ body {
 #tei {
 	padding: 5%;
 	width:855px;
-	margin:70px auto 10px auto;
+	margin:0 auto 10px auto;
 	line-height:150%;
 }
 
@@ -487,37 +519,6 @@ body {
 	-moz-transition: width .3s;
 	-ms-transition: width .3s;
 	border-right: 1px solid rgb(187, 184, 184);
-}
-
-#tools {
-	position: fixed;
-	top:0;
-	margin-top:126px;
-	right: 0;
-	width: 40px;
-	height:100%;
-	background:white;
-	z-index:10000;
-	border-left: 1px solid rgb(187, 184, 184);
-	text-align: center;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-#tools i {
-	display: inline-block;
-	margin:5px auto;
-	font-size: 25px;
-	cursor: pointer;
-	color: #C03938;
-}
-
-#tools i:hover {
-	color: #6E97CB;
 }
 
 /* toc extend */
@@ -569,10 +570,10 @@ body {
 
 #tocSearchQuery {
 	width: 345px;
-	width: -webkit-calc(100% - 25px);
-	width: -moz-calc(100% - 25px);
-	width: calc(100% - 25px);
-	height: 25px;
+	width: -webkit-calc(100% - 45px);
+	width: -moz-calc(100% - 45px);
+	width: calc(100% - 45px);
+	height: 23px;
 	position: relative;
 	top: -1px;
 	padding-left: 15px;
@@ -668,7 +669,7 @@ body {
 #tools {
 	position: fixed;
 	top:0;
-	margin-top:232px;
+	margin-top:126px;
 	right: 0;
 	width: 40px;
 	height:100%;
@@ -820,7 +821,7 @@ body {
 }
 
 .dialog-wait {
-	background: url(../../img/calvin/wait.gif) white no-repeat;
+	background: url(../../img/__PORTALDEFAULT__/wait.gif) white no-repeat;
 	background-position: center;
 	width: 60px;
 	height: 60px;
@@ -878,4 +879,85 @@ button[data-id] {
 
 .__liaAt:before {
 	content:"@";
+}
+
+/* ---------------------------------- Admin ---------------------------------- */
+.admin-bartool {
+	text-align: center;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	padding: 5px;
+	margin-bottom: 15px;
+}
+
+.admin-button {
+	display: none;
+	border: 1px solid gray;
+	text-transform:uppercase;
+	border-radius: 5px;
+	height:25px;
+	line-height: 25px;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.admin-button:hover {
+	background: white;
+	border: 1px solid black;
+}
+
+.tabs {
+	text-align: center;
+}
+
+.tab {
+	display: inline-block;
+	text-align: center;
+	background-color: gray;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.tab:hover {
+	color: gainsboro;
+}
+
+.tabselect {
+	color: black ! important;
+	background-color: gainsboro;
+}
+
+.panels {
+	border-top: black solid 2px;
+}
+
+.panel {
+	display:none;
+	margin:0;
+	padding:15px;
+}
+
+.paneselect {
+	display: block;
+}
+
+.frames {
+	border-top: black solid 2px;
+}
+
+.subscription_counter {
+	left: 0px;
+	text-align: center;
+	margin-bottom: 20px;
+	font-weight: bold;
+	font-size: 1.2em;
+	position: fixed;
+	width: 250px;
+
+}
+
+.subscription_counter .admin-button {
+	font-weight: normal;
+	font-size: 0.8em;
+	display: inline-block;
 }

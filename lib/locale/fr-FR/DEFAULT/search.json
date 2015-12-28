@@ -1,5 +1,6 @@
 {
 	"date" : "Date",
+	"source_date" : "Source",
 	"authors" : "Auteurs",
 	"title" : "Titre",
 	"editors" : "Éditeurs",
@@ -24,7 +25,6 @@
 	"filter" : "Filtres",
 	"source" : "Sources",
 	"nosource" : "Études",
-	"bibliography" : "Bibliographies",
 	"searchBook" : "Vous faites une recherche dans le livre :",
 	"searchHelp" : "Aide à la recherche"
 }

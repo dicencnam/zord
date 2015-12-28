@@ -1,8 +1,8 @@
 {
 	"source" : "Sources",
 	"nosource" : "Études",
-	"bibliography" : "Bibliographies",
 	"date" : "Date",
+	"source_date" : "Source",
 	"authors" : "Auteurs",
 	"title" : "Titre",
 	"editors" : "Éditeurs",

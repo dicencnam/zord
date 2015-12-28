@@ -13,15 +13,18 @@
 	<input id="delete_del" type="button" value="{{$del}}"/>
 </div>
 <div>
-	<table id="publication_table"></table>
+	<div class="panelsTabs" id="publication_table">
+		<div class="tabs" id="publication_tabs"></div>
+		<div class="panels" id="publication_panels"></div>
+	</div>
 </div>
 {{/template}}
 
-{{template id="publication_item" overlay="publication_table" insert="beforeend" preload="true"}}
+{{template id="publication_item" lang="false"}}
 <tr{{$level}} data-id="{{$isbn}}" data-repository="{{$portal}}">
 	<td><input type="checkbox" value="{{$isbn}}" data-type="del" class="pub-selector"/></td>
-	<td>{{$isbn}}</td>
-	<td>{{$title}}</td>
+	<td><a class="pub-href" href="{{$load}}" target="_blank">{{$isbn}}</a></td>
+	<td><a class="pub-href" href="{{$href}}" target="_blank">{{$title}}</a></td>
 	<td>{{$date}}</td>
 	<td>
 		<select class="pub-draft">
@@ -30,25 +33,31 @@
 		</select>
 	</td>
 	<td style="text-align:center;"><input type="checkbox" value="{{$isbn}}" data-type="novelty" {{$checked_novelty}}/></td>
-	<td style="text-align:center;"><a class="pub-download" href="{{$downlod}}">↥</a></td>
+	<td style="text-align:center;"><a class="pub-href" href="{{$download}}">↥</a></td>
 </tr>
 {{/template}}
 
-{{template id="publication_portal" overlay="publication_table" insert="beforeend" preload="true"}}
-<tr>
-	<th colspan="7" style="font-size:1.3em;text-transform: uppercase;">{{$portal}}</th>
-</tr>
-<tr>
-	<th></th>
-	<th>{{$label_isbn}}</th>
-	<th>{{$label_title}}</th>
-	<th>{{$label_date}}</th>
-	<th>{{$label_status}}</th>
-	<th>{{$label_novelty}}</th>
-	<th>{{$label_download}}</th>
-</tr>
+{{template id="publication_panels" overlay="publication_panels" insert="beforeend" preload="true"}}
+<div data-panel="{{$portal}}" class="panel">
+	<table>
+	<tr>
+		<th></th>
+		<th>{{$label_isbn}}</th>
+		<th>{{$label_title}}</th>
+		<th>{{$label_date}}</th>
+		<th>{{$label_status}}</th>
+		<th>{{$label_novelty}}</th>
+		<th>{{$label_download}}</th>
+	</tr>
+	{{$content}}
+	</table>
+</div>
 {{/template}}
 
 {{template id="publication_websites" overlay="publication_websites" insert="beforeend" preload="true"}}
 <label><input type="checkbox" name="websites" value="{{$value}}" checked="checked"/>{{$label}}</label>
+{{/template}}
+
+{{template id="publication_tab" overlay="publication_tabs" insert="beforeend" preload="true"}}
+<div data-tab="{{$portal}}" class="tab"><div class="frame_title">{{$portal}}</div></div>
 {{/template}}

@@ -8,7 +8,7 @@
 		<input type="hidden" value="Start" name="module"/>
 		<input type="hidden" value="lang" name="action"/>
 	<?php
-		include(LIB_FOLDER.'zord'.DS.'zordLangs.php');
+		include(CONFIG_FOLDER.'config_language.php');
 		foreach ($zordLangsString as $key => $lang) {
 			if($key==LANG)
 				echo '<span class="lang-select">'.$lang.'</span>';

@@ -31,7 +31,7 @@ class Admin_action extends Module {
 		Dirs::deleteContentsDirectory(substr(CACHE_FOLDER, 0, -1));
 		Dirs::deleteContentsDirectory(TOOLS_FOLDER.'obfuscation'.DS.'shuffler');
 		file_put_contents(TOOLS_FOLDER.'obfuscation'.DS.'shuffler'.DS.'.gitignore','*');
-		include(LIB_FOLDER.'zord'.DS.'websites.php');
+		include(CONFIG_FOLDER.'config_portals.php');
 		foreach ($websites as $portal){
 			@Dirs::deleteContentsDirectory(CSS_FOLDER.$portal.DS.'obf');
 			@file_put_contents(CSS_FOLDER.$portal.DS.'obf'.DS.'.gitignore','*');
@@ -53,7 +53,7 @@ class Admin_action extends Module {
 
 	// --------------------------------------------------------------------------
 	protected function _getUsers() {
-		include_once(ROOT.'config'.DS.'config_orm_admin.php');
+		include_once(CONFIG_FOLDER.'config_db_admin.php');
 		$users = ORM::for_table('users', 'zord_admin')->find_array();
 		$result = array();
 		foreach ($users as $key => $value) {
@@ -65,7 +65,10 @@ class Admin_action extends Module {
 				'start' => $value['start'],
 				'websites' => $value['websites'],
 				'name' => $value['name'],
-				'type' => $value['type']
+				'type' => $value['type'],
+				'ip' => $value['ip'],
+				'level' => $value['level'],
+				'subscription' => $value['subscription']
 			);
 		}
 		return array('content'=>$result);
@@ -81,7 +84,9 @@ class Admin_action extends Module {
 		"websites" => FILTER_SANITIZE_STRING,
 		"users_type" => FILTER_SANITIZE_STRING,
 		"users_level" => array(FILTER_VALIDATE_INT,'options' => array('min_range'=>0, 'max_range'=>1)),
-		"users_name" => FILTER_SANITIZE_SPECIAL_CHARS
+		"users_name" => FILTER_SANITIZE_SPECIAL_CHARS,
+		"users_subscription" => array(FILTER_VALIDATE_INT,'options' => array('min_range'=>0, 'default'=>0)),
+		"users_ip" => FILTER_SANITIZE_STRING
 	);
 	public $addUser_filter_path = array();
 	/**
@@ -98,8 +103,9 @@ class Admin_action extends Module {
 			&& $this->request['params']['users_password']
 			&& $this->request['params']['websites']
 			&& $this->request['params']['users_name']
+			&& $this->request['params']['users_subscription']>=0
 			&& $this->request['params']['users_start']){
-				include_once(ROOT.'config'.DS.'config_orm_admin.php');
+				include_once(CONFIG_FOLDER.'config_db_admin.php');
 				$user = ORM::for_table('users','zord_admin')->create();
 				$user->set('type', $this->request['params']['users_type']);
 				$user->set('email', $this->request['params']['users_email']);
@@ -110,6 +116,9 @@ class Admin_action extends Module {
 				$user->set('name', $this->request['params']['users_name']);
 				$user->set('websites', $this->request['params']['websites']);
 				$user->set('level', $this->request['params']['users_level']);
+				$user->set('subscription', $this->request['params']['users_subscription']);
+				if($this->request['params']['users_type']=='IP')
+					$user->set('ip', $this->request['params']['users_ip']);
 				$user->save();
 				return $this->_getUsers();
 		}
@@ -123,6 +132,8 @@ class Admin_action extends Module {
 			$invalid = 'users_end_invalid';
 		if($this->request['params']['users_email']==null)
 			$invalid = 'users_email_invalid';
+		if($this->request['params']['users_subscription']==null)
+			$invalid = 'users_subscription_invalid';
 		return $this->error(303,$invalid);
 	}
 	// updateUser ------------------------------------------------------------------
@@ -133,7 +144,9 @@ class Admin_action extends Module {
 		"id" => FILTER_VALIDATE_INT,
 		"websites" => FILTER_SANITIZE_STRING,
 		"start" => array(FILTER_VALIDATE_REGEXP,'options' => array('regexp','/^\d{4}-\d{2}-\d{2}$/')),
-		"name" => FILTER_SANITIZE_SPECIAL_CHARS
+		"name" => FILTER_SANITIZE_SPECIAL_CHARS,
+		"subscription" => array(FILTER_VALIDATE_INT,'options' => array('min_range'=>0, 'default'=>0)),
+		"ip" => FILTER_SANITIZE_STRING
 	);
 	public $updateUser_filter_path = array();
 	/**
@@ -148,8 +161,9 @@ class Admin_action extends Module {
 		&& $this->request['params']['login']
 		&& $this->request['params']['websites']
 		&& $this->request['params']['name']
+		&& $this->request['params']['subscription']>=0
 		&& $this->request['params']['start']){
-			include_once(ROOT.'config'.DS.'config_orm_admin.php');
+			include_once(CONFIG_FOLDER.'config_db_admin.php');
 			$user = ORM::for_table('users', 'zord_admin')
 			->where('id', $this->request['params']['id'])
 			->find_one();
@@ -161,6 +175,9 @@ class Admin_action extends Module {
 				$user->start = $this->request['params']['start'];
 				$user->websites = $this->request['params']['websites'];
 				$user->name = $this->request['params']['name'];
+				$user->subscription = $this->request['params']['subscription'];
+				if($user->type=='IP')
+					$user->ip = $this->request['params']['ip'];
 				$user->save();
 				return $this->_getUsers();
 			}
@@ -174,6 +191,8 @@ class Admin_action extends Module {
 			$invalid = 'users_end_invalid';
 		if($this->request['params']['users_email']==null)
 			$invalid = 'users_email_invalid';
+		if($this->request['params']['users_subscription']==null)
+			$invalid = 'users_subscription_invalid';
 		return $this->error(303,$invalid);
 	}
 
@@ -189,7 +208,7 @@ class Admin_action extends Module {
 	*/
 	public function delUser() {
 		if($this->request['params']['id']){
-			include_once(ROOT.'config'.DS.'config_orm_admin.php');
+			include_once(CONFIG_FOLDER.'config_db_admin.php');
 			$user = ORM::for_table('users', 'zord_admin')
 				->where('id', $this->request['params']['id'])
 				->find_one();
@@ -280,24 +299,18 @@ class Admin_action extends Module {
 				$namePortal = pathinfo($value,PATHINFO_FILENAME);
 				$_Epubs[$namePortal] = array();
 			} else {
-				$_Epubs[$namePortal][] = pathinfo($value,PATHINFO_FILENAME);
-			}
-		}
-
-		$noEpubs = array();
-		foreach($books as $portal => $bookInPortal){
-			foreach($bookInPortal as $isbn => $title){
-				if(!isset($_Epubs[$portal]))
-					$_Epubs[$portal] = array();
-				if(!in_array($isbn,$_Epubs[$portal])){
-					if(!isset($noEpubs[$portal]))
-						$noEpubs[$portal] = array();
-					$noEpubs[$portal][$isbn] = $title;
+				$pathinfo = pathinfo($value);
+				if($pathinfo['extension']=='epub'){
+					$namePortal = basename($pathinfo['dirname']);
+					if(!isset($_Epubs[$namePortal]))
+						$_Epubs[$namePortal] = array();
+					$_Epubs[$namePortal][] = $pathinfo['filename'];
 				}
 			}
 		}
 		return array(
-			'books' => $noEpubs
+			'books' => $books,
+			'epubs' => $_Epubs
 		);
 	}
 
@@ -305,7 +318,7 @@ class Admin_action extends Module {
 
 	// createEpubs ---------------------------------------------------------------
 	public $createEpubs_filter = array(
-		'books' => array('filter' => FILTER_CALLBACK, 'options' => array('Filter','json'))
+		'book' => array('filter' => FILTER_CALLBACK, 'options' => array('Filter','json'))
 	);
 	public $createEpubs_filter_path = array();
 	/**
@@ -314,14 +327,129 @@ class Admin_action extends Module {
 	* @return JSON
 	*/
 	public function createEpubs() {
-		$books = Tool::objectToArray($this->request['params']['books']);
-		foreach($books as $portal => $bookInPortal){
-			foreach($bookInPortal as $isbn){
-				$cmd = 'nohup nice -n 10 /usr/bin/php -f '.ROOT.'services/services.php teitoepub '.$isbn.' '.$portal.' >> '.LOGS_FOLDER.'epubs_'.date("Y-m-d").'.log &';
-				shell_exec($cmd);
-			}
+		$book = Tool::objectToArray($this->request['params']['book']);
+		$folder = TEI_FOLDER.$book['portal'].DS.$book['id'].DS;
+		$partJSONFile = $folder.'part_save.json';
+		$files = Tool::objectToArray(json_decode(file_get_contents($partJSONFile)));
+		$content = array();
+		foreach ($files as $file) {
+			$content[] = array(
+				'title' => $file['title'],
+				'file' => $file['file'],
+				'tei' => file_get_contents($folder.$file['file'].'.xml')
+			);
 		}
+		return array('content'=>$content,'navMap'=>file_get_contents($folder.'toc.xml'));
+	}
+
+	// saveEpubs ---------------------------------------------------------------
+	public $saveEpubs_filter = array(
+		'data' => array('filter' => FILTER_CALLBACK, 'options' => array('Filter','sourceStucture'))
+	);
+	public $saveEpubs_filter_path = array();
+	/**
+	* Save ePub
+	*
+	* @return JSON
+	*/
+	public function saveEpubs() {
+		$data = $this->request['params']['data'];
+		$portal = $data['portal'];
+		$id = $data['id'];
+
+		if(Filter::validPortal($portal) && Filter::validEAN13($id)){
+
+			// portal folder
+			if(!file_exists(EPUBS_FOLDER.$portal))
+				mkdir(EPUBS_FOLDER.$portal,0777);
+
+			$epubFile = EPUBS_FOLDER.$portal.DS.$id.'.epub';
+			if(file_exists($epubFile))
+				unlink($epubFile);
+
+			$metadata = Tool::objectToArray(json_decode(file_get_contents(TEI_FOLDER.$portal.DS.$id.DS.'header.json')));
+
+			$Epub = new Epub($epubFile,$metadata);
+
+			// cover ------------------------------------------------------------------------
+			$coverIMG = PROFILES_FOLDER.$portal.DS.'epub'.DS.'cover.jpg';
+			$coverExtension = 'jpg';
+			if(file_exists(COVERS_FOLDER.$id.'.jpg'))
+				$coverIMG = COVERS_FOLDER.$id.'.jpg';
+			else if(file_exists(COVERS_FOLDER.$id.'.png')){
+				$coverIMG = COVERS_FOLDER.$id.'.png';
+				$coverExtension = 'png';
+			}
+			$Epub->addCover($coverIMG,$coverExtension);
+
+			// html --------------------------------------------------------------------------
+			foreach ($data['content'] as $key => $value) {
+				$name = explode('_',$value['file']);
+				$Epub->addXHTML(
+					$value['tei'],
+					$name[1],
+					array(
+						'spine' 	=> array(
+							'position'	=> null,
+							'linear'		=> 'yes'
+						),
+						'guide' 	=> array(
+							'position'	=> null,
+							'title'			=> $value['title'],
+							'type'			=> 'text'
+						)
+					)
+				);
+			}
+
+			// medias -------------------------------------------------------------------------
+			foreach ($data['medias'] as $target) {
+				$source = str_replace('medias/', MEDIA_FOLDER.$id.DS, $target);
+				$Epub->addSource($source,$target);
+			}
+
+			// NCX ----------------------------------------------------------------------------
+			$Epub->addNCX($data['navMap']);
+
+			// CSS ----------------------------------------------------------------------------
+			$cssFile = PROFILES_FOLDER.$portal.DS.'epub'.DS.'epub.css';
+			$Epub->addSource(PROFILES_FOLDER.$portal.DS.'epub'.DS.'epub.css','css/epub.css');
+
+			$cl = new $portal();
+			$cl->epub($Epub);
+
+			$Epub->finish();
+
+			// epubcheck
+			Cmd::epubcheck($portal,$id);
+		}
+
 		return array();
+	}
+
+	// getEpubCheck ---------------------------------------------------------------
+	public $getEpubCheck_filter = array(
+		'book' => FILTER_SANITIZE_NUMBER_INT,
+		"portal" => FILTER_SANITIZE_STRING
+	);
+	public $getEpubCheck_filter_path = array();
+	/**
+	* Get epubCheck
+	*
+	* @return JSON
+	*/
+	public function getEpubCheck() {
+		$book = $this->request['params']['book'];
+		$portal = $this->request['params']['portal'];
+		if(Filter::validPortal($portal) && Filter::validEAN13($book)) {
+			return array(
+				'content' => htmlspecialchars(file_get_contents(EPUBS_FOLDER.$portal.DS.$book.'_check.txt'))
+			);
+		} else {
+			return array(
+				'content' => htmlspecialchars('Error portal or book name')
+			);
+		}
 	}
 
 	// getDocs ---------------------------------------------------------------
@@ -355,8 +483,8 @@ class Admin_action extends Module {
 		$solr = new Solr();
 		foreach($books as $portal => $bookInPortal){
 			foreach($bookInPortal as $isbn){
-				$solr->delBook($isbn,$portal);
-				if($isbn!=''){
+				if(Filter::validPortal($portal) && Filter::validEAN13($isbn)){
+					$solr->delBook($isbn,$portal);
 					$docFolder = TEI_FOLDER.$portal.DS.$isbn;
 					if(is_dir($docFolder) && $docFolder != TEI_FOLDER.$portal.DS)
 						Dirs::deleteDirectory($docFolder);
@@ -370,7 +498,8 @@ class Admin_action extends Module {
 	public $portalNew_filter = array(
 		"portal" => FILTER_SANITIZE_STRING,
 		"url" => FILTER_VALIDATE_URL,
-		"publisher" => FILTER_SANITIZE_STRING
+		"publisher" => FILTER_SANITIZE_STRING,
+		"portalname" => FILTER_SANITIZE_STRING
 	);
 	public $portalNew_filter_path = array();
 	/**
@@ -384,7 +513,8 @@ class Admin_action extends Module {
 			$Portal->create(
 				$this->request['params']['portal'],
 				$this->request['params']['url'],
-				$this->request['params']['publisher']
+				$this->request['params']['publisher'],
+				$this->request['params']['portalname']
 			);
 			return array();
 		}
@@ -403,7 +533,7 @@ class Admin_action extends Module {
 	* @return JSON
 	*/
 	public function portalDel() {
-		if($this->request['params']['portal'] && $this->request['params']['url']){
+		if(Filter::validPortal($this->request['params']['portal']) && $this->request['params']['url']){
 			$Portal = new Portal();
 			$Portal->delete(
 				$this->request['params']['portal'],
@@ -412,39 +542,6 @@ class Admin_action extends Module {
 			return array();
 		}
 		return $this->error(303,'Invalid');
-	}
-
-	// emailNews ---------------------------------------------------------------
-	public $emailNews_filter = array();
-	public $emailNews_filter_path = array();
-	/**
-	* email News
-	*
-	* @return JSON
-	*/
-	public function emailNews() {
-		// $mail = new Mail();
-		// $sourceMail = 'server@team-story.com';
-		//
-		//
-		// $targetMail = 'david.dauvergne@gmail.com';
-		//
-		// $subject = "test Mail";
-		//
-		// $message = '<h1>message en html</h1>';
-		//
-		// $mail = new Mail();
-		// $mail->CharSet = "UTF-8";
-		// $mail->SetFrom($sourceMail, $this->_baseUrl['domaine']);
-		// $mail->AddReplyTo($sourceMail, $this->_baseUrl['domaine']);
-		// $mail->AddAddress($targetMail, "");
-		// $mail->Subject = $subject;
-		// $mail->MsgHTML('<html><head><meta http-equiv="Content-type" content="text/html; charset=utf-8"/></head><body>'.$message.'</body></html>');
-		// $mail->Send();
-
-
-		return array();
-		// return $this->error(303,'Invalid');
 	}
 }
 ?>

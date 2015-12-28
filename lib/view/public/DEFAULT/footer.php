@@ -1,1 +1,1 @@
-<p>__PORTALDEFAULT__</p>
+<p><?php echo  $v->footer_zord; ?></p>

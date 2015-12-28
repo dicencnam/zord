@@ -33,6 +33,34 @@ class Filter {
 	}
 
 	/**
+	* Valid portal name
+	*
+	* @param string $str
+	* @return boolean
+	*/
+	public static function validPortal($portal) {
+		include(CONFIG_FOLDER.'config_portals.php');
+		if(in_array($portal, $websites))
+			return true;
+		return false;
+	}
+
+	/**
+	* Valid Book name
+	*
+	* @param string $str
+	* @return boolean
+	*/
+	public static function validEAN13($ean){
+		if(gettype($ean)=='integer')
+			$ean = (string) $ean;
+
+		if(gettype($ean)==='string' && ctype_digit($ean) && strlen($ean)==13)
+			return true;
+		return false;
+	}
+
+	/**
 	* TEI source structure filter
 	*
 	* @param string $str

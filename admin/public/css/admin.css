@@ -71,6 +71,7 @@ body {
 .form_service input[type="text"],
 .form_service input[type="password"],
 .form_service input[type="file"],
+.form_service input[type="number"],
 .form_service input[type="email"],
 .form_service input[type="month"],
 .form_service input[type="date"] {
@@ -130,4 +131,43 @@ input[type="button"],input[type="submit"] {
 	-o-box-shadow: -15px 15px 30px 0px rgba(0, 0, 0, 0.5);
 	box-shadow: -15px 15px 30px 0px rgba(0, 0, 0, 0.5);
 	border-radius: 5px;
+}
+
+.tabs {
+	text-align: center;
+}
+
+.tab {
+	display: inline-block;
+	text-align: center;
+	background-color: gray;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.tab:hover {
+	color: gainsboro;
+}
+
+.tabselect {
+	color: black ! important;
+	background-color: gainsboro;
+}
+
+.panels {
+	border-top: black solid 2px;
+}
+
+.panel {
+	display:none;
+	margin:0;
+	padding:15px;
+}
+
+.paneselect {
+	display: block;
+}
+
+.frames {
+	border-top: black solid 2px;
 }
